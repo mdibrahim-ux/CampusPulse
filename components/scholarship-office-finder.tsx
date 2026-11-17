@@ -4,6 +4,18 @@ import {useEffect,useMemo,useState} from 'react';
 import {ExternalLink,MapPin,ShieldCheck,RefreshCw,Building2,Globe2} from 'lucide-react';
 
 type Props={schemeId:string;schemeName:string;provider:string;category:string};
+type OfficerSource = {
+ id:string;
+ label:string;
+ url:string;
+ reachable?:boolean|null;
+ publishedUpdate?:string|null;
+ note?:string;
+};
+type OfficerSourceSnapshot = {
+ checkedAt?:string|null;
+ sources?:OfficerSource[];
+};
 const schemeWiseUrl='https://scholarships.gov.in/nodelOfficerDetails';
 const districtWiseUrl='https://scholarships.gov.in/districtNodelOfficerDetails';
 
@@ -21,7 +33,7 @@ export function ScholarshipOfficeFinder({schemeId,schemeName,provider,category}:
  const [city,setCity]=useState('Bengaluru');
  const [district,setDistrict]=useState('');
  const [state,setState]=useState('Karnataka');
- const [snapshot,setSnapshot]=useState<any>(null);
+ const [snapshot,setSnapshot]=useState<OfficerSourceSnapshot|null>(null);
  const [loading,setLoading]=useState(false);
  const department=departmentFor(schemeId,provider,category);
  const query=department+', '+(district?district+', ':'')+city+', '+state+', India';
@@ -57,7 +69,7 @@ export function ScholarshipOfficeFinder({schemeId,schemeName,provider,category}:
     <div className="office-source-meta">
      <div className="office-source-meta-head"><span><ShieldCheck size={15}/> Official source monitoring</span><button type="button" onClick={refresh} disabled={loading}>{loading?<RefreshCw className="spin" size={13}/>:<RefreshCw size={13}/>} Check latest snapshot</button></div>
      <p>Last automatic check: {lastChecked}</p>
-     {snapshot?.sources?.map((source:any)=><div className="office-source-row" key={source.id}><span className={source.reachable===false?'source-down':'source-up'}/><div><b>{source.label}</b><small>{source.publishedUpdate?'Portal page last updated: '+source.publishedUpdate:source.note||'No published update marker found'}</small></div><a href={source.url} target="_blank" rel="noreferrer" aria-label={'Open '+source.label}><ExternalLink size={12}/></a></div>)}
+     {snapshot?.sources?.map((source)=><div className="office-source-row" key={source.id}><span className={source.reachable===false?'source-down':'source-up'}/><div><b>{source.label}</b><small>{source.publishedUpdate?'Portal page last updated: '+source.publishedUpdate:source.note||'No published update marker found'}</small></div><a href={source.url} target="_blank" rel="noreferrer" aria-label={'Open '+source.label}><ExternalLink size={12}/></a></div>)}
      {!snapshot&&<p className="office-source-loading">Loading the latest daily source-check record. The official NSP links above are live now.</p>}
      <p className="office-source-disclaimer">CampusPulse checks public page availability and the portal’s own “Last update” notice. It does not scrape officer names or contact details. NSP requires users to choose the scheme or district in its official forms and may display CAPTCHA.</p>
     </div>

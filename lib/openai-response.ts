@@ -1,9 +1,18 @@
-export function extractResponseText(payload: any): string {
+type ResponseContent = { type?: string; text?: unknown };
+type ResponseOutputItem = { type?: string; content?: ResponseContent[] };
+type ResponsesPayload = {
+  output?: ResponseOutputItem[];
+  error?: { message?: string };
+};
+
+export function extractResponseText(payload: ResponsesPayload): string {
   const parts: string[] = [];
-  for (const item of payload?.output ?? []) {
-    if (item?.type !== 'message') continue;
-    for (const content of item?.content ?? []) {
-      if ((content?.type === 'output_text' || content?.type === 'text') && typeof content?.text === 'string') parts.push(content.text);
+  for (const item of payload.output ?? []) {
+    if (item.type !== 'message') continue;
+    for (const content of item.content ?? []) {
+      if ((content.type === 'output_text' || content.type === 'text') && typeof content.text === 'string') {
+        parts.push(content.text);
+      }
     }
   }
   return parts.join('\n').trim();
@@ -19,9 +28,9 @@ export async function createAnalysis(input: unknown) {
     cache: 'no-store',
     body: JSON.stringify({ model, store: false, input })
   });
-  const payload = await response.json();
+  const payload = await response.json() as ResponsesPayload;
   if (!response.ok) {
-    const message = payload?.error?.message || `AI provider returned HTTP ${response.status}`;
+    const message = payload.error?.message || `AI provider returned HTTP ${response.status}`;
     throw new Error(message);
   }
   const analysis = extractResponseText(payload);

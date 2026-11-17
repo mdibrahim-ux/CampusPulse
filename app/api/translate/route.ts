@@ -4,6 +4,22 @@ import { LANGUAGE_BY_CODE } from "@/lib/languages";
 export const runtime = "nodejs";
 export const maxDuration = 45;
 
+type PipelineTaskConfig = {
+  language?: { sourceLanguage?: string; targetLanguage?: string };
+  serviceId?: string;
+  modelId?: string;
+};
+type PipelineConfigurationResponse = {
+  pipelineResponseConfig?: Array<{ taskType?: string; config?: PipelineTaskConfig | PipelineTaskConfig[] }>;
+  pipelineInferenceAPIEndPoint?: {
+    callbackUrl?: string;
+    inferenceApiKey?: { name?: string; value?: string };
+  };
+};
+type TranslationResponse = {
+  pipelineResponse?: Array<{ output?: Array<{ target?: string }> }>;
+};
+
 type PipelineConfig = {
   serviceId: string;
   modelId?: string;
@@ -42,10 +58,11 @@ async function getPipelineConfig(targetLanguage: string): Promise<PipelineConfig
   });
 
   if (!response.ok) throw new Error("BHASHINI pipeline configuration failed. Check your project ID and language access.");
-  const data = await response.json();
-  const translationTask = (data.pipelineResponseConfig || []).find((task: any) => task.taskType === "translation");
-  const configs = Array.isArray(translationTask?.config) ? translationTask.config : [translationTask?.config].filter(Boolean);
-  const selected = configs.find((item: any) =>
+  const data = await response.json() as PipelineConfigurationResponse;
+  const translationTask = (data.pipelineResponseConfig || []).find((task) => task.taskType === "translation");
+  const rawConfig = translationTask?.config;
+  const configs: PipelineTaskConfig[] = Array.isArray(rawConfig) ? rawConfig : rawConfig ? [rawConfig] : [];
+  const selected = configs.find((item) =>
     item.language?.sourceLanguage === "en" && item.language?.targetLanguage === targetLanguage
   ) || configs[0];
   const endpoint = data.pipelineInferenceAPIEndPoint;
@@ -101,7 +118,7 @@ export async function POST(request: NextRequest) {
     });
 
     if (!response.ok) throw new Error("BHASHINI translation request failed. Retry in a moment.");
-    const data = await response.json();
+    const data = await response.json() as TranslationResponse;
     const output = data.pipelineResponse?.[0]?.output || [];
     const translations = texts.map((_, index) => String(output[index]?.target || ""));
     if (translations.some((value) => !value)) throw new Error("BHASHINI returned an incomplete translation batch.");
