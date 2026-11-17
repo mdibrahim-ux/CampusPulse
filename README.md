@@ -76,8 +76,10 @@ The language preference is saved in this browser and applies across the app. Pag
 
 ### Enable translation
 
-1. Register your integration at https://bhashini.gov.in/ and create a project/API key in the ULCA profile.
-2. Add the values to `.env.local` (server-side only):
+Translation has two provider options. The easiest option is the OpenAI key already used by document/rejection analysis: when `OPENAI_API_KEY` is present, CampusPulse can translate the interface without separate BHASHINI credentials. BHASHINI is preferred when its keys are configured.
+
+1. For BHASHINI, register at https://bhashini.gov.in/ and create a project/API key in the ULCA profile.
+2. Add the values to `.env.local` (server-side only) when using BHASHINI:
 
 ```env
 BHASHINI_USER_ID=your_ulca_user_id
@@ -87,7 +89,7 @@ BHASHINI_PIPELINE_ID=64392f96daac500b55c543cd
 
 3. Restart Next.js. Choose a language from the globe selector in the top bar.
 
-If credentials are missing or a language pair is not enabled for the configured project, CampusPulse keeps the page in English and reports that translation is not configured. It never displays a false “translated” state. Bhashini availability, model quality, usage limits and charges are controlled by the selected project and current service terms.
+OpenAI fallback: set `OPENAI_API_KEY` and `OPENAI_MODEL` (the same key used for document/rejection analysis). Interface text batches are sent to the OpenAI Responses API with storage disabled, and returned translations are cached in the browser. BHASHINI remains preferred when configured. If neither provider is configured, CampusPulse keeps the page in English and shows a small status icon; hover it for setup details. It never displays a false “translated” state. Bhashini availability, model quality, usage limits and charges are controlled by the selected project and current service terms.
 
 ## Automatic NSP officer-source monitoring
 
