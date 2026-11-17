@@ -6,7 +6,7 @@ function write<T>(key:string,value:T){if(typeof window!=='undefined')localStorag
 export const getProfile=()=>read<StudentProfile>(profileKey,blankProfile);
 export const saveProfile=(p:StudentProfile)=>write(profileKey,p);
 export const getTracker=()=>{
- const raw=read<Array<TrackerItem & {status:string}>>(trackerKey,[]);
+ const raw=read<Array<Omit<TrackerItem,'status'> & {status:string}>>(trackerKey,[]);
  const migrated=raw.map(item=>({ ...item, status: (
    item.status==='Assessment' || item.status==='Interview' ? 'Under verification' :
    item.status==='Offer' ? 'Awarded' :
