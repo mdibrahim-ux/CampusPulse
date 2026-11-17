@@ -1,77 +1,52 @@
-# CampusPulse Scholarship Intelligence — Feature Plan
+# CampusPulse — product plan, November 2026
 
-Research checked 17 November 2026. The user-approved scope is scholarship-only. Internships, jobs, courses and events are removed from the product.
+## Product position
+CampusPulse is a student support workspace for India. Scholarships remain a primary module, alongside practical student services: transit concessions, academic records, education finance, and verified education-plan benefits for software and cloud tools.
 
-## Product promise
+## Feature-by-feature plan
 
-Help a student answer four practical questions: (1) which scholarships may fit the details they provide; (2) which documents do they already have and what is missing; (3) what does a document appear to be and what visible issues need attention; (4) what does a portal defect / rejection reason mean and what is the next safe step? CampusPulse never submits an application or decides an award.
+### F01 — Overview without a marketing landing page
+- Visiting `/` takes the student directly to the overview dashboard.
+- Overview shows saved scholarship activity, personal reminders, verified scholarship deadlines within 30 days, and an entry point to the Student Services directory.
+- Deadline cards display source-check dates and distinguish the student application deadline from later institute/department verification dates.
 
-## Research and data provenance
+### F02 — Scholarship catalogue and detail
+- Keep scholarship-only discovery.
+- On scholarship detail, add local support discovery based on the scheme's responsible department and the student's selected city/district.
+- Show a city map search and public office information only when a government source publishes it.
+- Link directly to NSP scheme-wise nodal officers and district-wise nodal officers/grievance services.
 
-- NSP Students and All-Scholarships pages show AY 2026–27, named scheme listings, individual specifications / FAQs and separate student and verification timelines. NSP states OTR is mandatory. https://scholarships.gov.in/Students and https://scholarships.gov.in/All-Scholarships
-- NSP has its own eligibility checker. CampusPulse complements this with a document tick list and human-readable explanation; it does not replace the official checker. https://scholarships.gov.in/scholarshipEligibility/
-- PM-USP CSSS FAQ 2025–26: above 80th percentile of successful Class XII candidates in the relevant board stream; regular study; family income ≤₹4.5L; no other scholarship / fee reimbursement; fresh applicants taking a post-Class-XII drop are excluded. Source: Ministry of Education FAQ.
-- AICTE Pragati / Saksham scheme brochure contains an older set of criteria and example documents. The current NSP scheme specification and FAQ must override the historical snapshot.
-- Top Class Scholarship for SC Students guidelines applicable from 2025–26 require SC category, annual family income ≤₹8L, full-time prescribed course and institution on the notified list; institution-wise scholarship slots apply. Confirm the current notified list.
-- DEPwD Post-Matric scheme page identifies eligible course levels, benchmark disability and income requirements; check current official scheme guidelines for exact document format.
-- NSP SOP: an application marked defective is returned to the student for correction and then enters reverification. Rejected is a distinct status; CampusPulse must not promise editing / resubmission will reverse it. https://scholarships.gov.in/public/FAQ/NSP_SOP.pdf
+### F03 — Student Services directory
+- Transport: Karnataka KSRTC student pass route through Seva Sindhu; clarify that KSRTC pass rules are not automatically BMTC city-bus rules.
+- Academic records: DigiLocker and Academic Bank of Credits / APAAR.
+- Education finance: PM-Vidyalaxmi loan application/status/grievance links.
+- Education-plan tools: GitHub Student Developer Pack, Microsoft Azure for Students, JetBrains, Figma Education, Autodesk Education, Notion Education, Microsoft 365 Education, Google Workspace for Education, AWS Educate.
+- Include a clear “who qualifies” and “what proof is required” explanation per service. Do not promise that any arbitrary college email domain automatically qualifies.
+- Include cautions where a frequently shared student offer does not apply to university students (Canva Education is currently K–12 focused).
 
-## F01 — Scholarship catalogue
+### F04 — Scholarship local office / officer finder
+- Scheme-to-department mapping: SC/social welfare, disability welfare, AICTE, minority welfare, higher education or general district scholarship nodal channel.
+- City, district and state inputs drive a map search.
+- The official NSP scheme-wise/district-wise directory is the source of truth for assigned officers and grievance officers.
+- A named officer is displayed only when a government directory publishes the role/contact. General District Commissioner contacts must never be labelled as the scholarship's assigned officer.
+- Map pins/search results are third-party geospatial information and must be independently checked before visiting.
 
-- Only scholarship schemes and scholarship sources appear in navigation or catalogues.
-- Each scheme card has provider, source, rule snapshot date, amount wording where supported, deadline / status note and caveats.
-- Catalogue references are not presented as a live scraped feed.
+### F05 — Visual system
+- Replace the acid-lime/lilac/peach palette with ink navy, peacock teal, warm amber, mineral blue and soft neutral surfaces.
+- Keep the neo-brutalist border/shadow language and pill navigation.
 
-## F02 — Document possession checklist + eligibility engine
+### F06 — Existing scholarship intelligence retained
+- Tickable document inventory and explainable eligibility comparison.
+- Consent-gated document review and rejection/defect analysis.
+- Scholarship tracker and personal reminder planner.
+- Local-first storage and server-side AI API key only.
 
-- Ask study level, mode, technical / AICTE status, admission year, Class XII percentile band, family income band/value, category, gender only for a scheme that needs it, girl children count for Pragati, disability percentage only if relevant, institution list status and other scholarship receipt.
-- Ask which documents the student currently has using tickable checklist controls.
-- Compare each scheme condition by condition and report `Potential match`, `Needs more information` or `Not a match based on these answers`.
-- Show matched rules, failing conditions, unknown fields and missing documents per scheme.
-- Missing documents do not automatically mean a student is ineligible.
-- Sensitive answers stay in component memory and are not persisted to localStorage by this release.
-
-## F03 — Document Intelligence
-
-- Accept one PDF / JPG / JPEG / PNG / WEBP at a time, maximum 8 MB.
-- Require explicit consent before sending; explain that the file is relayed from the server to the configured OpenAI API.
-- Send Responses API request with `store: false`; no file is saved in CampusPulse database or localStorage. Provider-side processing / API data policy still applies.
-- Identify the apparent document with confidence and evidence; explain common scholarship purpose; list visible non-sensitive fields; detect only visible quality / completeness concerns such as crop, blur, glare, unreadable text, missing edge/page, visibly expired date or apparent mismatch.
-- Never call a document authentic / fake, never repeat full identifiers, never recommend editing / backdating official documents. For a true error, instruct user to request a corrected reissue from the issuer.
-
-## F04 — Rejection / defect analyser
-
-- Collect scheme name, exact portal status, verification stage and exact reason text. Warn users to remove application ID, OTR, Aadhaar and other personal identifiers.
-- Translate the remark, classify likely issue, separate known fact from possibility, list corrective actions, tell user what must be obtained from the issuer and prepare questions for the institute / nodal officer.
-- Make the defected vs rejected distinction explicit. Do not promise a rejected application can be reopened or that an appeal exists without scheme-specific evidence.
-
-## F05 — Saved scholarship tracker and planner
-
-- Track Interested, Preparing, Applied, Under verification, Defected, Rejected, Approved, Awarded or Withdrawn.
-- Store notes / next action / personal reminder locally. Distinguish personal reminders from official provider closing dates.
-
-## F06 — Source desk and trust signals
-
-- NSP, AICTE scholarship source, Ministry of Social Justice, DEPwD and scheme-specific official pages.
-- Every scheme references the exact guideline version and date checked. Old guideline snapshots are labelled as such.
-- Keep official provider links visible; all deadlines and document formats must be rechecked before applying.
-
-## F07 — Privacy and security boundaries
-
-- Never ask for portal password, OTP, Aadhaar number, OTR number, bank account number or IFSC.
-- Explicit upload consent and sensitive identifier redaction notice.
-- File bytes are streamed to the AI provider only during the request; no storage in CampusPulse.
-- Keep API key server-side only. No key in client bundle, browser storage or GitHub.
-- Local profile export / reset; sensitive eligibility facts are not saved by default.
-
-## Release acceptance checks
-
-1. No internship, job, course or event appears in navigation or discovery.
-2. Every catalogue entry is a scholarship scheme and has a source and rule-version note.
-3. Eligibility result explains matched rules, conflicts, unknown answers and missing documents for each scheme.
-4. Checker never labels a potential match as guaranteed eligible.
-5. Document upload is consent-gated and limited by type and size; missing API key returns clear setup instructions.
-6. Document report never certifies authenticity and masks identifiers in generated text.
-7. Rejection analysis distinguishes defected from rejected and gives non-guaranteed next steps.
-8. Local tracker and reminders persist through refresh.
-9. Responsive layout, keyboard controls and reduced motion remain functional.
+## Acceptance checks
+1. `/` redirects to `/dashboard`; no marketing landing page is rendered.
+2. Dashboard shows the student application deadlines in the next 30 days from the dated source snapshot, with official source link.
+3. Student Services filters and search work and every card has eligibility/verification notes and an official provider URL.
+4. Bus-pass card is explicitly KSRTC/Seva Sindhu for the current 2026–27 process and does not imply universal BMTC validity.
+5. Scholarship detail map search responds to city/district/state inputs and includes official NSP officer directory links.
+6. No officer name or number is fabricated; general district contacts are labelled as non-scheme-specific.
+7. New palette is consistent across overview, services and scheme detail pages.
+8. Existing eligibility, document analysis, rejection analysis, tracker and planner remain accessible.

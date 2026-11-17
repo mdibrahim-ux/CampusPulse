@@ -1,33 +1,39 @@
-# Scholarship research notes
+# CampusPulse research notes — checked 17 November 2026
 
-**Checked: 17 November 2026.** This is a curated rule reference, not a live feed or legal opinion. Where the underlying rule document predates the current academic year, the product marks that date and instructs students to verify the current NSP specification.
+## Scholarship windows and support offices
 
-## Official sources
+- The National Scholarship Portal's AY 2026–27 scheme catalogue shows several fresh student application windows open until **30 November 2026**, including PM-USP CSSS, AICTE Pragati (Technical Degree), Central Sector Top Class Education for SC Students and DEPwD Post-Matric Scholarship. Each scheme has its own opening and verification timeline; some other schemes have already closed. Source: https://scholarships.gov.in/All-Scholarships
+- NSP announcements confirm PM-USP CSSS fresh applications are open to 30 November 2026, and clarify additional state-specific availability caveats for PM YASASVI Top Class Schools. Source: https://scholarships.gov.in/fresh1819/ViewMoreAnnouncement
+- NSP's Officers page lists scheme-wise nodal officers and grievance redressal officers. The Public section links district-wise nodal officers, grievance registration, NSP helpdesk and PFMS helpdesk. These are the authoritative routes for scheme-assigned contacts; CampusPulse does not invent names or treat a general district official as a scheme officer. Sources: https://scholarships.gov.in/Officers and https://scholarships.gov.in/Public
+- Bengaluru Urban District publishes the Deputy Commissioner office address and contact details. The contact is general district administration, not automatically the scholarship officer. Source: https://bengaluruurban.nic.in/en/aboutdistrict/whos-who/
+- Bengaluru South District publishes a District Minority Welfare Officer contact. It is shown only for relevant Minority Welfare enquiries, not misrepresented as an officer for a different scholarship. Source: https://bengalurusouth.nic.in/en/divisions/minority-division/
 
-| Source | What the source currently provides | CampusPulse use |
-|---|---|---|
-| National Scholarship Portal Students: https://scholarships.gov.in/Students | AY 2026–27 portal, announcements, scheme listing, eligibility, OTR, application and payment tracking | Main starting point for official scholarship discovery. NSP says OTR is mandatory; do not capture the OTR or login in CampusPulse. |
-| NSP All Scholarships: https://scholarships.gov.in/All-Scholarships | Named schemes, specifications, FAQs and distinct application / verification windows | Scheme catalogue metadata and source links. At 17 Nov 2026, many 2026–27 student deadlines displayed were 31 Oct 2026; distinguish student deadlines from later verification dates. |
-| NSP Eligibility Checker: https://scholarships.gov.in/scholarshipEligibility/ | Official eligibility workflow asks students to provide facts and shows scheme results / reasons | CampusPulse adds a documents-in-possession checklist and readable rule comparison, not a replacement for NSP. |
-| PM-USP CSSS FAQ 2025–26: https://www.education.gov.in/sites/upload_files/mhrd/files/upload_document/FAQs_PM_USP2526.pdf | Fresh eligibility includes >80th percentile in relevant Class XII stream, regular course, family income ≤₹4.5 lakh, no other scholarship / reimbursement, no Class XII drop for fresh application | Deterministic conditions in checker; 2025–26 snapshot is clearly labelled. |
-| AICTE Pragati brochure: https://aicte-qa.aicte-india.org/sites/default/files/pragatisaksham.pdf | Older brochure states first-year AICTE-approved technical course, up to two girl children in family, income ≤₹8 lakh and example documents | Historical comparison only. Use current NSP degree-specific specification / FAQ if it differs. |
-| AICTE Saksham current catalogue listing: https://scholarships.gov.in/All-Scholarships | 2026–27 NSP listing includes technical diploma and technical degree schemes | Current catalogue presence; detailed degree-specific criteria are not inferred beyond the referenced guideline snapshot. |
-| Top Class Scholarship for SC Students guidelines: https://socialjustice.gov.in/writereaddata/UploadFile/95131767944207.pdf | Guideline applicable from 2025–26; SC status, family income up to ₹8 lakh, full-time prescribed course at notified institutions; slots allocated by institution | Checker requests institution-list status and warns about current institution list / slot validation. |
-| DEPwD Post-Matric Scholarship: https://depwd.gov.in/en/scholarship-post-matric/ | Official scheme summary for Class XI/XII, Diploma, Degree and PG students; Indian national; benchmark disability ≥40%; family income ≤₹2.5 lakh; UDID; no other scholarship / stipend | Optional disability matching. Do not ask for disability certificate number or Aadhaar number. |
-| NSP Standard Operating Procedures: https://scholarships.gov.in/public/FAQ/NSP_SOP.pdf | Institute nodal officer may verify, reject or defect; reasons should be supplied. Defected application is returned to student and reappears in reverification after resubmission. “Mark as Fake” also exists. | Rejection analyser must distinguish statuses and not promise a rejected application can be reopened. |
+## Student services and campus benefits
 
-## Rule-source limitations
+### Transport
+- KSRTC's 2026–27 student pass process was reported as opening online applications through Karnataka Seva Sindhu for eligible school, PU, diploma, ITI, professional-course and PhD students. Assisted service-centre applications may have a service charge. This is a KSRTC student-pass reference, not a claim that the pass is valid on BMTC city buses. Check operator, route and current service terms in Seva Sindhu before applying. Source: https://www.newindianexpress.com/states/karnataka/2026/May/28/ksrtc-to-open-online-applications-for-2026-27-student-bus-passes-from-may-29 and https://sevasindhu.karnataka.gov.in/
 
-- Scheme rules may change between academic years and scheme versions. CampusPulse labels the date/version used and provides official source links.
-- The NSP catalogue currently lists schemes with different student application and verification dates. A verification deadline after a student application deadline does not mean fresh applications remain open.
-- The checker does not model every state, board, income-certificate format, institution list, course mapping, reservation, slot availability, renewal, or exception. Unknowns are surfaced rather than guessed.
-- AICTE Pragati / Saksham brochures are older scheme snapshots. The current NSP specification is authoritative if rules were updated.
-- No real-time API integration / scraping is claimed.
+### Digital academic records and finance
+- DigiLocker provides a digital document wallet for documents issued by participating authorities. Acceptance depends on the receiving organisation and whether the document is issuer-issued. Source: https://www.digilocker.gov.in/
+- Academic Bank of Credits / APAAR supports storage, tracking, transfer and redemption of credits when institutions are registered and submit verified credit data. Source: https://abc.digilocker.gov.in/faq and https://www.pib.gov.in/PressReleasePage.aspx?PRID=2281148&lang=1&reg=3
+- PM-Vidyalaxmi is a unified portal for students to apply for education loans from member banks, track application status, raise grievances and claim interest subvention if eligible. Its manual says students can select up to three banks. Loan eligibility remains subject to scheme and bank terms. Source: https://pmvidyalaxmi.co.in/StudentSignUp.aspx and https://pmvidyalaxmi.co.in/img/UserManual-Student.pdf
 
-## AI document review integration
+### Student-email and education-plan benefits
+- GitHub Student Developer Pack offers developer tools and partner offers. Eligibility requires enrolment in a degree/diploma-granting programme, minimum age 13 and proof of current student status. GitHub may require an academic email, but accepts other official evidence in some cases. Source: https://docs.github.com/en/education/about-github-education/github-education-for-students/apply-to-github-education-as-a-student and https://education.github.com/pack
+- Microsoft Azure for Students advertises USD 100 in Azure credits for the first 12 months plus select free services without a credit card at sign-up. It requires an age-18+ full-time student at an accredited degree-granting institution and academic-status verification via the organisation email. Source: https://azure.microsoft.com/en-in/pricing/offers/ms-azr-0170p/
+- JetBrains Student Pack provides eligible full-time students with a free annual student subscription; verification can use university email, ISIC/ITIC or GitHub Student Developer Pack. Source: https://www.jetbrains.com/academy/student-pack/
+- Figma for Education provides free Education access to eligible higher-education students and educators after education verification; availability is region-dependent. Source: https://help.figma.com/hc/en-us/articles/360041061214-Figma-for-Education
+- Autodesk Education offers eligible students one-year, single-user access to education software for educational purposes, renewable annually while eligible. Source: https://www.autodesk.com/support/account/education/students-educators/overview
+- AWS Educate provides free self-paced cloud learning paths and hands-on learning resources. The general AWS Educate offer is open to individuals regardless of education status, so it should not be described as requiring a college email or as a universal cash credit. Source: https://aws.amazon.com/education/awseducate/
+- Notion's individual Education Plan is free for eligible students at accredited colleges/universities with a school email recognised by WHED; it is a one-member workspace and status must be reverified annually. Source: https://www.notion.com/product/notion-for-education and https://www.notion.com/help/notion-for-education
+- Microsoft 365 Education A1 is free for students/educators with an eligible education email at qualified institutions; eligibility and continued access depend on the institution and re-verification. Source: https://www.microsoft.com/en-us/education/products/office
+- Google Workspace for Education Fundamentals is free for qualifying institutions and typically provisioned/managed by the institution; students should ask their college IT administrator what edition and features are included. Source: https://edu.google.com/workspace-for-education/editions/overview/
+- Canva Education's current eligibility guidance is mainly for K–12 teachers and institutions and excludes higher-education teachers/institutions. It is included as a cautionary entry, not a claimed university freebie. Source: https://www.canva.com/education/eligibility-guidelines/
 
-The current app uses OpenAI Responses API file inputs for PDF and image review. PDF input supports `input_file` with base64 `file_data`; PDF processing can include extracted text and rendered page images. Images can be sent as `input_image` with a base64 data URL and `detail: high`. References: https://developers.openai.com/api/docs/guides/file-inputs and https://developers.openai.com/api/docs/guides/images-vision. The app sends `store: false`, but does not claim the external API has zero retention; review provider policies before uploading sensitive files.
+## Product implementation boundaries
 
-## Privacy design
-
-Eligibility answers are in-memory only for this release. Document upload requires consent and is relayed through a server route; CampusPulse does not write the uploaded bytes to storage. Users are asked to redact unnecessary identifiers. The DPDP Rules, 2025 Gazette includes staged commencement and notice requirements; product privacy copy is designed to be explicit about the data sent and purpose, but this implementation is not a legal compliance certification. Gazette: https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf
+- Deadlines are source snapshots in the dashboard, not a real-time alert feed. Always recheck NSP before applying.
+- Student-services links are curated external services. CampusPulse does not process applications or collect passwords/OTP/bank/Aadhaar details.
+- Office map uses a Google Maps search iframe for the selected city and relevant department. It is a map search, not an authoritative list of every government office.
+- Named public officer records are only displayed when found in an official government directory. A general district-office contact is explicitly labelled as such. Scheme-assigned nodal officer names must be confirmed in NSP's official scheme/district directories.
+- Current service and student-plan eligibility can change; external providers control benefit terms and availability.

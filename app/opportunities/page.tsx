@@ -1,2 +1,2 @@
 import {redirect} from 'next/navigation';
-export default function LegacyOpportunitiesRedirect(){redirect('/scholarships');}
+export default function LegacyOpportunityDirectory(){redirect('/scholarships');}

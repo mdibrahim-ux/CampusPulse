@@ -1,0 +1,22 @@
+'use client';
+import {useMemo,useState} from 'react';
+import {ArrowUpRight,Bus,Cloud,Code2,FileCheck2,GraduationCap,Landmark,Palette,Search,ShieldCheck,Wallet} from 'lucide-react';
+import {serviceCategories,studentServices} from '@/lib/services';
+const iconFor=(category:string)=>category==='Transport'?Bus:category==='Academic records'?FileCheck2:category==='Education finance'?Wallet:category==='Developer tools'?Code2:category==='Design tools'?Palette:category==='Cloud & learning'?Cloud:GraduationCap;
+export default function StudentServicesPage(){
+ const [category,setCategory]=useState<(typeof serviceCategories)[number]>('All');
+ const [query,setQuery]=useState('');
+ const filtered=useMemo(()=>studentServices.filter(s=>(category==='All'||s.category===category)&&`${s.name} ${s.summary} ${s.tags.join(' ')}`.toLowerCase().includes(query.toLowerCase())),[category,query]);
+ const featured=studentServices.filter(s=>s.featured);
+ return <div className="services-page">
+  <div className="services-hero"><div><span className="eyebrow">STUDENT LIFE / ONE PRACTICAL DESK</span><h1>More than classes.<br/><em>More support.</em></h1><p>Find student services, academic records, financial support and software benefits that can reduce your costs and make college life easier.</p></div><div className="services-hero-art"><GraduationCap size={54}/><span>THE STUDENT<br/>TOOLKIT</span><small>COMMUTE · CREATE · LEARN</small></div></div>
+  <div className="services-callouts"><div><Bus/><b>Get to campus</b><span>Transport concessions and pass applications</span></div><div><Code2/><b>Use pro tools</b><span>Verified student software and cloud offers</span></div><div><Landmark/><b>Handle essentials</b><span>Academic records and education finance</span></div></div>
+  <section className="services-featured"><div className="services-section-head"><div><span className="eyebrow">START HERE</span><h2>Useful services students miss.</h2></div><span className="services-count">{studentServices.length} researched resources</span></div><div className="services-feature-grid">{featured.slice(0,4).map((service,i)=>{const Icon=iconFor(service.category);return <article className={`service-feature service-feature-${i}`} key={service.id}><span className="service-number">0{i+1} / {service.category.toUpperCase()}</span><Icon size={24}/><h3>{service.name}</h3><p>{service.summary}</p><a href={service.url} target="_blank" rel="noreferrer">{service.urlLabel} <ArrowUpRight size={14}/></a></article>})}</div></section>
+  <section className="services-catalogue"><div className="services-section-head"><div><span className="eyebrow">THE SERVICE DIRECTORY</span><h2>Browse by what you need.</h2></div><label className="services-search"><Search size={16}/><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search tools, transport, finance…"/></label></div>
+   <div className="service-categories">{serviceCategories.map(item=><button type="button" key={item} onClick={()=>setCategory(item)} className={category===item?'active':''}>{item}</button>)}</div>
+   <div className="service-grid">{filtered.map(service=>{const Icon=iconFor(service.category);return <article className="service-card" key={service.id}><div className="service-card-top"><span>{service.category}</span><Icon size={20}/></div><h3>{service.name}</h3><p>{service.summary}</p><div className="service-fact"><b>What you get</b><span>{service.benefit}</span></div><div className="service-fact"><b>Who can use it</b><span>{service.eligibility}</span></div><div className="service-verification"><ShieldCheck size={15}/><span>{service.verification}</span></div>{service.note&&<p className="service-extra-note">{service.note}</p>}<div className="service-tags">{service.tags.map(tag=><span key={tag}>{tag}</span>)}</div><a className="service-open" href={service.url} target="_blank" rel="noreferrer">{service.urlLabel} <ArrowUpRight size={15}/></a></article>})}</div>
+   {filtered.length===0&&<div className="service-empty">No matching services. Try another keyword or category.</div>}
+  </section>
+  <div className="services-disclaimer"><ShieldCheck size={17}/><p><b>CampusPulse is a discovery guide, not the service provider.</b> Benefits, dates, fees, location coverage and eligibility can change. Always verify the current terms with the official provider before applying. We never ask for portal passwords, OTPs, Aadhaar numbers or bank details.</p></div>
+ </div>;
+}

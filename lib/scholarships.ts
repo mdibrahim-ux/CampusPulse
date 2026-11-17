@@ -44,7 +44,7 @@ export type DocumentId = typeof documentOptions[number]['id'];
 
 export type ScholarshipScheme = {
   id:string; name:string; shortName:string; category:string; provider:string; sourceUrl:string; ruleSource:string;
-  sourceDate:string; summary:string; amount:string; deadlineNote:string; required:DocumentId[]; criteria:string[]; caveats:string[];
+  sourceDate:string; summary:string; amount:string; deadlineNote:string; studentDeadline?:string; deadlineStage?:string; required:DocumentId[]; criteria:string[]; caveats:string[];
 };
 
 export const scholarshipSchemes: ScholarshipScheme[] = [
@@ -53,7 +53,7 @@ export const scholarshipSchemes: ScholarshipScheme[] = [
     category:'Merit-based · Central', provider:'Department of Higher Education · Ministry of Education',
     sourceUrl:'https://scholarships.gov.in/All-Scholarships', ruleSource:'PM-USP CSSS FAQ 2025–26', sourceDate:'2025–26 rule snapshot; NSP catalogue checked 17 Nov 2026',
     summary:'Merit-cum-means support for students pursuing regular college and university courses after Class 12.', amount:'₹12,000 per year for the first three years; higher rate for eligible postgraduate / professional-course years under the scheme FAQ.',
-    deadlineNote:'NSP currently lists the 2026–27 renewal window separately; the student deadline shown for renewal was 30 Sep 2026. Check the live scheme entry for any fresh-application window.',
+    deadlineNote:'NSP AY 2026–27 catalogue shows fresh student applications open until 30 Nov 2026. Renewal timelines are separate; verify the correct application type.', studentDeadline:'2026-11-30', deadlineStage:'Fresh applications',
     required:['class12','income','admission','bonafide','nsp_otr'],
     criteria:['Above the 80th percentile of successful candidates in the relevant Class 12 board stream.','Regular degree course; distance / correspondence and diploma courses are excluded.','Family income up to ₹4.5 lakh per year.','Not receiving another scholarship or fee reimbursement.','A student who took a drop after Class 12 is not eligible for a fresh application.'],
     caveats:['This checker does not calculate your board-wise percentile; use the relevant board / official scheme data.','The FAQ version used here is 2025–26. Confirm the current year’s FAQ before applying.']
@@ -63,7 +63,7 @@ export const scholarshipSchemes: ScholarshipScheme[] = [
     category:'Merit-based · Technical education', provider:'All India Council for Technical Education (AICTE)',
     sourceUrl:'https://scholarships.gov.in/All-Scholarships', ruleSource:'AICTE Pragati scheme brochure; confirm current NSP specification', sourceDate:'Brochure rule snapshot; NSP AY 2026–27 catalogue checked 17 Nov 2026',
     summary:'Scholarship support for eligible girl students entering an AICTE-approved technical degree programme.', amount:'The older AICTE brochure states tuition support up to ₹30,000 (or actual tuition, whichever is less) plus incidentals; confirm current scheme specifications.',
-    deadlineNote:'NSP AY 2026–27 catalogue showed the student deadline as 31 Oct 2026 for this scheme. The listed fresh-application window has passed as of 17 Nov 2026.',
+    deadlineNote:'NSP AY 2026–27 catalogue shows student applications open until 30 Nov 2026. Check the current specification and applicant category before submission.', studentDeadline:'2026-11-30', deadlineStage:'Student applications',
     required:['class10','class12','income','admission','bonafide','fee','bank','family_declaration','nsp_otr'],
     criteria:['Girl student admitted to the first year of an AICTE-approved technical degree programme through the prescribed admission process.','No more than two girl children from the family under the cited brochure.','Family income not more than ₹8 lakh per year.'],
     caveats:['Detailed rules may have been updated after the brochure snapshot. Verify the current degree-specific NSP specification and FAQ.','The brochure contains identity and bank evidence requirements; CampusPulse never asks you to upload or type Aadhaar or bank numbers.']
@@ -73,7 +73,7 @@ export const scholarshipSchemes: ScholarshipScheme[] = [
     category:'Welfare-based · Technical education', provider:'All India Council for Technical Education (AICTE)',
     sourceUrl:'https://scholarships.gov.in/All-Scholarships', ruleSource:'AICTE Saksham scheme guidelines; confirm current NSP specification', sourceDate:'Guideline snapshot; NSP AY 2026–27 catalogue checked 17 Nov 2026',
     summary:'Support for eligible students with benchmark disabilities pursuing an AICTE-approved technical degree.', amount:'₹50,000 per year in the cited scheme guideline; verify the current scheme specification.',
-    deadlineNote:'NSP AY 2026–27 catalogue showed the student deadline as 31 Oct 2026. Check the live listing for any changed or renewal timeline.',
+    deadlineNote:'Check the live NSP listing for the current student application and renewal windows before relying on an older brochure timeline.',
     required:['class10','class12','income','admission','bonafide','disability','udid','bank','nsp_otr'],
     criteria:['Benchmark disability of 40% or more.','Admitted to the first year of an AICTE-approved technical degree programme under the prescribed admission process.','Family income up to ₹8 lakh per year.'],
     caveats:['Current year’s specification and any lateral-entry rules must be verified on the scheme page.','Disability status is optional in this checker; leave it blank if you do not want to provide it.']
@@ -83,7 +83,7 @@ export const scholarshipSchemes: ScholarshipScheme[] = [
     category:'Merit-cum-means · SC', provider:'Department of Social Justice and Empowerment',
     sourceUrl:'https://scholarships.gov.in/All-Scholarships', ruleSource:'Top Class Scholarship for SC Students Guidelines, applicable from 2025–26', sourceDate:'2025–26 guideline; NSP AY 2026–27 catalogue checked 17 Nov 2026',
     summary:'Financial support for SC students admitted to prescribed full-time courses in institutions notified by the Ministry.', amount:'Varies by approved course / guideline components; see current scheme guidelines.',
-    deadlineNote:'NSP AY 2026–27 catalogue showed the student deadline as 31 Oct 2026. Verify the current window and institution allocation before applying.',
+    deadlineNote:'NSP AY 2026–27 catalogue shows student applications open until 30 Nov 2026. Institution-wise slots and the current notified list still apply.', studentDeadline:'2026-11-30', deadlineStage:'Student applications',
     required:['caste','income','admission','fee','institution_list','bank','nsp_otr'],
     criteria:['Applicant belongs to the Scheduled Caste category.','Family income up to ₹8 lakh per year.','Admission to a full-time prescribed course at an institution notified by the Ministry.','Selection is subject to institution-wise scholarship slots.'],
     caveats:['The published guideline applies from 2025–26 and refers to notified institutions for 2024–25 to 2025–26. Confirm the current notified-institution list and current scheme rules.']
@@ -93,7 +93,7 @@ export const scholarshipSchemes: ScholarshipScheme[] = [
     category:'Welfare-based · Disability', provider:'Department of Empowerment of Persons with Disabilities',
     sourceUrl:'https://depwd.gov.in/en/scholarship-post-matric/', ruleSource:'DEPwD Post-Matric Scholarship scheme page', sourceDate:'Official page checked 17 Nov 2026',
     summary:'Post-matric support for eligible Indian students with benchmark disabilities studying in Class 11/12, diploma, degree or postgraduate programmes.', amount:'Fee and maintenance support vary by approved component and hosteller / day-scholar status; consult the scheme page.',
-    deadlineNote:'NSP AY 2026–27 catalogue showed a student application deadline of 31 Oct 2026. Verify the current status and any reopening notice.',
+    deadlineNote:'NSP AY 2026–27 catalogue shows student applications open until 30 Nov 2026. Disability-related verification steps and consent must be completed as instructed by NSP.', studentDeadline:'2026-11-30', deadlineStage:'Student applications',
     required:['class10','class12','income','admission','bonafide','disability','udid','bank','nsp_otr'],
     criteria:['Indian national.','Benchmark disability of 40% or more.','Family income up to ₹2.5 lakh per year.','Enrolled in an eligible post-matric course; the official scheme page lists Class 11/12, diploma, degree and postgraduate study.','Not receiving another post-matric scholarship or stipend.'],
     caveats:['The portal states UDID and Aadhaar requirements. CampusPulse does not request Aadhaar number, UDID number or bank details.','Verify the latest scheme guideline for any additional restrictions and document format.']
