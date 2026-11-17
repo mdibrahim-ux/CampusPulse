@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const targetLanguage = String(body.targetLanguage || "");
-    const texts = Array.isArray(body.texts) ? body.texts.map((value: unknown) => String(value)) : [];
+    const texts: string[] = Array.isArray(body.texts) ? body.texts.map((value: unknown) => String(value)) : [];
 
     if (!LANGUAGE_BY_CODE[targetLanguage] || targetLanguage === "en") {
       return NextResponse.json({ error: "Choose a supported non-English language." }, { status: 400 });
