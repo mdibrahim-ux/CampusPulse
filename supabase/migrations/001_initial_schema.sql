@@ -22,7 +22,7 @@ create table if not exists public.opportunities (
   id uuid primary key default gen_random_uuid(),
   title text not null,
   organization text not null,
-  type text not null check (type in ('Scholarship','Internship','Job','Course','Event')),
+  type text not null check (type in ('Scholarship')),
   category text not null default '',
   description text not null default '',
   amount text,
@@ -42,7 +42,7 @@ create table if not exists public.saved_opportunities (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null references auth.users(id) on delete cascade,
   opportunity_id uuid not null references public.opportunities(id) on delete cascade,
-  status text not null default 'Saved' check (status in ('Saved','Preparing','Applied','Interview','Selected','Rejected')),
+  status text not null default 'Interested' check (status in ('Interested','Preparing','Applied','Under verification','Defected','Rejected','Approved','Awarded','Withdrawn')),
   notes text not null default '',
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
@@ -83,8 +83,8 @@ alter table public.opportunities enable row level security;
 create policy "Profiles are readable by owner" on public.profiles for select using (auth.uid() = id);
 create policy "Profiles are insertable by owner" on public.profiles for insert with check (auth.uid() = id);
 create policy "Profiles are updatable by owner" on public.profiles for update using (auth.uid() = id) with check (auth.uid() = id);
-create policy "Public may read published opportunities" on public.opportunities for select using (published_at is not null);
-create policy "Users manage their saved opportunities" on public.saved_opportunities for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
+create policy "Public may read published scholarship schemes" on public.opportunities for select using (published_at is not null);
+create policy "Users manage their saved scholarships" on public.saved_opportunities for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 create policy "Users manage their documents" on public.application_documents for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 create policy "Users manage their reminders" on public.deadline_reminders for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 

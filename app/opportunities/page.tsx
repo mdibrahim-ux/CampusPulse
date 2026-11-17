@@ -1,16 +1,2 @@
-'use client';
-import {useMemo,useState} from 'react';
-import {Search,SlidersHorizontal,X} from 'lucide-react';
-import {opportunities} from '@/lib/data';
-import {OpportunityCard} from '@/components/opportunity-card';
-import {SectionHeading} from '@/components/section-heading';
-const filters=['All','Scholarship','Internship','Job','Course','Event'];
-export default function OpportunitiesPage(){
- const [filter,setFilter]=useState('All');const [query,setQuery]=useState('');const [kind,setKind]=useState('All');const [location,setLocation]=useState('All');
- const visible=useMemo(()=>opportunities.filter(o=>(filter==='All'||o.type===filter)&&(kind==='All'||o.sourceKind===kind)&&(location==='All'||(location==='India'&&o.location.toLowerCase().includes('india'))||(location==='Online'&&['Remote','Online'].includes(o.mode))||(location==='Bengaluru'&&o.location.toLowerCase().includes('bengaluru')))&&`${o.title} ${o.organization} ${o.description} ${o.tags.join(' ')}`.toLowerCase().includes(query.toLowerCase())),[filter,query,kind,location]);
- return <div className="listing-page"><SectionHeading eyebrow="DISCOVERY STARTS WITH A SOURCE" title="Find your next direction." description="Browse official catalogues and service portals. Open each provider's page to check the live programme or vacancy details."/><div className="discover-banner"><div className="discover-sticker">✳</div><div><b>Not every portal entry is a live opening.</b><p>CampusPulse groups trusted starting points; closing dates and requirements must be confirmed for each scheme or posting.</p></div><span className="discover-count">{opportunities.length}<small> SOURCE DESKS</small></span></div>
- <div className="filter-toolbar"><div className="filter-tabs">{filters.map(f=><button key={f} className={filter===f?'selected':''} onClick={()=>setFilter(f)}>{f}</button>)}</div><label className="search-box"><Search size={17}/><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search programmes, providers or skills…"/>{query&&<button onClick={()=>setQuery('')} aria-label="Clear search"><X size={15}/></button>}</label></div>
- <div className="catalogue-filters"><label><span>Source type</span><select value={kind} onChange={e=>setKind(e.target.value)}><option>All</option><option>Official portal</option><option>Official catalogue</option><option>Curated reference</option></select></label><label><span>Location contains</span><select value={location} onChange={e=>setLocation(e.target.value)}><option>All</option><option>India</option><option>Online</option><option>Bengaluru</option></select></label><span className="results-count">{visible.length} RESULTS</span></div>
- {visible.length?<div className="opportunity-grid listing-grid">{visible.map(o=><OpportunityCard key={o.id} item={o}/>)}</div>:<div className="empty-state"><SlidersHorizontal size={28}/><h3>No source matches those filters.</h3><p>Try another keyword or reset the filters.</p><button className="button button-dark" onClick={()=>{setFilter('All');setKind('All');setLocation('All');setQuery('')}}>Reset filters</button></div>}
- <div className="source-note"><b>HOW TO READ THIS PAGE</b><span>Provider catalogue references are not vacancy confirmations. Last checked date is shown on each detail page. Match explanations are profile-based guidance, not official eligibility decisions.</span></div></div>
-}
+import {redirect} from 'next/navigation';
+export default function LegacyOpportunitiesRedirect(){redirect('/scholarships');}

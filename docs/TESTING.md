@@ -1,33 +1,36 @@
-# Manual acceptance checklist
+# CampusPulse manual acceptance checklist
 
-## Onboarding and profile
-- [ ] Fresh user sees setup guidance, not an invented person.
-- [ ] Enter education, programme, year, city/state, skills and interests.
-- [ ] Save, refresh and verify profile persistence.
-- [ ] Export profile/tracker/reminders to JSON.
-- [ ] Clear local data and verify reset.
+## Scholarship-only scope
+- [ ] Sidebar and landing page show only scholarship workflows.
+- [ ] Old `/opportunities` and `/sources` routes redirect to `/scholarships`.
+- [ ] Directory contains only scholarship schemes with source, rule version and caveats.
 
-## Discovery and detail
-- [ ] Category, keyword and source-type filters change results.
-- [ ] Each card opens a detail page.
-- [ ] Detail shows source class, last-checked date, status note and official URL.
-- [ ] Match section separates aligned signals, gaps and unknown conditions.
-- [ ] No match is presented as official eligibility.
-- [ ] Provider action opens the source in a new tab.
+## Eligibility checker
+- [ ] Fill current study level, course mode, income and relevant scheme fields.
+- [ ] Tick the available documents and run the checker.
+- [ ] Verify potential / more-information / no-match states, matched criteria, unknowns and missing documents.
+- [ ] Clear the form and confirm answers are not persisted after refresh.
+- [ ] Confirm missing documents are not treated as automatic ineligibility.
 
-## Tracker and planner
-- [ ] Save item and see it on tracker/dashboard.
-- [ ] Refresh and verify record persists.
-- [ ] Edit status, next action, reminder date and notes; refresh and verify.
-- [ ] Remove record.
-- [ ] Create reminder, mark complete, delete and refresh.
-- [ ] Personal reminders are not labelled as provider deadlines.
+## Document review (requires server-side OpenAI API key)
+- [ ] Without `OPENAI_API_KEY`, the route returns a clear setup message.
+- [ ] Without consent, file upload is blocked by the route.
+- [ ] Test a redacted PDF, JPG and PNG under 8 MB.
+- [ ] Reject unsupported types and oversized files.
+- [ ] Result identifies apparent type, use, visible fields, issues and limitations.
+- [ ] Confirm the result never calls a certificate authentic / fake and masks visible identifiers.
+- [ ] Confirm file does not appear in localStorage or Supabase.
 
-## Quality
-- [ ] Navigation works on desktop and mobile.
-- [ ] Keyboard focus is visible.
-- [ ] Reduced-motion preference disables nonessential animation.
-- [ ] Small viewport has no horizontal overflow.
-- [ ] `npm run lint`
-- [ ] `npm run typecheck`
-- [ ] `npm run build`
+## Rejection analyser (requires server-side OpenAI API key)
+- [ ] Paste a defect remark and choose `Defected`.
+- [ ] Paste a rejection remark and choose `Rejected`.
+- [ ] Confirm the report explains difference; does not promise reversal or invent appeal rights.
+- [ ] Confirm it requests removal of application IDs, OTR and personal numbers.
+
+## Tracker / planner / quality
+- [ ] Save and remove a scholarship; refresh and confirm persistence.
+- [ ] Update progress, notes, next action and personal date.
+- [ ] Create, complete and delete personal reminder.
+- [ ] Test keyboard focus and mobile navigation.
+- [ ] Test `prefers-reduced-motion`.
+- [ ] Run `npm run lint`, `npm run typecheck`, `npm run build`.

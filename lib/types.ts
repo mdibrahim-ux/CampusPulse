@@ -1,6 +1,6 @@
-export type OpportunityType = 'Scholarship' | 'Internship' | 'Job' | 'Course' | 'Event';
+export type OpportunityType = 'Scholarship';
 export type SourceKind = 'Official portal' | 'Official catalogue' | 'Curated reference' | 'Demo sample';
-export type OpportunityStatus = 'Interested' | 'Preparing' | 'Applied' | 'Assessment' | 'Interview' | 'Offer' | 'Not selected' | 'Withdrawn';
+export type OpportunityStatus = 'Interested' | 'Preparing' | 'Applied' | 'Under verification' | 'Defected' | 'Rejected' | 'Approved' | 'Awarded' | 'Withdrawn';
 export type Opportunity = {
   id: string; title: string; organization: string; type: OpportunityType; category: string;
   description: string; amount?: string; location: string; mode: 'Remote' | 'Hybrid' | 'On-site' | 'Varies';

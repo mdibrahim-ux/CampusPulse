@@ -1,25 +1,33 @@
-# Architecture
+# CampusPulse architecture
 
-## Local-first MVP
-- Next.js App Router, React and TypeScript.
-- Framer Motion for short, purposeful transitions; Lucide for icons.
-- `lib/data.ts`: curated provider catalogue references, not a live-feed cache.
-- `lib/matching.ts`: deterministic matching explanation; missing/unknown profile fields remain visible.
-- `lib/storage.ts`: browser localStorage adapter for profile, tracker and reminders.
-- Routes: public landing, onboarding, dashboard, catalogue, opportunity detail, tracker, planner, sources and profile settings.
-- `supabase/migrations/001_initial_schema.sql`: future hosted schema foundation only. Frontend does not currently authenticate or persist through Supabase.
+## Application
 
-## Data flow
-1. Student enters optional profile fields through onboarding/profile.
-2. Profile is stored in localStorage.
-3. Catalogue cards call `matchOpportunity` using actual profile data.
-4. Saving a provider reference creates a tracker record.
-5. Tracker changes persist status, notes, next action and personal follow-up date.
-6. Planner stores reminders entered by the student.
+- Next.js App Router + TypeScript + React.
+- Scholarship-only routes: landing, dashboard, scholarship directory and detail, eligibility checker, document review, rejection analyser, saved scholarship tracker, personal planner and academic profile. Legacy `/opportunities` and `/sources` URLs redirect to `/scholarships`.
+- Neo-brutalist visual system based on warm paper background, acid-lime panels, lilac / peach accents, heavy ink borders and short motion transitions. `prefers-reduced-motion` is respected.
 
-## Boundaries
-- No automated source scraper/API ingestion in this release.
-- Official provider links open in a new tab; final application remains on the provider.
-- No sensitive identity records or document binaries are stored.
-- LocalStorage is not authentication and is unsuitable for confidential shared-device data.
-- Hosted mode requires Supabase auth, server-side authorization, tested RLS, secret handling, retention and account deletion controls.
+## Domain logic
+
+- `lib/scholarships.ts` contains scheme metadata, rule snapshots, required document IDs and a deterministic condition evaluator. Match state is calculated from user answers: potential match / needs more information / not a match. Documents missing are shown separately from eligibility conflicts.
+- `app/eligibility-checker` keeps answers in component memory only; it does not persist income, category or disability inputs in localStorage.
+- `lib/data.ts` and the tracker provide the scholarship reference records; all records are scholarship type.
+
+## AI routes
+
+- `POST /api/analyze-document`: multipart file, one PDF or supported image, <=8 MB, explicit consent, optional intended use. File is converted to base64 in memory and passed to Responses API. No database / localStorage write.
+- `POST /api/analyze-rejection`: text-only portal reason, scheme, stage and status. Prompt distinguishes defected from rejected and forbids invented appeal paths or reversal guarantees.
+- `lib/openai-response.ts` keeps API key server-side, calls Responses API with `store: false` and extracts output text. Set `OPENAI_API_KEY` in `.env.local`; `OPENAI_MODEL` defaults to `gpt-4.1`.
+- User-provided files / reasons are still sent to the configured AI provider for analysis. UI requires explicit consent and warns users to redact Aadhaar, OTR, bank and unrelated personal identifiers. `store: false` is not a promise of zero provider-side processing / retention.
+
+## Storage
+
+- Profile, tracker and reminders use browser localStorage.
+- Checker answers are not persisted by default.
+- Uploaded documents are not saved by CampusPulse.
+- Supabase migration is a starting schema only; authentication, server-side persistence and production admin ingestion are not enabled by this release.
+
+## Security notes
+
+- Never place `OPENAI_API_KEY` or Supabase service-role keys in `NEXT_PUBLIC_*` variables.
+- Keep identity numbers and application credentials out of client forms.
+- AI responses are preliminary guidance; never present them as an authentic-document verdict, official eligibility decision, or guarantee of appeal success.
