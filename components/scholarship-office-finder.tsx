@@ -7,12 +7,13 @@ const officialNsp='https://scholarships.gov.in/Officers';
 const publicNsp='https://scholarships.gov.in/Public';
 const districtRecords=[
  {id:'bengaluru-minority',city:'Bengaluru',district:'Bengaluru South',state:'Karnataka',department:'Department of Minority Welfare',name:'Bindu Mani',designation:'District Minority Welfare Officer',phone:'080-27271029',email:'kmdcrmngr@gmail.com',address:'Department of Minority Welfare, Bengaluru South',source:'https://bengalurusouth.nic.in/en/divisions/minority-division/',note:'Relevant only to Minority Welfare schemes. This contact is published on the district administration site.'},
- {id:'bengaluru-dc',city:'Bengaluru',district:'Bengaluru Urban',state:'Karnataka',department:'Bengaluru Urban District Administration',name:'District Commissioner Office',designation:'General district administration contact — not a scheme-specific scholarship officer',phone:'080-22211292',email:'dcurban@nic.in',address:'Kempegowda Road, Behind Kandaya Bhavana, Bengaluru Urban, Karnataka 560009',source:'https://bengaluruurban.nic.in/en/aboutdistrict/whos-who/',note:'Use only for district administration routing. The scholarship’s own NSP nodal officer remains the correct scheme contact.'}
+ {id:'bengaluru-dc',city:'Bengaluru',district:'Bengaluru Urban',state:'Karnataka',department:'Bengaluru Urban District Administration',name:'Shri P.S. Kantharaju, IAS',designation:'Deputy Commissioner & District Magistrate — general district administration contact, not a scheme-specific scholarship officer',phone:'080-22211292',email:'dcurban@nic.in',address:'Kempegowda Road, Behind Kandaya Bhavana, Bengaluru Urban, Karnataka 560009',source:'https://bengaluruurban.nic.in/en/aboutdistrict/whos-who/',note:'Use only for district administration routing. The scholarship’s own NSP nodal officer remains the correct scheme contact.'}
 ];
 function departmentFor(id:string,provider:string,category:string){
  if(id.includes('top-class-sc'))return 'District Social Welfare Office / Scheduled Caste Welfare Department';
- if(id.includes('saksham')||id.includes('depwd'))return 'District Disability Welfare Office / Department for Empowerment of Persons with Disabilities';
- if(id.includes('pragati')||provider.includes('AICTE'))return 'AICTE regional office / institute scholarship nodal officer';
+ if(id.includes('depwd'))return 'District Disability Welfare Office / Department for Empowerment of Persons with Disabilities';
+ if(id.includes('saksham')||id.includes('pragati')||provider.includes('AICTE'))return 'AICTE regional office / institute scholarship nodal officer';
+ if(id.includes('pm-usp-csss'))return 'College scholarship nodal officer / Ministry of Education scheme-wise nodal officer';
  if(id.includes('minority'))return 'District Minority Welfare Office';
  if(category.toLowerCase().includes('merit'))return 'District / State Scholarship Nodal Office';
  return 'District Scholarship Nodal Office';
