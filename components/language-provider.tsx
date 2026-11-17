@@ -14,7 +14,7 @@ type LanguageContextValue = {
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 const STORAGE_KEY = "campuspulse.language.v1";
 const CACHE_KEY = "campuspulse.translation-cache.v1";
-const EXCLUDED_TEXT = "input, textarea, script, style, noscript, code, pre, svg, [data-no-translate], [data-user-content], .analysis-body, .office-contact, .office-contact-links, .user-mini, .profile-pill, .user-note, .user-entered";
+const EXCLUDED_TEXT = "input, textarea, script, style, noscript, code, pre, svg, [data-no-translate], [data-user-content], .analysis-body, .office-contact-links, .user-mini, .profile-pill, .user-note, .user-entered";
 const EXCLUDED_ATTRIBUTES = "script, style, noscript, code, pre, svg, [data-no-translate], [data-user-content], .user-mini, .profile-pill, .user-note";
 
 type AttributeSource = { source: string; applied?: string };

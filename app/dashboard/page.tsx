@@ -38,7 +38,7 @@ export default function DashboardPage(){
   <section className="overview-hero">
    <div className="overview-hero-copy">
     <span className="overview-eyebrow"><span/> YOUR STUDENT DESK</span>
-    <h1>One clear step<br/><em>at a time, {firstName}.</em></h1>
+    <h1>One clear step<br/><em>at a time, <span data-user-content>{firstName}</span>.</em></h1>
     <p>Find support, prepare your documents and keep track of what matters. Start with the task you need today.</p>
     <div className="overview-hero-actions">
      <Link className="overview-main-button" href="/eligibility-checker">Find scholarships <ArrowRight size={17}/></Link>
