@@ -67,3 +67,32 @@ The Supabase migration remains a foundation. Hosted authentication, cross-device
 ## License
 
 MIT — see [`LICENSE`](LICENSE).
+
+## System-wide Indian language support
+
+CampusPulse includes a global language selector with 23 language options: English, Hindi, Kannada, Tamil, Telugu, Malayalam, Marathi, Bengali, Gujarati, Punjabi, Odia, Urdu, Assamese, Sanskrit, Konkani, Kashmiri, Maithili, Nepali, Sindhi, Bodo, Dogri, Manipuri and Santali.
+
+The language preference is saved in this browser and applies across the app. Page text, headings, navigation, buttons, form labels, placeholders and accessibility labels are translated. User-entered values and uploaded-document analysis content are not run through the page translator; document and rejection reports are requested directly in the selected language.
+
+### Enable translation
+
+1. Register your integration at https://bhashini.gov.in/ and create a project/API key in the ULCA profile.
+2. Add the values to `.env.local` (server-side only):
+
+```env
+BHASHINI_USER_ID=your_ulca_user_id
+BHASHINI_ULCA_API_KEY=your_ulca_api_key
+BHASHINI_PIPELINE_ID=64392f96daac500b55c543cd
+```
+
+3. Restart Next.js. Choose a language from the globe selector in the top bar.
+
+If credentials are missing or a language pair is not enabled for the configured project, CampusPulse keeps the page in English and reports that translation is not configured. It never displays a false “translated” state. Bhashini availability, model quality, usage limits and charges are controlled by the selected project and current service terms.
+
+## Automatic NSP officer-source monitoring
+
+A GitHub Actions workflow checks the official NSP Officers and Public pages every day at 09:00 India time and updates `public/data/officer-source-status.json` with page availability and the portal's own “Last update” marker.
+
+The workflow does **not** scrape officer names, emails or phone numbers. NSP's scheme-wise and district-wise officer pages are interactive filtered forms and may require CAPTCHA. Students open the official live form, choose their scheme or district, and complete the portal's checks to see the currently assigned officer. CampusPulse's map is a department/location search, not a government-maintained office register.
+
+Manual refresh: GitHub → Actions → “Refresh official scholarship officer sources” → Run workflow.

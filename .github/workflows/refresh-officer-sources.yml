@@ -1,0 +1,31 @@
+name: Refresh official scholarship officer sources
+
+on:
+  schedule:
+    - cron: "30 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check official NSP source metadata
+        run: node scripts/refresh-officer-sources.mjs
+      - name: Commit changed source status
+        run: |
+          if git diff --quiet -- public/data/officer-source-status.json; then
+            echo "No source metadata changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/officer-source-status.json
+          git commit -m "chore: refresh NSP officer source metadata"
+          git push

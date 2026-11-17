@@ -50,3 +50,24 @@ CampusPulse is a student support workspace for India. Scholarships remain a prim
 6. No officer name or number is fabricated; general district contacts are labelled as non-scheme-specific.
 7. New palette is consistent across overview, services and scheme detail pages.
 8. Existing eligibility, document analysis, rejection analysis, tracker and planner remain accessible.
+
+### F07 — System-wide language
+- Global language selector persisted in browser localStorage and reflected in the root HTML lang/dir attributes.
+- Translate visible UI text, navigation, headings, buttons, form labels, placeholders and accessible labels on every route.
+- Preserve user-entered text and uploaded-document outputs from page-wide DOM translation. AI document/rejection reports are requested in the selected language.
+- 23 language choices, using BHASHINI's translation pipeline where the configured project supports the requested language pair.
+- Missing API credentials or unsupported language pair must be reported honestly; do not claim a language is active when translation has not run.
+
+### F08 — Official officer-source freshness
+- A daily GitHub Actions job checks NSP Officers, Public, scheme-wise and district-wise directory page availability.
+- Capture the portal's own last-updated marker and checked timestamp in a versioned public JSON snapshot.
+- Never bypass CAPTCHA or scrape officer names, phone numbers or emails from protected forms.
+- Scheme-wise and district-wise results remain live on official NSP forms; CampusPulse supplies direct links, map search and source-freshness metadata.
+
+### Additional acceptance checks
+9. Language choice persists across refresh and all app routes.
+10. Every visible static string is translated through the configured Bhashini pipeline; user-entered values and document analysis outputs are excluded from page-wide translation.
+11. Urdu and other RTL languages set document direction appropriately.
+12. Missing Bhashini credentials produce a visible setup status and keep English text legible.
+13. Officer-source status is refreshed daily by GitHub Actions and shows both checked time and the portal's own published update marker.
+14. Officer names/contact details are never fabricated or collected by bypassing NSP's CAPTCHA.

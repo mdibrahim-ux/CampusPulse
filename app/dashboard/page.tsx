@@ -1,20 +1,95 @@
 'use client';
+
 import Link from 'next/link';
 import {useEffect,useMemo,useState} from 'react';
-import {ArrowRight,ArrowUpRight,CalendarClock,FileCheck2,FileSearch,GraduationCap,ShieldCheck,Target,Clock3,BriefcaseBusiness} from 'lucide-react';
+import {ArrowRight,ArrowUpRight,CalendarClock,FileCheck2,FileSearch,GraduationCap,ShieldCheck} from 'lucide-react';
 import {scholarshipSchemes} from '@/lib/scholarships';
-import {getProfile,getReminders,getTracker} from '@/lib/storage';
+import {getProfile,getTracker} from '@/lib/storage';
 import type {StudentProfile,TrackerItem} from '@/lib/types';
+
 export default function DashboardPage(){
- const [profile,setProfile]=useState<StudentProfile|null>(null);const [items,setItems]=useState<TrackerItem[]>([]);const [reminders,setReminders]=useState(getReminders());
- useEffect(()=>{const sync=()=>{setProfile(getProfile());setItems(getTracker());setReminders(getReminders())};sync();const events=['storage','campuspulse-tracker','campuspulse-profile','campuspulse-reminders'];events.forEach(e=>window.addEventListener(e,sync));return()=>events.forEach(e=>window.removeEventListener(e,sync))},[]);
- const incomplete=!profile||(!profile.branch&&!profile.year&&!profile.name);const next=useMemo(()=>reminders.filter(r=>!r.done).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,3),[reminders]);
- const closingSoon=useMemo(()=>scholarshipSchemes.filter(s=>s.studentDeadline).map(s=>({...s,daysLeft:Math.ceil((new Date(s.studentDeadline+'T23:59:59').getTime()-Date.now())/86400000)})).filter(s=>s.daysLeft>=0&&s.daysLeft<=30).sort((a,b)=>a.daysLeft-b.daysLeft),[]);
- return <div className="scholar-dashboard"><section className="hero-panel"><div className="hero-copy"><div className="hero-kicker"><span className="kicker-star">✳</span> THE SCHOLARSHIP DESK <span className="kicker-line"/></div><h1>Your next<br/><span>scholarship.</span></h1><p>{incomplete?'Start by telling us about your study programme and the documents you already have. We will compare your answers with the scheme rules in our reference set.':'Your scholarship workspace is ready. Check your scheme matches, review your document checklist and keep your next application step visible.'}</p><div className="hero-actions"><Link className="button button-dark" href="/eligibility-checker">Check scholarship eligibility <ArrowUpRight size={17}/></Link><Link className="text-link" href="/scholarships">Browse scheme directory <ArrowRight size={15}/></Link></div><div className="hero-footnote"><ShieldCheck size={15}/> Source-linked guidance <span className="foot-separator">·</span> No guaranteed eligibility claims</div></div><div className="hero-art scholarship-hero-art"><div className="orbit orbit-one"/><div className="orbit orbit-two"/><div className="orbit-core"><div className="core-spark">₹</div><span>FUNDING<br/>FOR YOUR<br/>NEXT STEP.</span></div><div className="orbit-card orbit-card-a"><span className="orbit-icon lilac"><FileCheck2 size={18}/></span><div><b>Documents</b><small>Ready to review</small></div></div><div className="orbit-card orbit-card-b"><span className="orbit-icon peach"><GraduationCap size={18}/></span><div><b>Scholarships</b><small>Rule-based matches</small></div></div><span className="art-caption">FIG. 01 — A CLEARER WAY TO APPLY</span></div></section>
- <section className="expiring-section"><div className="expiring-heading"><div><span className="eyebrow">DON’T MISS THE WINDOW</span><h2>Scholarships closing soon.</h2><p>Student application cut-offs from the latest scheme catalogue we checked. Dates can change; verify on NSP before applying.</p></div><Link href="/scholarships" className="subtle-link">All schemes <ArrowUpRight size={14}/></Link></div>{closingSoon.length?<div className="expiring-grid">{closingSoon.map(s=><article className="expiring-card" key={s.id}><div className="expiring-card-top"><span>{s.deadlineStage||'Student applications'}</span><span className="days-left"><Clock3 size={13}/>{s.daysLeft===0?'Closes today':`${s.daysLeft} days left`}</span></div><h3>{s.shortName}</h3><p>{s.provider}</p><div className="expiring-date"><b>{new Date(s.studentDeadline+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})}</b><span>Student application deadline</span></div><Link href={`/scholarships/${s.id}`}>Review eligibility & documents <ArrowRight size={14}/></Link></article>)}</div>:<div className="expiring-empty"><b>No verified student deadline in the next 30 days.</b><span>Open the official National Scholarship Portal catalogue for the latest scheme timelines.</span><a href="https://scholarships.gov.in/All-Scholarships" target="_blank" rel="noreferrer">Check live NSP deadlines <ArrowUpRight size={14}/></a></div>}<small className="expiring-footnote">Last checked: 17 Nov 2026 · Source: National Scholarship Portal, AY 2026–27. Deadline status is shown as a source snapshot, not a live alert feed.</small></section>
- <div className="stats-grid"><div className="stat-card stat-highlight"><div className="stat-icon"><Target size={18}/></div><span className="stat-label">SAVED SCHOLARSHIPS</span><strong>{items.length.toString().padStart(2,'0')}</strong><small>Programmes you chose to track</small></div><div className="stat-card"><div className="stat-icon"><CalendarClock size={18}/></div><span className="stat-label">PERSONAL REMINDERS</span><strong>{reminders.filter(x=>!x.done).length.toString().padStart(2,'0')}</strong><small>Next steps you have set</small></div><div className="stat-card"><div className="stat-icon"><GraduationCap size={18}/></div><span className="stat-label">SCHEME REFERENCES</span><strong>{scholarshipSchemes.length.toString().padStart(2,'0')}</strong><small>Specific scholarship rule sets</small></div><div className="stat-card"><div className="stat-icon"><FileSearch size={18}/></div><span className="stat-label">DOCUMENT TOOLS</span><strong>02</strong><small>Document review and rejection analysis</small></div></div>
- <div className="scholar-quick-grid"><Link href="/eligibility-checker" className="quick-feature quick-lime"><span>01 / MATCH</span><GraduationCap size={25}/><h3>What can I apply for?</h3><p>Answer a guided form, tick the documents you have, and review potential scholarship matches.</p><b>Open eligibility checker <ArrowUpRight size={16}/></b></Link><Link href="/document-review" className="quick-feature quick-lilac"><span>02 / INSPECT</span><FileSearch size={25}/><h3>Is my document ready?</h3><p>Understand what a document appears to be, what it is used for and which visible issues to check.</p><b>Review a document <ArrowUpRight size={16}/></b></Link><Link href="/rejection-analyzer" className="quick-feature quick-peach"><span>03 / RESOLVE</span><ShieldCheck size={25}/><h3>Why was I rejected?</h3><p>Explain a portal remark and prepare practical questions and corrective next steps.</p><b>Analyse a rejection <ArrowUpRight size={16}/></b></Link></div>
- <Link href="/services" className="dashboard-services-banner"><div><span className="eyebrow">STUDENT LIFE / EXTRA SUPPORT</span><h2>Have you claimed your student benefits?</h2><p>Bus pass applications, free academic tools, education finance, digital records and more.</p></div><span className="dashboard-services-cta">Explore student services <ArrowUpRight size={16}/></span><BriefcaseBusiness size={30}/></Link>
- <div className="dashboard-bottom"><section className="tracker-preview"><div className="section-heading"><div><span className="eyebrow">YOUR SAVED WORK</span><h2>Scholarships you are tracking.</h2></div><Link className="subtle-link" href="/tracker">Open tracker <ArrowUpRight size={15}/></Link></div>{items.length?<div className="action-list">{items.slice(0,4).map((s)=>{const item=scholarshipSchemes.find(x=>x.id===s.opportunityId);return item?<Link href={`/scholarships/${item.id}`} className="action-row" key={item.id}><span className="action-number">₹</span><div className="action-info"><b>{item.shortName}</b><small>{item.provider}</small></div><span className="status-chip">{s.status}</span><ArrowRight size={15}/></Link>:null})}</div>:<div className="empty-inline"><b>No saved scholarship yet.</b><p>Start with the scheme directory and save a programme you want to check.</p><Link href="/scholarships">Browse scholarships <ArrowRight size={14}/></Link></div>}</section><aside className="deadline-panel"><div className="deadline-head"><div><span className="eyebrow">YOUR PERSONAL PLANNER</span><h3>Next steps<br/>to remember.</h3></div><div className="calendar-glyph"><CalendarClock size={25}/></div></div>{next.length?<div className="deadline-list">{next.map((d,i)=><div className="deadline-row" key={d.id}><span className={`deadline-dot d-${i}`}/><div><b>{d.title}</b><small>{new Date(d.date+'T00:00:00').toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</small></div></div>)}</div>:<p className="empty-deadline">You have not added a personal reminder yet. Add one when you choose a scheme or need to follow up.</p>}<Link className="deadline-link" href="/planner">Open planner <ArrowRight size={15}/></Link></aside></div>
- </div>
+ const [profile,setProfile]=useState<StudentProfile|null>(null);
+ const [items,setItems]=useState<TrackerItem[]>([]);
+ useEffect(()=>{
+  const sync=()=>{setProfile(getProfile());setItems(getTracker())};
+  sync();
+  window.addEventListener('storage',sync);
+  window.addEventListener('campuspulse-profile',sync);
+  window.addEventListener('campuspulse-tracker',sync);
+  return()=>{
+   window.removeEventListener('storage',sync);
+   window.removeEventListener('campuspulse-profile',sync);
+   window.removeEventListener('campuspulse-tracker',sync);
+  };
+ },[]);
+ const closingSoon=useMemo(()=>scholarshipSchemes
+  .filter(s=>s.studentDeadline)
+  .map(s=>({...s,daysLeft:Math.ceil((new Date(s.studentDeadline+'T23:59:59').getTime()-Date.now())/86400000)}))
+  .filter(s=>s.daysLeft>=0&&s.daysLeft<=30)
+  .sort((a,b)=>a.daysLeft-b.daysLeft)
+  .slice(0,3),[]);
+ const firstName=profile?.name?.trim().split(/\s+/)[0]||'there';
+ const saved=items.slice(0,2).map(item=>({
+  item,
+  scheme:scholarshipSchemes.find(s=>s.id===item.opportunityId)
+ })).filter(x=>x.scheme);
+
+ return <div className="overview-page">
+  <section className="overview-hero">
+   <div className="overview-hero-copy">
+    <span className="overview-eyebrow"><span/> YOUR STUDENT DESK</span>
+    <h1>One clear step<br/><em>at a time, {firstName}.</em></h1>
+    <p>Find support, prepare your documents and keep track of what matters. Start with the task you need today.</p>
+    <div className="overview-hero-actions">
+     <Link className="overview-main-button" href="/eligibility-checker">Find scholarships <ArrowRight size={17}/></Link>
+     <Link className="overview-text-link" href="/scholarships">Browse all schemes <ArrowUpRight size={15}/></Link>
+    </div>
+   </div>
+   <div className="overview-visual" aria-hidden="true">
+    <div className="overview-visual-ring ring-one"/>
+    <div className="overview-visual-ring ring-two"/>
+    <div className="overview-visual-centre"><span>₹</span><b>YOUR<br/>NEXT STEP</b></div>
+    <div className="overview-visual-note note-yellow"><FileCheck2 size={17}/> Documents</div>
+    <div className="overview-visual-note note-white"><GraduationCap size={17}/> Scholarships</div>
+   </div>
+  </section>
+
+  <section className="overview-section">
+   <div className="overview-section-heading">
+    <div><span className="overview-kicker">DATES TO WATCH</span><h2>Closing soon</h2><p>Check the date on the official portal before applying.</p></div>
+    <Link href="/scholarships" className="overview-small-link">All scholarships <ArrowUpRight size={14}/></Link>
+   </div>
+   {closingSoon.length>0?<div className="overview-deadline-grid">
+    {closingSoon.map((scheme,index)=><Link href={'/scholarships/'+scheme.id} className={'overview-deadline-card deadline-tone-'+index} key={scheme.id}>
+     <span className="overview-deadline-tag">{scheme.deadlineStage||'Student applications'}</span>
+     <h3>{scheme.shortName}</h3>
+     <div className="overview-deadline-bottom"><b>{new Date(scheme.studentDeadline+'T00:00:00').toLocaleDateString('en-IN',{day:'numeric',month:'short'})}</b><span>{scheme.daysLeft===0?'Closes today':scheme.daysLeft+' days left'}</span></div>
+     <small>Check details <ArrowRight size={13}/></small>
+    </Link>)}
+   </div>:<div className="overview-empty-deadline">
+    <CalendarClock size={20}/><div><b>No verified deadline in the next 30 days.</b><span>Check the official catalogue for new dates.</span></div>
+    <a href="https://scholarships.gov.in/All-Scholarships" target="_blank" rel="noreferrer">Open NSP <ArrowUpRight size={14}/></a>
+   </div>}
+   <div className="overview-source-note"><ShieldCheck size={13}/> Source snapshot: National Scholarship Portal, AY 2026–27 · Checked 17 Nov 2026 · Dates may change.</div>
+  </section>
+
+  <section className="overview-section">
+   <div className="overview-section-heading">
+    <div><span className="overview-kicker">PICK WHAT YOU NEED</span><h2>How can we help today?</h2></div>
+   </div>
+   <div className="overview-task-grid">
+    <Link href="/eligibility-checker" className="overview-task task-yellow"><span>01</span><GraduationCap size={25}/><h3>Find scholarships</h3><p>Answer a few questions and see which schemes may fit.</p><b>Check eligibility <ArrowUpRight size={15}/></b></Link>
+    <Link href="/document-review" className="overview-task task-teal"><span>02</span><FileSearch size={25}/><h3>Check a document</h3><p>Understand what it is and what to fix before upload.</p><b>Review document <ArrowUpRight size={15}/></b></Link>
+    <Link href="/rejection-analyzer" className="overview-task task-coral"><span>03</span><ShieldCheck size={25}/><h3>Understand a rejection</h3><p>Paste the portal remark and get a simple action plan.</p><b>Get an explanation <ArrowUpRight size={15}/></b></Link>
+   </div>
+  </section>
+
+  <section className="overview-bottom">
+   <div className="overview-saved-card">
+    <div className="overview-section-heading"><div><span className="overview-kicker">YOUR LIST</span><h2>Saved scholarships</h2></div><Link href="/tracker" className="overview-small-link">Open list <ArrowUpRight size={14}/></Link></div>
+    {saved.length?saved.map(({item,scheme})=><Link href={'/scholarships/'+scheme!.id} className="overview-saved-row" key={item.opportunityId}><span className="overview-saved-icon">₹</span><span><b>{scheme!.shortName}</b><small>{scheme!.provider}</small></span><span className="overview-status">{item.status}</span><ArrowRight size={15}/></Link>):<div className="overview-saved-empty"><p>No saved scholarship yet.</p><Link href="/scholarships">Choose a scheme to track <ArrowRight size={14}/></Link></div>}
+   </div>
+   <Link href="/services" className="overview-services-card"><span className="overview-services-icon"><CalendarClock size={24}/></span><span className="overview-kicker">STUDENT SERVICES</span><h2>Make college life easier.</h2><p>Bus pass, free student software, education finance and digital records — all in one place.</p><b>Explore student services <ArrowUpRight size={16}/></b></Link>
+  </section>
+ </div>;
 }
