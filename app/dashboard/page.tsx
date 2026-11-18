@@ -7,22 +7,19 @@ import {
  FileSearch,GraduationCap,ShieldCheck,Sparkles
 } from 'lucide-react';
 import {scholarshipSchemes} from '@/lib/scholarships';
-import {getProfile,getTracker} from '@/lib/storage';
-import type {StudentProfile,TrackerItem} from '@/lib/types';
+import {getTracker} from '@/lib/storage';
+import type {TrackerItem} from '@/lib/types';
 
 export default function DashboardPage(){
- const [profile,setProfile]=useState<StudentProfile|null>(null);
  const [items,setItems]=useState<TrackerItem[]>([]);
 
  useEffect(()=>{
-  const sync=()=>{setProfile(getProfile());setItems(getTracker())};
+  const sync=()=>setItems(getTracker());
   sync();
   window.addEventListener('storage',sync);
-  window.addEventListener('campuspulse-profile',sync);
   window.addEventListener('campuspulse-tracker',sync);
   return()=>{
    window.removeEventListener('storage',sync);
-   window.removeEventListener('campuspulse-profile',sync);
    window.removeEventListener('campuspulse-tracker',sync);
   };
  },[]);
@@ -34,7 +31,6 @@ export default function DashboardPage(){
   .sort((a,b)=>a.daysLeft-b.daysLeft)
   .slice(0,3),[]);
 
- const firstName=profile?.name?.trim().split(/\s+/)[0]||'there';
  const saved=items.slice(0,2).map(item=>({
   item,
   scheme:scholarshipSchemes.find(s=>s.id===item.opportunityId)
@@ -65,7 +61,7 @@ export default function DashboardPage(){
 
   <section className="overview-deadline-section">
    <div className="overview-section-title">
-    <div><span className="page-kicker">DON'T MISS THE WINDOW</span><h2>Closing soon <span className="title-spark">✳</span></h2><p>Student application dates published on the official NSP catalogue.</p></div>
+    <div><span className="page-kicker">DON&apos;T MISS THE WINDOW</span><h2>Closing soon <span className="title-spark">✳</span></h2><p>Student application dates published on the official NSP catalogue.</p></div>
     <Link href="/scholarships" className="overview-section-link">All schemes <ArrowUpRight size={15}/></Link>
    </div>
    {closingSoon.length>0?<div className="overview-deadline-grid">
