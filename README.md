@@ -98,3 +98,21 @@ A GitHub Actions workflow checks the official NSP Officers and Public pages ever
 The workflow does **not** scrape officer names, emails or phone numbers. NSP's scheme-wise and district-wise officer pages are interactive filtered forms and may require CAPTCHA. Students open the official live form, choose their scheme or district, and complete the portal's checks to see the currently assigned officer. CampusPulse's map is a department/location search, not a government-maintained office register.
 
 Manual refresh: GitHub → Actions → “Refresh official scholarship officer sources” → Run workflow.
+
+
+## Full UI/UX redesign — Editorial Neo-Brutalism
+
+The current visual system uses Midnight Ink, Electric Cobalt, Scholar Amber, Jade, Signal Coral and Cloud neutrals. Navigation, cards, forms, controls, icons, spacing and mobile breakpoints follow one shared system. The stylesheet was consolidated into one design system rather than layering additional overrides.
+
+The overview now has a focused editorial hero, a short deadline strip, three student task paths, saved scholarships and a student-services panel. The scholarship directory has a searchable/filterable layout and scheme/provider imagery.
+
+### Scholarship image provenance
+
+Each scholarship card identifies its image as scheme artwork or an issuing-authority logo. Images are not recoloured or presented as a unique scheme logo when the source only represents the provider:
+- PM-USP CSSS: Ministry of Education identity asset from SATHEE / IIT Kanpur.
+- AICTE Pragati: published scheme artwork.
+- AICTE Saksham: published scheme poster.
+- Top Class SC: Government of India National Emblem from the UX4G approved logo library.
+- DEPwD Post-Matric: official DEPwD scholarship-scheme artwork.
+
+The official scheme source links remain the authority for current rules and application dates. The full design rationale is in `docs/DESIGN-REDESIGN-PLAN.md`.

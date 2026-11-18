@@ -1,10 +1,61 @@
+'use client';
+
 import Link from 'next/link';
-import {ArrowUpRight,CalendarDays,ExternalLink,FileCheck2,Filter,GraduationCap,ShieldCheck} from 'lucide-react';
-import {SectionHeading} from '@/components/section-heading';
+import {useMemo,useState} from 'react';
+import {ArrowRight,ArrowUpRight,Search,ShieldCheck,Sparkles} from 'lucide-react';
 import {scholarshipSchemes} from '@/lib/scholarships';
-export default function ScholarshipsPage(){return <div className="scholar-page"><SectionHeading eyebrow="SCHOLARSHIP DIRECTORY / 01" title="Scholarships, not noise." description="A focused directory of named scholarship schemes with their provider, rule source and important caveats. Dates are shown only where a current official catalogue publishes them." action={<Link className="button button-dark" href="/eligibility-checker">Check my eligibility <ArrowUpRight size={15}/></Link>}/>
- <div className="catalogue-callout"><div><span className="eyebrow">START WITH YOUR PROFILE</span><h2>Which schemes may fit your details?</h2><p>Use the checklist to compare your education, family income, scheme-specific conditions and the documents already in your possession.</p><Link className="button button-dark" href="/eligibility-checker">Open eligibility checker <ArrowUpRight size={15}/></Link></div><div className="catalogue-callout-icon"><GraduationCap size={52}/><span>₹</span></div></div>
- <div className="catalogue-intro-row"><div><span className="eyebrow">SCHEME REFERENCE SET</span><h2>{scholarshipSchemes.length} researched schemes</h2></div><div className="catalogue-legend"><span><i className="dot-green"/> Source checked</span><span><i className="dot-orange"/> Rule snapshot needs confirmation</span></div></div>
- <div className="scholarship-grid">{scholarshipSchemes.map((s,i)=><article className="scholarship-card" key={s.id}><div className="scholarship-card-top"><span>0{i+1} / {s.category.toUpperCase()}</span><span className="source-chip"><ShieldCheck size={12}/> OFFICIAL SOURCE</span></div><h3>{s.name}</h3><p>{s.summary}</p><div className="scholarship-amount"><span>INDICATIVE SUPPORT</span><b>{s.amount}</b></div><div className="scholarship-card-foot"><span><CalendarDays size={14}/> {s.deadlineNote}</span><span><FileCheck2 size={14}/> {s.required.length} document types noted</span></div><div className="scholarship-card-actions"><Link href={`/scholarships/${s.id}`}>View scheme details <ArrowUpRight size={15}/></Link><a href={s.sourceUrl} target="_blank" rel="noreferrer" aria-label="Open official portal"><ExternalLink size={14}/></a></div><small className="rule-snapshot">Rule reference: {s.sourceDate}</small></article>)}</div>
- <div className="scholarship-footnote"><Filter size={16}/><p>This is a curated reference set, not the full NSP catalogue and not a live API feed. Verify the current academic year, institution lists, quotas, dates and scheme conditions on the linked government portal before applying.</p></div>
- </div>}
+import {ScholarshipCard} from '@/components/scholarship-card';
+
+const filters=['All schemes','Merit-based','Welfare-based','Technical'];
+
+export default function ScholarshipsPage(){
+ const [filter,setFilter]=useState('All schemes');
+ const [query,setQuery]=useState('');
+ const filtered=useMemo(()=>scholarshipSchemes.filter(s=>{
+  const matchesFilter=filter==='All schemes'
+   ||(filter==='Technical'?s.category.toLowerCase().includes('technical'):s.category.toLowerCase().includes(filter.toLowerCase().replace('-based','')));
+  const text=(s.name+' '+s.shortName+' '+s.provider+' '+s.summary).toLowerCase();
+  return matchesFilter&&text.includes(query.toLowerCase().trim());
+ }),[filter,query]);
+
+ return <div className="scholarship-directory-page">
+  <section className="directory-hero">
+   <div className="directory-hero-copy">
+    <span className="directory-eyebrow"><span/> THE SCHOLARSHIP DIRECTORY <b>01 / 05</b></span>
+    <h1>Find the support<br/><em>that moves you forward.</em></h1>
+    <p>Explore named scholarship schemes, understand their support and compare the published conditions before you apply.</p>
+    <div className="directory-hero-actions">
+     <Link href="/eligibility-checker" className="directory-primary-action">Check my eligibility <ArrowRight size={17}/></Link>
+     <a href="https://scholarships.gov.in/All-Scholarships" target="_blank" rel="noreferrer" className="directory-secondary-action">Official NSP catalogue <ArrowUpRight size={15}/></a>
+    </div>
+    <div className="directory-trust-row"><span><ShieldCheck size={14}/> Source-linked scheme references</span><span><Sparkles size={14}/> Clear eligibility notes</span></div>
+   </div>
+   <div className="directory-hero-art" aria-hidden="true">
+    <div className="directory-art-orbit orbit-a"/>
+    <div className="directory-art-orbit orbit-b"/>
+    <div className="directory-art-ticket"><span>STUDENT<br/>SUPPORT</span><b>₹</b><small>ONE APPLICATION<br/>AT A TIME</small></div>
+    <span className="directory-art-sticker">FIND<br/>YOUR<br/>FIT ↗</span>
+    <span className="directory-art-caption">CAMPUSPULSE / SCHOLARSHIP INTELLIGENCE</span>
+   </div>
+  </section>
+
+  <section className="directory-intro">
+   <div><span className="page-kicker">THE RIGHT STARTING POINT</span><h2>Scholarships worth checking.</h2><p>Use the filters to narrow the list. Open a scheme to see eligibility conditions, documents and official links.</p></div>
+   <div className="directory-count"><b>{filtered.length.toString().padStart(2,'0')}</b><span>SCHEMES<br/>IN THIS VIEW</span></div>
+  </section>
+
+  <section className="directory-controls" aria-label="Scholarship filters">
+   <div className="directory-search"><Search size={18}/><input value={query} onChange={event=>setQuery(event.target.value)} placeholder="Search by scheme, provider or keyword..." aria-label="Search scholarships"/>{query&&<button type="button" onClick={()=>setQuery('')} aria-label="Clear search">×</button>}</div>
+   <div className="directory-filter-list">
+    {filters.map(item=><button type="button" key={item} onClick={()=>setFilter(item)} className={filter===item?'selected':''}>{item}</button>)}
+   </div>
+  </section>
+
+  <section className="directory-card-grid" aria-live="polite">
+   {filtered.map((scheme,index)=><ScholarshipCard key={scheme.id} scheme={scheme} index={index}/>)}
+   {filtered.length===0&&<div className="directory-empty"><Search size={23}/><h3>No matching scheme found.</h3><p>Try another keyword or choose “All schemes”.</p><button type="button" onClick={()=>{setQuery('');setFilter('All schemes')}}>Clear filters</button></div>}
+  </section>
+
+  <div className="directory-source-note"><ShieldCheck size={16}/><p><b>Before you apply:</b> CampusPulse is a curated reference, not the government application portal. Scheme conditions, institutional lists, financial support and deadlines can change. Always verify the current specification on the linked official source.</p></div>
+ </div>;
+}

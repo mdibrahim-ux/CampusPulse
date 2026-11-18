@@ -2,11 +2,67 @@ import Link from 'next/link';
 import {notFound} from 'next/navigation';
 import {ArrowLeft,ArrowUpRight,ExternalLink,FileCheck2,Info,ShieldCheck} from 'lucide-react';
 import {scholarshipSchemes,documentOptions} from '@/lib/scholarships';
+import {scholarshipBranding} from '@/lib/scholarship-branding';
 import {ScholarshipOfficeFinder} from '@/components/scholarship-office-finder';
+
 export function generateStaticParams(){return scholarshipSchemes.map(s=>({id:s.id}));}
-export default async function ScholarshipDetailPage({params}:{params:Promise<{id:string}>}){const {id}=await params;const s=scholarshipSchemes.find(x=>x.id===id);if(!s)notFound();return <div className="scholar-page scheme-detail-page"><Link className="back-link" href="/scholarships"><ArrowLeft size={14}/> Back to scholarship directory</Link><div className="scheme-detail-hero"><div><span className="eyebrow">{s.category} / SCHEME REFERENCE</span><h1>{s.name}</h1><p>{s.summary}</p><span className="scheme-provider"><ShieldCheck size={15}/> {s.provider}</span></div><div className="scheme-hero-badge">₹<small>STUDENT<br/>SUPPORT</small></div></div><div className="scheme-detail-grid"><main>
- <section className="scheme-detail-section"><span className="eyebrow">01 / PUBLISHED CONDITIONS</span><h2>What the scheme rules say.</h2><ol className="criteria-list">{s.criteria.map((x,i)=><li key={x}><span>0{i+1}</span><p>{x}</p></li>)}</ol></section>
- <section className="scheme-detail-section"><span className="eyebrow">02 / DOCUMENT PREPARATION</span><h2>Documents to check.</h2><div className="scheme-doc-list">{s.required.map(id=>{const d=documentOptions.find(x=>x.id===id)!;return <div key={id}><FileCheck2 size={16}/><span><b>{d.label}</b><small>{d.detail}</small></span></div>})}</div><p className="scheme-warning">This is a preparation checklist only. The exact document format, validity period, issuing authority and upload requirements must be taken from the current scheme guideline.</p></section>
- <section className="scheme-detail-section"><span className="eyebrow">03 / IMPORTANT LIMITATIONS</span><h2>Read before you rely on a match.</h2><ul className="caveat-list">{s.caveats.map(x=><li key={x}>{x}</li>)}</ul></section>
- <ScholarshipOfficeFinder schemeId={s.id} schemeName={s.name} provider={s.provider} category={s.category}/>
- </main><aside><div className="scheme-aside-card"><span className="eyebrow">SOURCE & STATUS</span><h3>{s.shortName}</h3><div className="scheme-fact"><span>Rule source</span><b>{s.ruleSource}</b></div><div className="scheme-fact"><span>Checked</span><b>{s.sourceDate}</b></div><div className="scheme-fact"><span>Application timeline</span><b>{s.deadlineNote}</b></div><div className="scheme-fact"><span>Support amount</span><b>{s.amount}</b></div><a className="button button-dark scheme-official-button" href={s.sourceUrl} target="_blank" rel="noreferrer">Open official scheme source <ExternalLink size={14}/></a><Link className="button button-light scheme-check-button" href="/eligibility-checker">Check my profile against this <ArrowUpRight size={14}/></Link><div className="scheme-legal"><Info size={15}/><p>CampusPulse is independent. Only the official scheme authority can confirm eligibility and award a scholarship.</p></div></div></aside></div></div>}
+
+export default async function ScholarshipDetailPage({params}:{params:Promise<{id:string}>}){
+ const {id}=await params;
+ const s=scholarshipSchemes.find(x=>x.id===id);
+ if(!s)notFound();
+ const brand=scholarshipBranding[s.id];
+
+ return <div className="scholar-page scheme-detail-page">
+  <Link className="back-link" href="/scholarships"><ArrowLeft size={14}/> Back to scholarship directory</Link>
+
+  <section className="scheme-detail-hero">
+   <div className="scheme-detail-copy">
+    <div className="scheme-detail-brand">
+     {brand&&<img src={brand.imageUrl} alt={brand.imageAlt} loading="eager" decoding="async"/>}
+     <div><span className="eyebrow">{s.category} / SCHEME REFERENCE</span><span className="scheme-detail-brand-kind">{brand?.imageLabel||'Issuing authority'}</span></div>
+    </div>
+    <h1>{s.name}</h1>
+    <p>{s.summary}</p>
+    <span className="scheme-provider"><ShieldCheck size={15}/> {s.provider}</span>
+    {brand&&<a className="scheme-detail-credit" href={brand.imageUrl} target="_blank" rel="noreferrer">Visual identity: {brand.imageSource} <ExternalLink size={11}/></a>}
+   </div>
+   <div className="scheme-hero-badge">₹<small>STUDENT<br/>SUPPORT</small></div>
+  </section>
+
+  <div className="scheme-detail-grid">
+   <main>
+    <section className="scheme-detail-section">
+     <span className="eyebrow">01 / PUBLISHED CONDITIONS</span>
+     <h2>What the scheme rules say.</h2>
+     <ol className="criteria-list">{s.criteria.map((x,i)=><li key={x}><span>{String(i+1).padStart(2,'0')}</span><p>{x}</p></li>)}</ol>
+    </section>
+    <section className="scheme-detail-section">
+     <span className="eyebrow">02 / DOCUMENT PREPARATION</span>
+     <h2>Documents to check.</h2>
+     <div className="scheme-doc-list">{s.required.map(id=>{const d=documentOptions.find(x=>x.id===id)!;return <div key={id}><FileCheck2 size={16}/><span><b>{d.label}</b><small>{d.detail}</small></span></div>})}</div>
+     <p className="scheme-warning">This is a preparation checklist only. The exact document format, validity period, issuing authority and upload requirements must be taken from the current scheme guideline.</p>
+    </section>
+    <section className="scheme-detail-section">
+     <span className="eyebrow">03 / IMPORTANT LIMITATIONS</span>
+     <h2>Read before you rely on a match.</h2>
+     <ul className="caveat-list">{s.caveats.map(x=><li key={x}>{x}</li>)}</ul>
+    </section>
+    <ScholarshipOfficeFinder schemeId={s.id} schemeName={s.name} provider={s.provider} category={s.category}/>
+   </main>
+   <aside>
+    <div className="scheme-aside-card">
+     <span className="eyebrow">SOURCE & STATUS</span>
+     <h3>{s.shortName}</h3>
+     <div className="scheme-fact"><span>Rule source</span><b>{s.ruleSource}</b></div>
+     <div className="scheme-fact"><span>Checked</span><b>{s.sourceDate}</b></div>
+     <div className="scheme-fact"><span>Application timeline</span><b>{s.deadlineNote}</b></div>
+     <div className="scheme-fact"><span>Support amount</span><b>{s.amount}</b></div>
+     <a className="button button-dark scheme-official-button" href={s.sourceUrl} target="_blank" rel="noreferrer">Open official scheme source <ExternalLink size={14}/></a>
+     <Link className="button button-light scheme-check-button" href="/eligibility-checker">Check my profile against this <ArrowUpRight size={14}/></Link>
+     <div className="scheme-legal"><Info size={15}/><p>CampusPulse is independent. Only the official scheme authority can confirm eligibility and award a scholarship.</p></div>
+    </div>
+   </aside>
+  </div>
+ </div>;
+}
