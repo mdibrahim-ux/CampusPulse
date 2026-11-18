@@ -1,11 +1,55 @@
 {
-  "checkedAt": null,
+  "checkedAt": "2026-11-18T12:02:24.321Z",
   "academicYear": "2026-27",
   "method": "Daily public-page metadata check; no officer names, emails or phone numbers are extracted.",
   "sources": [
-    { "id": "officers", "label": "NSP officer directory", "url": "https://scholarships.gov.in/Officers", "purpose": "Official scheme-wise nodal officer and grievance officer entry point.", "reachable": null, "publishedUpdate": null, "note": "The first scheduled source check will populate this status." },
-    { "id": "public", "label": "NSP public services", "url": "https://scholarships.gov.in/Public", "purpose": "Official entry point for scheme-wise officers, district-wise officers and grievance services.", "reachable": null, "publishedUpdate": null, "note": "The first scheduled source check will populate this status." },
-    { "id": "scheme-wise", "label": "Scheme-wise officer search", "url": "https://scholarships.gov.in/nodelOfficerDetails", "purpose": "Live scheme-wise search form.", "reachable": null, "publishedUpdate": null, "queryRequiresOfficialInteraction": true, "note": "Use the official form to select the scheme and ministry and complete any displayed CAPTCHA." },
-    { "id": "district-wise", "label": "District-wise officer search", "url": "https://scholarships.gov.in/districtNodelOfficerDetails", "purpose": "Live district-wise search form.", "reachable": null, "publishedUpdate": null, "queryRequiresOfficialInteraction": true, "note": "Use the official form to select state and district and complete any displayed CAPTCHA." }
+    {
+      "id": "officers",
+      "label": "NSP officer directory",
+      "url": "https://scholarships.gov.in/Officers",
+      "purpose": "Official scheme-wise nodal officer and grievance officer entry point.",
+      "checkedAt": "2026-11-18T12:02:24.321Z",
+      "httpStatus": 200,
+      "reachable": true,
+      "publishedUpdate": "November 2026",
+      "queryRequiresOfficialInteraction": false,
+      "note": "Only public page availability and its published update marker are checked. Officer names and contact details are not scraped."
+    },
+    {
+      "id": "public",
+      "label": "NSP public services",
+      "url": "https://scholarships.gov.in/Public",
+      "purpose": "Official entry point for scheme-wise officers, district-wise officers and grievance services.",
+      "checkedAt": "2026-11-18T12:02:24.467Z",
+      "httpStatus": 200,
+      "reachable": true,
+      "publishedUpdate": "November 2026",
+      "queryRequiresOfficialInteraction": false,
+      "note": "Only public page availability and its published update marker are checked. Officer names and contact details are not scraped."
+    },
+    {
+      "id": "scheme-wise",
+      "label": "Scheme-wise officer search",
+      "url": "https://scholarships.gov.in/nodelOfficerDetails",
+      "purpose": "Live scheme-wise search form. The official portal controls the filters and any CAPTCHA.",
+      "checkedAt": "2026-11-18T12:02:24.468Z",
+      "httpStatus": 200,
+      "reachable": true,
+      "publishedUpdate": "November 2026",
+      "queryRequiresOfficialInteraction": true,
+      "note": "Only public page availability and its published update marker are checked. Officer names and contact details are not scraped."
+    },
+    {
+      "id": "district-wise",
+      "label": "District-wise officer search",
+      "url": "https://scholarships.gov.in/districtNodelOfficerDetails",
+      "purpose": "Live district-wise search form. The official portal controls the filters and any CAPTCHA.",
+      "checkedAt": "2026-11-18T12:02:24.470Z",
+      "httpStatus": 200,
+      "reachable": true,
+      "publishedUpdate": "November 2026",
+      "queryRequiresOfficialInteraction": true,
+      "note": "Only public page availability and its published update marker are checked. Officer names and contact details are not scraped."
+    }
   ]
 }
