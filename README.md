@@ -116,3 +116,10 @@ Each scholarship card identifies its image as scheme artwork or an issuing-autho
 - DEPwD Post-Matric: official DEPwD scholarship-scheme artwork.
 
 The official scheme source links remain the authority for current rules and application dates. The full design rationale is in `docs/DESIGN-REDESIGN-PLAN.md`.
+
+
+## Dark product redesign
+
+The current experience is a dark editorial neo-brutalist workspace with a floating translucent navigation layer. The content surfaces remain opaque for legibility. The overview contains an interactive explanation of the three actual product stages (student details, scholarship rule comparison and preparation actions), a deadline module sourced from explicit student-deadline fields, and a category chart computed from the five curated scheme records in `lib/scholarships.ts`. The category chart is not a national distribution or user-outcome metric.
+
+The design research and implementation decisions are recorded in `docs/DARK-REDESIGN-PLAN.md`.
