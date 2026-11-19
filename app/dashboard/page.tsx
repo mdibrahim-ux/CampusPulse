@@ -4,58 +4,31 @@ import Link from 'next/link';
 import {useEffect,useMemo,useState} from 'react';
 import {motion} from 'framer-motion';
 import {
-  ArrowRight,ArrowUpRight,Bookmark,CalendarClock,
-  FileSearch,GraduationCap,ShieldCheck,
-  ClipboardCheck,BookOpenCheck,MoveUpRight
+  ArrowRight,ArrowUpRight,Bookmark,CalendarClock,CheckCircle2,
+  FileSearch,GraduationCap,ShieldCheck,ClipboardCheck,CalendarDays
 } from 'lucide-react';
+import {SectionHeading} from '@/components/section-heading';
 import {scholarshipSchemes} from '@/lib/scholarships';
-import {getTracker} from '@/lib/storage';
-import type {TrackerItem} from '@/lib/types';
-
-const workflow = [
-  {
-    number:'01',
-    eyebrow:'START WITH YOUR CONTEXT',
-    title:'Your details',
-    body:'Study level, course, household context and the documents already available.',
-    tags:['Study','Documents','Profile'],
-    icon:ClipboardCheck,
-    href:'/eligibility-checker',
-    accent:'olive'
-  },
-  {
-    number:'02',
-    eyebrow:'READ THE ACTUAL CONDITIONS',
-    title:'Scheme comparison',
-    body:'Compare your information with published criteria, deadlines and source notes.',
-    tags:['Criteria','Deadlines','Sources'],
-    icon:BookOpenCheck,
-    href:'/scholarships',
-    accent:'rust'
-  },
-  {
-    number:'03',
-    eyebrow:'TURN INFORMATION INTO ACTION',
-    title:'Next steps',
-    body:'See what to prepare, understand a portal remark and keep your follow-up organized.',
-    tags:['Checklist','Review','Tracker'],
-    icon:MoveUpRight,
-    href:'/document-review',
-    accent:'slate'
-  }
-];
+import {getReminders,getTracker} from '@/lib/storage';
+import type {Reminder,TrackerItem} from '@/lib/types';
 
 export default function DashboardPage(){
   const [items,setItems]=useState<TrackerItem[]>([]);
+  const [reminders,setReminders]=useState<Reminder[]>([]);
 
   useEffect(()=>{
-    const sync=()=>setItems(getTracker());
+    const sync=()=>{
+      setItems(getTracker());
+      setReminders(getReminders());
+    };
     sync();
     window.addEventListener('storage',sync);
     window.addEventListener('campuspulse-tracker',sync);
+    window.addEventListener('campuspulse-reminders',sync);
     return()=>{
       window.removeEventListener('storage',sync);
       window.removeEventListener('campuspulse-tracker',sync);
+      window.removeEventListener('campuspulse-reminders',sync);
     };
   },[]);
 
@@ -64,7 +37,7 @@ export default function DashboardPage(){
     .map(s=>({...s,daysLeft:Math.ceil((new Date(s.studentDeadline+'T23:59:59').getTime()-Date.now())/86400000)}))
     .filter(s=>s.daysLeft>=0&&s.daysLeft<=30)
     .sort((a,b)=>a.daysLeft-b.daysLeft)
-    .slice(0,3),[]);
+    .slice(0,4),[]);
 
   const categories=useMemo(()=>{
     const tally=new Map<string,number>();
@@ -75,162 +48,99 @@ export default function DashboardPage(){
     return Array.from(tally.entries()).map(([label,count])=>({label,count,share:count/scholarshipSchemes.length}));
   },[]);
 
-  const saved=items.slice(0,3).map(item=>({
+  const saved=items.slice(0,4).map(item=>({
     item,
     scheme:scholarshipSchemes.find(s=>s.id===item.opportunityId)
   })).filter(x=>x.scheme);
 
-  return <div className="fieldguide-home">
-    <motion.section
-      className="fieldguide-cover"
-      aria-labelledby="home-title"
-      initial={{opacity:0,y:12}}
-      animate={{opacity:1,y:0}}
-      transition={{duration:.48,ease:[.22,1,.36,1]}}
-    >
-      <div className="cover-topline">
-        <span className="cover-brandline"><i/> CAMPUSPULSE <b>STUDENT FIELD GUIDE</b></span>
-        <span className="cover-edition">SCHOLARSHIP SUPPORT <b>VOL. 01</b></span>
-      </div>
+  const nextReminders=reminders.filter(item=>!item.done).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,4);
 
-      <div className="cover-layout">
-        <div className="cover-copy">
-          <div className="cover-kicker"><span>01</span> KNOW THE RULES. OWN THE NEXT STEP.</div>
-          <h1 id="home-title">SCHOLARSHIPS.<br/><span>WITHOUT THE</span><em>GUESSWORK.</em></h1>
-          <p>Find schemes that fit your details. Understand which documents are needed. Turn confusing portal messages into practical next steps.</p>
-          <div className="cover-actions">
-            <Link href="/eligibility-checker" className="pill-button pill-button-primary">Check eligibility <ArrowRight size={17}/></Link>
-            <Link href="/scholarships" className="pill-button pill-button-secondary">Browse scholarships <ArrowUpRight size={16}/></Link>
-          </div>
-          <div className="cover-assurance">
-            <span><ShieldCheck size={14}/> Official sources linked</span>
-            <i/>
-            <span>Your information stays under your control</span>
-          </div>
-        </div>
+  return <div className="overview-page">
+    <SectionHeading
+      eyebrow="YOUR CAMPUSPULSE / OVERVIEW"
+      title="Your student support workspace."
+      description="A clear place to find scholarships, prepare documents and keep track of what needs attention."
+      action={<Link href="/eligibility-checker" className="button button-primary">Check eligibility <ArrowRight size={16}/></Link>}
+    />
 
-        <div className="cover-storyboard" aria-label="How CampusPulse helps students">
-          <div className="storyboard-heading">
-            <span>THE ROUTE / 01—03</span>
-            <span>THREE CLEAR STAGES</span>
-          </div>
-          <div className="storyboard-track" aria-hidden="true"><i/></div>
-          <div className="storyboard-panels">
-            {workflow.map((step,index)=>{
-              const Icon=step.icon;
-              return <motion.div
-                key={step.number}
-                className={'storyboard-panel storyboard-'+step.accent}
-                initial={{opacity:0,y:14}}
-                animate={{opacity:1,y:0}}
-                transition={{duration:.42,delay:.12+index*.09,ease:[.22,1,.36,1]}}
-              >
-                <div className="storyboard-panel-top">
-                  <span className="storyboard-number">{step.number}</span>
-                  <span className="storyboard-icon"><Icon size={19}/></span>
-                  <span className="storyboard-kicker">{step.eyebrow}</span>
-                </div>
-                <div className="storyboard-panel-copy">
-                  <h2>{step.title}</h2>
-                  <p>{step.body}</p>
-                  <div className="storyboard-tags">{step.tags.map(tag=><span key={tag}>{tag}</span>)}</div>
-                </div>
-                <Link href={step.href} className="storyboard-arrow" aria-label={'Open '+step.title}><ArrowUpRight size={16}/></Link>
-              </motion.div>;
-            })}
-          </div>
-          <div className="storyboard-foot"><span>FROM INFORMATION</span><i/><span>TO A CLEAR NEXT ACTION</span></div>
-        </div>
-      </div>
-
-      <div className="cover-bottomline">
-        <span>01 <b>DISCOVER</b></span>
-        <span className="cover-bottom-rule"/>
-        <span>02 <b>UNDERSTAND</b></span>
-        <span className="cover-bottom-rule"/>
-        <span>03 <b>MOVE FORWARD</b></span>
-        <span className="cover-bottom-note">A PRACTICAL TOOLKIT FOR STUDENTS</span>
-      </div>
-    </motion.section>
-
-    <section className="home-actions-section" aria-labelledby="home-actions-title">
-      <div className="home-section-heading">
-        <div>
-          <span className="home-overline">THE TOOLKIT / CHOOSE A TASK</span>
-          <h2 id="home-actions-title">Start where you <em>need support.</em></h2>
-        </div>
-        <span className="home-section-aside">DIRECT ROUTES. NO EXTRA STEPS.</span>
-      </div>
-      <div className="home-action-grid">
-        <motion.article className="home-action-card action-olive" initial={{opacity:0,y:16}} whileInView={{opacity:1,y:0}} viewport={{once:true,amount:.2}} transition={{duration:.42,ease:[.22,1,.36,1]}}>
-          <div className="home-action-top"><span>01 / MATCH</span><GraduationCap size={21}/></div>
-          <h3>Check your<br/>eligibility.</h3>
-          <p>Answer a few focused questions and compare your details with scholarship conditions.</p>
-          <Link href="/eligibility-checker" className="home-action-link">CHECK ELIGIBILITY <ArrowRight size={14}/></Link>
-        </motion.article>
-        <motion.article className="home-action-card action-rust" initial={{opacity:0,y:16}} whileInView={{opacity:1,y:0}} viewport={{once:true,amount:.2}} transition={{duration:.42,delay:.07,ease:[.22,1,.36,1]}}>
-          <div className="home-action-top"><span>02 / REVIEW</span><FileSearch size={21}/></div>
-          <h3>Understand your<br/>documents.</h3>
-          <p>Identify a document, understand why it is needed and check visible details before applying.</p>
-          <Link href="/document-review" className="home-action-link">REVIEW A DOCUMENT <ArrowRight size={14}/></Link>
-        </motion.article>
-        <motion.article className="home-action-card action-slate" initial={{opacity:0,y:16}} whileInView={{opacity:1,y:0}} viewport={{once:true,amount:.2}} transition={{duration:.42,delay:.14,ease:[.22,1,.36,1]}}>
-          <div className="home-action-top"><span>03 / RESOLVE</span><ShieldCheck size={21}/></div>
-          <h3>Decode a portal<br/>remark.</h3>
-          <p>Understand whether a message is a defect or rejection, and identify sensible follow-up steps.</p>
-          <Link href="/rejection-analyzer" className="home-action-link">ANALYZE A REMARK <ArrowRight size={14}/></Link>
-        </motion.article>
-      </div>
+    <section className="overview-quick-grid" aria-label="Start a task">
+      <Link href="/scholarships" className="overview-quick-card quick-card-lime">
+        <span className="overview-quick-icon"><GraduationCap size={21}/></span>
+        <span className="overview-quick-copy"><b>Find scholarships</b><small>Browse schemes and official conditions</small></span>
+        <ArrowUpRight size={17}/>
+      </Link>
+      <Link href="/document-review" className="overview-quick-card quick-card-blue">
+        <span className="overview-quick-icon"><FileSearch size={20}/></span>
+        <span className="overview-quick-copy"><b>Review a document</b><small>Understand its purpose and visible details</small></span>
+        <ArrowUpRight size={17}/>
+      </Link>
+      <Link href="/rejection-analyzer" className="overview-quick-card quick-card-neutral">
+        <span className="overview-quick-icon"><ShieldCheck size={20}/></span>
+        <span className="overview-quick-copy"><b>Understand a portal remark</b><small>Separate a defect from a rejection</small></span>
+        <ArrowUpRight size={17}/>
+      </Link>
     </section>
 
-    <section className="home-data-section" aria-labelledby="home-data-title">
-      <div className="home-section-heading">
-        <div>
-          <span className="home-overline">REFERENCE DESK / CURRENT WINDOWS</span>
-          <h2 id="home-data-title">Keep an eye on <em>the details.</em></h2>
-        </div>
-        <Link href="/scholarships" className="home-inline-link">ALL SCHOLARSHIPS <ArrowUpRight size={14}/></Link>
+    <section className="overview-section">
+      <div className="overview-section-heading">
+        <div><span className="eyebrow">APPLICATION WINDOWS</span><h2>Deadlines to keep in view.</h2><p>Student application deadlines in the current CampusPulse reference set.</p></div>
+        <Link href="/scholarships" className="text-link">All schemes <ArrowUpRight size={14}/></Link>
       </div>
-
-      <div className="home-data-grid">
-        <div className="home-deadline-panel">
-          <div className="home-panel-heading"><span><CalendarClock size={15}/> STUDENT APPLICATION WINDOWS</span><span>{closingSoon.length.toString().padStart(2,'0')} IN RANGE</span></div>
-          {closingSoon.length>0?closingSoon.map((scheme,index)=><Link key={scheme.id} href={'/scholarships/'+scheme.id} className="home-deadline-row">
-            <span className="home-deadline-number">0{index+1}</span>
-            <span className="home-deadline-main"><b>{scheme.shortName}</b><small>{scheme.provider}</small></span>
-            <span className="home-deadline-date"><b>{new Date(scheme.studentDeadline+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short'})}</b><small>{scheme.daysLeft===0?'Closes today':scheme.daysLeft+' days left'}</small></span>
+      <div className="overview-data-grid">
+        <div className="overview-panel deadlines-panel">
+          <div className="overview-panel-head"><span><CalendarClock size={16}/> STUDENT APPLICATION DEADLINES</span><b>{closingSoon.length.toString().padStart(2,'0')} IN NEXT 30 DAYS</b></div>
+          {closingSoon.length>0?<div className="deadline-list">{closingSoon.map((scheme,index)=><Link key={scheme.id} href={'/scholarships/'+scheme.id} className="deadline-item">
+            <span className="deadline-index">{String(index+1).padStart(2,'0')}</span>
+            <span className="deadline-name"><b>{scheme.shortName}</b><small>{scheme.provider}</small></span>
+            <span className="deadline-date"><b>{new Date(scheme.studentDeadline+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short'})}</b><small>{scheme.daysLeft===0?'Closes today':scheme.daysLeft+' days left'}</small></span>
             <ArrowUpRight size={15}/>
-          </Link>):<div className="home-deadline-empty"><CalendarClock size={20}/><div><b>No verified student deadline in the next 30 days.</b><span>Check the official catalogue for newly published dates.</span></div></div>}
-          <div className="home-data-footnote"><ShieldCheck size={13}/> NSP reference snapshot checked 17 November 2026. Reconfirm every date on the official portal.</div>
+          </Link>)}</div>:<div className="overview-empty"><CalendarClock size={20}/><div><b>No verified student deadline in the next 30 days.</b><small>Check the official directory for newly published dates.</small></div></div>}
+          <div className="overview-footnote"><ShieldCheck size={13}/> NSP reference snapshot checked 17 November 2026. Reconfirm every date on the official portal.</div>
         </div>
 
-        <div className="home-reference-panel">
-          <div className="home-panel-heading"><span><BookOpenCheck size={15}/> SCHEME REFERENCE SET</span><span>LOCAL DATA</span></div>
-          <div className="home-reference-total"><b>{scholarshipSchemes.length.toString().padStart(2,'0')}</b><span>CURATED SCHEME<br/>RECORDS</span></div>
-          <div className="home-category-chart" role="img" aria-label={'Scheme categories in the current reference set: '+categories.map(c=>c.label+' '+c.count).join(', ')}>
-            {categories.map((category,index)=><div className="home-category-row" key={category.label}>
+        <div className="overview-panel reference-panel">
+          <div className="overview-panel-head"><span><ClipboardCheck size={16}/> SCHEME REFERENCE SET</span><b>LOCAL DATA</b></div>
+          <div className="reference-total"><strong>{scholarshipSchemes.length.toString().padStart(2,'0')}</strong><span>CURATED SCHEME<br/>RECORDS</span></div>
+          <div className="category-chart" role="img" aria-label={'Scheme categories in the current reference set: '+categories.map(c=>c.label+' '+c.count).join(', ')}>
+            {categories.map((category,index)=><div className="category-row" key={category.label}>
               <div><span>{category.label}</span><b>{category.count}</b></div>
-              <span className="home-category-track"><motion.i initial={{scaleX:0}} whileInView={{scaleX:category.share}} viewport={{once:true,amount:.7}} transition={{duration:.62,delay:index*.08,ease:[.22,1,.36,1]}} className={'home-category-fill fill-'+index}/></span>
+              <span className="category-track"><motion.i initial={{scaleX:0}} whileInView={{scaleX:category.share}} viewport={{once:true,amount:.7}} transition={{duration:.48,delay:index*.06,ease:[.22,1,.36,1]}} className={'category-fill category-fill-'+index}/></span>
             </div>)}
           </div>
-          <div className="home-data-footnote">Category counts are computed from the current {scholarshipSchemes.length} curated records in CampusPulse—not the full national catalogue.</div>
+          <div className="overview-footnote">Counts describe the {scholarshipSchemes.length} scheme records currently stored in CampusPulse, not the full national catalogue.</div>
         </div>
       </div>
     </section>
 
-    <section className="home-saved-section" aria-labelledby="home-saved-title">
-      <div className="home-saved-copy">
-        <span className="home-overline">YOUR WORKSPACE / PERSONAL SHORTLIST</span>
-        <h2 id="home-saved-title">Keep your<br/><em>next move close.</em></h2>
-        <p>Save a scholarship, note your progress and keep application follow-ups together.</p>
-        <Link href="/tracker" className="pill-button pill-button-secondary">Open my tracker <ArrowRight size={15}/></Link>
+    <section className="overview-workspace-grid">
+      <div className="overview-section overview-list-section">
+        <div className="overview-section-heading">
+          <div><span className="eyebrow">YOUR SHORTLIST</span><h2>Saved scholarships.</h2></div>
+          <Link href="/tracker" className="text-link">Open tracker <ArrowUpRight size={14}/></Link>
+        </div>
+        <div className="overview-panel list-panel">
+          {saved.length>0?<div className="saved-list">{saved.map(({item,scheme})=><Link href={'/scholarships/'+scheme!.id} key={item.opportunityId} className="saved-item">
+            <span className="saved-symbol">₹</span><span className="saved-copy"><b>{scheme!.shortName}</b><small>{scheme!.provider}</small></span><span className="status-chip">{item.status}</span><ArrowRight size={14}/>
+          </Link>)}</div>:<div className="overview-empty"><Bookmark size={20}/><div><b>Your shortlist is empty.</b><small>Save a scheme from the directory to keep its details and progress together.</small><Link href="/scholarships" className="text-link">Browse scholarships <ArrowRight size={13}/></Link></div></div>}
+        </div>
       </div>
-      <div className="home-saved-panel">
-        <div className="home-panel-heading"><span><Bookmark size={15}/> SAVED SCHEMES</span><Link href="/tracker">OPEN TRACKER <ArrowUpRight size={13}/></Link></div>
-        {saved.length>0?<div className="home-saved-list">{saved.map(({item,scheme})=><Link href={'/scholarships/'+scheme!.id} key={item.opportunityId} className="home-saved-row"><span className="home-saved-symbol">₹</span><span><b>{scheme!.shortName}</b><small>{scheme!.provider}</small></span><span className="home-saved-status">{item.status}</span><ArrowRight size={14}/></Link>)}</div>:<div className="home-saved-empty"><span className="home-saved-empty-icon"><Bookmark size={21}/></span><div><b>Your shortlist is ready when you are.</b><small>Save a scheme from the directory to keep its requirements and application progress together.</small><Link href="/scholarships" className="home-inline-link">FIND A SCHOLARSHIP <ArrowRight size={13}/></Link></div></div>}
+
+      <div className="overview-section overview-list-section">
+        <div className="overview-section-heading">
+          <div><span className="eyebrow">PERSONAL FOLLOW-UPS</span><h2>Upcoming reminders.</h2></div>
+          <Link href="/planner" className="text-link">Open planner <ArrowUpRight size={14}/></Link>
+        </div>
+        <div className="overview-panel list-panel">
+          {nextReminders.length>0?<div className="reminder-list">{nextReminders.map(item=><div className="overview-reminder" key={item.id}>
+            <span className="reminder-mark"><CalendarDays size={15}/></span><span><b>{item.title}</b><small>{new Date(item.date+'T00:00:00').toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})} · Personal reminder</small></span>
+          </div>)}</div>:<div className="overview-empty"><CheckCircle2 size={20}/><div><b>No personal reminders yet.</b><small>Add a follow-up date when you have something to remember.</small><Link href="/planner" className="text-link">Create a reminder <ArrowRight size={13}/></Link></div></div>}
+        </div>
       </div>
     </section>
 
-    <div className="home-colophon"><span>CAMPUSPULSE / STUDENT SUPPORT</span><b>CLARITY IS A GOOD NEXT STEP.</b><span>END OF ISSUE 01</span></div>
+    <section className="overview-services-strip">
+      <div><span className="eyebrow">BEYOND SCHOLARSHIPS</span><h2>Useful services for student life.</h2><p>Transport passes, academic records, education finance and student software offers.</p></div>
+      <Link href="/services" className="button button-secondary">Explore student services <ArrowUpRight size={15}/></Link>
+    </section>
   </div>;
 }
