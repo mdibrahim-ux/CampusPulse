@@ -4,8 +4,8 @@ import Link from 'next/link';
 import {useEffect,useMemo,useState} from 'react';
 import {motion} from 'framer-motion';
 import {
-  ArrowRight,ArrowUpRight,Bookmark,CalendarClock,Clock3,
-  FileSearch,GraduationCap,ShieldCheck,CheckCircle2,
+  ArrowRight,ArrowUpRight,Bookmark,CalendarClock,
+  FileSearch,GraduationCap,ShieldCheck,
   ClipboardCheck,BookOpenCheck,MoveUpRight
 } from 'lucide-react';
 import {scholarshipSchemes} from '@/lib/scholarships';
