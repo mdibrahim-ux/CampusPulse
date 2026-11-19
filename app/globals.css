@@ -262,6 +262,7 @@ label.field,label.scholar-field,.field,.scholar-field{min-width:0;display:flex;f
 .overview-quick-card:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--cp-shadow)}
 .overview-quick-card>svg:last-child{margin-left:auto;color:var(--cp-muted)}
 .overview-quick-icon{width:39px;height:39px;flex:0 0 39px;display:grid;place-items:center;border:1.5px solid var(--cp-border);border-radius:7px;background:var(--cp-accent);color:#171916}
+.quick-card-lime .overview-quick-icon{background:var(--cp-accent)}
 .quick-card-blue .overview-quick-icon{background:var(--cp-blue)}
 .quick-card-neutral .overview-quick-icon{background:var(--cp-surface-2);color:var(--cp-text)}
 .overview-quick-copy{min-width:0;display:grid;gap:4px}
@@ -273,6 +274,8 @@ label.field,label.scholar-field,.field,.scholar-field{min-width:0;display:flex;f
 .overview-section-heading p{margin:0;color:var(--cp-muted);font-size:9px}
 .overview-data-grid{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(320px,.82fr);gap:14px;align-items:stretch}
 .overview-panel{padding:15px;min-width:0}
+.deadlines-panel{background:var(--cp-surface)}
+.reference-panel{background:var(--cp-surface-2)}
 .overview-panel-head{min-height:26px;padding-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:9px;border-bottom:1px solid var(--cp-border-soft)}
 .overview-panel-head>span{display:inline-flex;align-items:center;gap:7px;color:var(--cp-text);font-size:8px;font-weight:900;letter-spacing:.55px}
 .overview-panel-head>span svg{color:var(--cp-muted)}
@@ -366,6 +369,8 @@ label.field,label.scholar-field,.field,.scholar-field{min-width:0;display:flex;f
 .scheme-card-facts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:auto}
 .scheme-card-facts>div{min-width:0;padding:8px;border:1px solid var(--cp-border-soft);border-radius:6px;background:var(--cp-surface-2)}
 .scheme-card-facts span{display:flex;align-items:center;gap:4px;color:var(--cp-muted);font-size:6px;font-weight:900;letter-spacing:.35px}
+.scheme-support span,.scheme-deadline>span{display:flex;align-items:center;gap:4px;color:var(--cp-muted);font-size:6px;font-weight:900;letter-spacing:.35px}
+.scheme-support>b,.scheme-deadline>b{display:block;margin-top:5px;color:var(--cp-text);font-size:8px;line-height:1.4}
 .scheme-card-facts b{display:block;margin-top:5px;color:var(--cp-text);font-size:8px;line-height:1.4}
 .scheme-card-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:11px;margin-top:11px;border-top:1px solid var(--cp-border-soft)}
 .scheme-doc-count{display:inline-flex;align-items:center;gap:5px;color:var(--cp-muted);font-size:7px;font-weight:800}
@@ -379,6 +384,7 @@ label.field,label.scholar-field,.field,.scholar-field{min-width:0;display:flex;f
 .directory-source-note{margin-top:20px;background:var(--cp-accent)}
 .directory-source-note svg{flex:0 0 auto}
 .directory-source-note b{font-weight:900}
+.scheme-detail-page{padding-bottom:8px}
 .scheme-detail-hero{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:24px;align-items:center;padding:22px;margin:0 0 22px;border:2px solid var(--cp-border);border-radius:10px;background:var(--cp-surface);box-shadow:3px 3px 0 var(--cp-shadow)}
 .scheme-detail-copy h1{margin:10px 0 10px;font-size:clamp(25px,3.3vw,39px);letter-spacing:-1.2px}
 .scheme-detail-copy>p{max-width:760px;font-size:11px}
@@ -420,6 +426,7 @@ label.field,label.scholar-field,.field,.scholar-field{min-width:0;display:flex;f
 .scheme-legal p{margin:0;color:var(--cp-muted);font-size:8px}
 
 /* Eligibility checker */
+.eligibility-page{display:block}
 .checker-layout{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:17px;align-items:start}
 .checker-main{min-width:0}
 .checker-workspace{overflow:hidden;border:2px solid var(--cp-border);border-radius:10px;background:var(--cp-surface);box-shadow:3px 3px 0 var(--cp-shadow)}
@@ -660,6 +667,7 @@ label.field,label.scholar-field,.field,.scholar-field{min-width:0;display:flex;f
 .office-map iframe{width:100%;min-height:300px;border:2px solid var(--cp-border);border-radius:6px;background:var(--cp-surface-2)}
 .office-directory{min-width:0;padding:12px;border:1.5px solid var(--cp-border-soft);border-radius:6px;background:var(--cp-surface-2)}
 .office-contact,.office-source-meta{padding:9px 0;border-bottom:1px solid var(--cp-border-soft)}
+.office-directory-source{display:grid;gap:7px;padding:12px;border:1px solid var(--cp-border-soft);border-radius:6px;background:var(--cp-surface)}
 .office-department,.office-designation{font-size:9px;font-weight:850}
 .office-source-link,.official-officer-links a{display:inline-flex;align-items:center;gap:5px;margin-top:7px;color:var(--cp-blue-strong);font-size:8px;font-weight:850}
 .office-source-meta-head{display:flex;align-items:center;justify-content:space-between;gap:8px}

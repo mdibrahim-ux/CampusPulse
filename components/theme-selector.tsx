@@ -9,8 +9,14 @@ export function ThemeSelector(){
   const [theme,setTheme]=useState<Theme>('light');
 
   useEffect(()=>{
-    const active=document.documentElement.dataset.theme==='dark'?'dark':'light';
-    setTheme(active);
+    const sync=()=>setTheme(document.documentElement.dataset.theme==='dark'?'dark':'light');
+    sync();
+    window.addEventListener('campuspulse-theme-change',sync);
+    window.addEventListener('storage',sync);
+    return()=>{
+      window.removeEventListener('campuspulse-theme-change',sync);
+      window.removeEventListener('storage',sync);
+    };
   },[]);
 
   const choose=(next:Theme)=>{
@@ -22,6 +28,7 @@ export function ThemeSelector(){
     }catch{
       // Theme still applies for this session if storage is unavailable.
     }
+    window.dispatchEvent(new Event('campuspulse-theme-change'));
   };
 
   return <div className="theme-selector" role="group" aria-label="Colour theme">

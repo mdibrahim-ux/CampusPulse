@@ -34,3 +34,18 @@
 - [ ] Test keyboard focus and mobile navigation.
 - [ ] Test `prefers-reduced-motion`.
 - [ ] Run `npm run lint`, `npm run typecheck`, `npm run build`.
+
+## Visual system — neo-brutalist light and dark themes
+
+- [ ] First visit follows the operating-system theme when no CampusPulse preference is stored.
+- [ ] Light / Dark theme controls are visible in desktop navigation and the mobile drawer.
+- [ ] Selecting Light or Dark updates the entire shell and every active route without a reload.
+- [ ] The chosen theme survives refresh and route navigation.
+- [ ] Date, select, text, file and checkbox controls use the active theme; no default white input appears in dark mode.
+- [ ] Desktop navigation remains one row at 1280px and 1440px widths with no overlap.
+- [ ] At tablet/mobile widths, primary navigation collapses to one header row and the drawer exposes all routes, theme and language controls.
+- [ ] Test home/dashboard, scholarship directory, detail, checker, review, rejection, services, tracker, planner and profile in both themes.
+- [ ] No horizontal page overflow at 375px, 768px, 1024px, 1280px or 1440px.
+- [ ] Keyboard focus is visible on links, buttons, form controls, menu and theme selector.
+- [ ] Reduced-motion preference disables nonessential spatial transitions.
+- [ ] Overview content is functional workspace information; no promotional mega-banner or decorative comic elements.
