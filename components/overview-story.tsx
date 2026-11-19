@@ -44,7 +44,7 @@ function StepIllustration({step}:{step:number}){
     <div className="journey-visual-top"><span><i/> CAMPUSPULSE / WORKFLOW PREVIEW</span><span>0{step+1} — 03</span></div>
     <div className="journey-visual-grid"/>
     <svg className="journey-connectors" viewBox="0 0 620 340" fill="none" aria-hidden="true">
-      <motion.path d="M105 172 C170 52 260 52 310 172 S455 292 515 172" stroke="url(#journeyLine)" strokeWidth="2" strokeDasharray="5 8" initial={{pathLength:0}} animate={{pathLength:1}} transition={{duration:reduced?.01:1.15,ease:'easeInOut'}}/>
+      <motion.path d="M105 172 C170 52 260 52 310 172 S455 292 515 172" stroke="url(#journeyLine)" strokeWidth="2" strokeDasharray="5 8" initial={{pathLength:0}} animate={{pathLength:1}} transition={{duration:reduced ? 0.01 : 1.15,ease:'easeInOut'}}/>
       <defs><linearGradient id="journeyLine" x1="105" y1="172" x2="515" y2="172" gradientUnits="userSpaceOnUse"><stop stopColor="#7187FF"/><stop offset=".52" stopColor="#56C7AD"/><stop offset="1" stopColor="#D7AB67"/></linearGradient></defs>
     </svg>
     <AnimatePresence mode="wait" initial={false}>
@@ -101,7 +101,7 @@ export function OverviewStory(){
           return <button type="button" key={stage.number} className={'story-step '+(selected?'active':'')} onClick={()=>setActive(index)} aria-pressed={selected}>
             <span className="story-step-number">{stage.number}</span>
             <span className={'story-step-icon tone-'+stage.tone}><StageIcon size={18}/></span>
-            <span className="story-step-copy"><b>{stage.label}</b><strong>{stage.title}</strong><small>{stage.body}</small>{selected&&<motion.i className="story-step-progress" layoutId="story-progress" transition={{duration:reduce?.01:.25}}/>}</span>
+            <span className="story-step-copy"><b>{stage.label}</b><strong>{stage.title}</strong><small>{stage.body}</small>{selected&&<motion.i className="story-step-progress" layoutId="story-progress" transition={{duration:reduce ? 0.01 : 0.25}}/>}</span>
             <ArrowRight size={15} className="story-step-arrow"/>
           </button>;
         })}
