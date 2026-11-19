@@ -13,7 +13,7 @@ export const viewport:Viewport={
   themeColor:'#F5F3EC',
 };
 
-const themeBootstrap = \`(()=>{try{const saved=localStorage.getItem('campuspulse-theme');const systemDark=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;const theme=saved==='dark'||(!saved&&systemDark)?'dark':'light';document.documentElement.dataset.theme=theme;document.documentElement.style.colorScheme=theme;}catch{document.documentElement.dataset.theme='light';document.documentElement.style.colorScheme='light';}})();\`;
+const themeBootstrap = `(()=>{try{const saved=localStorage.getItem('campuspulse-theme');const systemDark=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;const theme=saved==='dark'||(!saved&&systemDark)?'dark':'light';document.documentElement.dataset.theme=theme;document.documentElement.style.colorScheme=theme;}catch{document.documentElement.dataset.theme='light';document.documentElement.style.colorScheme='light';}})();`;
 
 export default function RootLayout({children}:{children:React.ReactNode}){
   return <html lang="en" data-theme="light" suppressHydrationWarning>

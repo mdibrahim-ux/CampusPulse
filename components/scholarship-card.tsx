@@ -18,7 +18,6 @@ export function ScholarshipCard({scheme,index}:{scheme:ScholarshipScheme;index:n
   initial={{opacity:0,y:16}}
   whileInView={{opacity:1,y:0}}
   viewport={{once:true,amount:.12}}
-  whileHover={{y:-4}}
   transition={{duration:.28,delay:Math.min(index*.045,.18),ease:[.22,1,.36,1]}}
  >
   <div className="scheme-card-art">
