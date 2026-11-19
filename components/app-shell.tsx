@@ -7,7 +7,7 @@ import {useEffect,useState} from 'react';
 import {
   ArrowRight,Bookmark,CalendarDays,ChevronDown,FileSearch,
   GraduationCap,LayoutGrid,ListChecks,Menu,ShieldAlert,UserRound,
-  X,BriefcaseBusiness,Zap
+  X,BriefcaseBusiness,Zap,Globe2
 } from 'lucide-react';
 import {getProfile} from '@/lib/storage';
 import {LanguageSelector} from '@/components/language-selector';
@@ -34,7 +34,7 @@ function activePath(path:string,href:string){
 
 function Brand(){
   return <Link href="/dashboard" className="brand" aria-label="CampusPulse overview">
-    <span className="brand-symbol"><Zap size={17} strokeWidth={2.4} fill="currentColor"/></span>
+    <span className="brand-symbol"><Zap size={18} strokeWidth={2.6} fill="currentColor"/></span>
     <span className="brand-wordmark">campus<span>pulse</span><small>STUDENT SUPPORT SYSTEM</small></span>
   </Link>;
 }
@@ -45,8 +45,6 @@ export function AppShell({children}:{children:React.ReactNode}){
   const [workspaceOpen,setWorkspaceOpen]=useState(false);
   const [mobileOpen,setMobileOpen]=useState(false);
   const activeWorkspace=workspace.some(item=>activePath(path,item.href));
-  const currentLabel=[...primary,...workspace].find(item=>activePath(path,item.href))?.label
-    ||(path.startsWith('/scholarships/')?'Scheme details':'CampusPulse');
 
   useEffect(()=>{
     const sync=()=>setProfile(getProfile());
@@ -78,6 +76,7 @@ export function AppShell({children}:{children:React.ReactNode}){
   const initials=profile?.name?.trim()
     ?profile.name.trim().split(/\s+/).slice(0,2).map(part=>part[0]).join('').toUpperCase()
     :null;
+  const firstName=profile?.name?.trim().split(/\s+/)[0]||'Profile';
 
   if(path==='/')return <>{children}</>;
 
@@ -85,9 +84,9 @@ export function AppShell({children}:{children:React.ReactNode}){
     <div className="app-frame">
       <motion.header
         className="shell-header"
-        initial={{opacity:0,y:-12}}
+        initial={{opacity:0,y:-8}}
         animate={{opacity:1,y:0}}
-        transition={{duration:.48,ease:[.22,1,.36,1]}}
+        transition={{duration:.34,ease:[.22,1,.36,1]}}
       >
         <div className="shell-nav">
           <Brand/>
@@ -97,21 +96,21 @@ export function AppShell({children}:{children:React.ReactNode}){
               const Icon=item.icon;
               const active=activePath(path,item.href);
               return <Link key={item.href} href={item.href} className={'primary-nav-link '+(active?'active':'')} aria-current={active?'page':undefined}>
+                {active&&<motion.span layoutId="primary-nav-pill" className="primary-nav-active" transition={{type:'spring',stiffness:440,damping:36}}/>}
                 <Icon size={15} strokeWidth={2}/>
                 <span>{item.label}</span>
-                {active&&<motion.i layoutId="primary-nav-indicator" className="primary-nav-indicator" transition={{type:'spring',stiffness:480,damping:36}}/>}
               </Link>;
             })}
             <div className="workspace-menu-wrap">
               <button type="button" className={'primary-nav-link workspace-trigger '+((workspaceOpen||activeWorkspace)?'active':'')} onClick={()=>setWorkspaceOpen(value=>!value)} aria-expanded={workspaceOpen} aria-haspopup="menu">
+                {(workspaceOpen||activeWorkspace)&&<motion.span layoutId="primary-nav-pill" className="primary-nav-active workspace-active-bg" transition={{type:'spring',stiffness:440,damping:36}}/>}
                 <span className="workspace-trigger-icon"><LayoutGrid size={15}/></span>
-                <span>My workspace</span>
+                <span>Workspace</span>
                 <ChevronDown size={13} className={workspaceOpen?'chevron-open':''}/>
-                {activeWorkspace&&<i className="workspace-active-dot"/>}
               </button>
               <AnimatePresence>
-                {workspaceOpen&&<motion.div className="workspace-popover" role="menu" initial={{opacity:0,y:8,scale:.97}} animate={{opacity:1,y:0,scale:1}} exit={{opacity:0,y:6,scale:.98}} transition={{duration:.18,ease:[.22,1,.36,1]}}>
-                  <div className="workspace-popover-head"><span>YOUR WORKSPACE</span><small>Everything you are working on.</small></div>
+                {workspaceOpen&&<motion.div className="workspace-popover" role="menu" initial={{opacity:0,y:7,scale:.985}} animate={{opacity:1,y:0,scale:1}} exit={{opacity:0,y:5,scale:.99}} transition={{duration:.16,ease:[.22,1,.36,1]}}>
+                  <div className="workspace-popover-head"><span>YOUR WORKSPACE</span><small>Your saved work and support tools</small></div>
                   {workspace.map(item=>{
                     const Icon=item.icon;
                     return <Link role="menuitem" href={item.href} key={item.href} className={'workspace-menu-item '+(activePath(path,item.href)?'active':'')}>
@@ -126,23 +125,22 @@ export function AppShell({children}:{children:React.ReactNode}){
           </nav>
 
           <div className="shell-actions">
-            <span className="shell-divider" aria-hidden="true"/>
             <LanguageSelector/>
             <Link href="/profile" className={'shell-profile '+(path==='/profile'?'active':'')} aria-label="Open profile">
               <span className="shell-avatar">{initials||<UserRound size={15}/>}</span>
-              <span className="shell-profile-name">{profile?.name?.trim().split(/\s+/)[0]||'Profile'}</span>
+              <span className="shell-profile-name">{firstName}</span>
             </Link>
           </div>
 
-          <button type="button" className="mobile-menu-button" onClick={()=>setMobileOpen(value=>!value)} aria-label={mobileOpen?'Close navigation':'Open navigation'} aria-expanded={mobileOpen}>
+          <button type="button" className="mobile-menu-button" onClick={()=>setMobileOpen(value=>!value)} aria-label={mobileOpen?'Close navigation':'Open navigation'} aria-expanded={mobileOpen} aria-controls="mobile-navigation">
             {mobileOpen?<X size={19}/>:<Menu size={19}/>}
           </button>
         </div>
       </motion.header>
 
       <AnimatePresence>
-        {mobileOpen&&<motion.div className="mobile-navigation" initial={{opacity:0,y:-8}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-8}} transition={{duration:.18}} aria-label="Mobile navigation">
-          <div className="mobile-navigation-top"><span>YOUR CAMPUSPULSE</span><span>{currentLabel}</span></div>
+        {mobileOpen&&<motion.nav id="mobile-navigation" className="mobile-navigation" aria-label="Mobile navigation" initial={{opacity:0,y:-7,scale:.99}} animate={{opacity:1,y:0,scale:1}} exit={{opacity:0,y:-5,scale:.995}} transition={{duration:.17,ease:[.22,1,.36,1]}}>
+          <div className="mobile-navigation-top"><span>EXPLORE CAMPUSPULSE</span><span>STUDENT SUPPORT</span></div>
           <div className="mobile-navigation-section">
             <small>EXPLORE</small>
             {primary.map(item=>{const Icon=item.icon;return <Link key={item.href} href={item.href} className={activePath(path,item.href)?'active':''}><Icon size={17}/><span>{item.label}</span><ArrowRight size={14}/></Link>;})}
@@ -151,20 +149,25 @@ export function AppShell({children}:{children:React.ReactNode}){
             <small>MY WORKSPACE</small>
             {workspace.map(item=>{const Icon=item.icon;return <Link key={item.href} href={item.href} className={activePath(path,item.href)?'active':''}><Icon size={17}/><span>{item.label}</span><ArrowRight size={14}/></Link>;})}
           </div>
-          <div className="mobile-navigation-bottom"><LanguageSelector/><Link href="/profile"><UserRound size={15}/> Profile</Link></div>
-        </motion.div>}
+          <div className="mobile-navigation-bottom">
+            <div className="mobile-language-label"><Globe2 size={15}/> LANGUAGE</div>
+            <LanguageSelector/>
+            <Link href="/profile" className="mobile-profile-link"><UserRound size={15}/> {firstName}</Link>
+          </div>
+        </motion.nav>}
       </AnimatePresence>
 
+      {(workspaceOpen||mobileOpen)&&<button className="shell-dismiss-layer" aria-label="Close open navigation" onClick={()=>{setWorkspaceOpen(false);setMobileOpen(false)}}/>}
+
       <main className="app-main">
-        <div className="page-context"><span>CAMPUSPULSE</span><i>/</i><b>{currentLabel}</b><span className="context-status"><i/> PRIVATE WORKSPACE</span></div>
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={path}
             className="route-stage"
-            initial={{opacity:0,y:7,filter:'blur(3px)'}}
-            animate={{opacity:1,y:0,filter:'blur(0px)'}}
-            exit={{opacity:0,y:-4,filter:'blur(2px)'}}
-            transition={{duration:.2,ease:[.22,1,.36,1]}}
+            initial={{opacity:0,y:6}}
+            animate={{opacity:1,y:0}}
+            exit={{opacity:0,y:-3}}
+            transition={{duration:.22,ease:[.22,1,.36,1]}}
           >
             {children}
           </motion.div>
@@ -176,7 +179,6 @@ export function AppShell({children}:{children:React.ReactNode}){
         <span>Independent student support · Official sources linked</span>
         <span className="footer-local"><i/> LOCAL-FIRST</span>
       </footer>
-      {(workspaceOpen||mobileOpen)&&<button className="shell-dismiss-layer" aria-label="Close open navigation" onClick={()=>{setWorkspaceOpen(false);setMobileOpen(false)}}/>}
     </div>
   </MotionConfig>;
 }
