@@ -84,7 +84,7 @@ export default function DashboardPage(){
             <div className="comic-file-footer"><span>YOUR PERSONAL WORKSPACE</span><span>CP / 01</span></div>
           </motion.div>
           <motion.div className="comic-speech-bubble" initial={{opacity:0,x:18,y:10}} animate={{opacity:1,x:0,y:0}} transition={{duration:.45,delay:.35}}>
-            <span>HEY, STUDENT!</span><b>YOU'VE GOT<br/>THIS.</b>
+            <span>HEY, STUDENT!</span><b>YOU&apos;VE GOT<br/>THIS.</b>
           </motion.div>
           <motion.div className="comic-orbit-stamp" animate={{rotate:[-7,1,-7],y:[0,-5,0]}} transition={{duration:5.2,repeat:Infinity,ease:'easeInOut'}}>
             <span>ONE STEP<br/>AT A TIME</span><ArrowRight size={18}/>
@@ -134,7 +134,7 @@ export default function DashboardPage(){
 
     <section className="comic-deadline-section" aria-labelledby="comic-deadline-title">
       <div className="comic-section-heading">
-        <div><span className="comic-overline">DON'T MISS THE WINDOW / LIVE FROM YOUR REFERENCE SET</span><h2 id="comic-deadline-title">Deadline <em>watch.</em></h2></div>
+        <div><span className="comic-overline">DON&apos;T MISS THE WINDOW / LIVE FROM YOUR REFERENCE SET</span><h2 id="comic-deadline-title">Deadline <em>watch.</em></h2></div>
         <Link href="/scholarships" className="comic-pill-link">OPEN SCHEME DIRECTORY <ArrowUpRight size={14}/></Link>
       </div>
       <div className="comic-deadline-layout">
@@ -171,6 +171,6 @@ export default function DashboardPage(){
       </div>
     </section>
 
-    <div className="comic-endnote"><span>THAT'S THE BRIEF.</span><b>YOUR NEXT STEP IS YOURS.</b><span>CP / STUDENT SUPPORT SYSTEM</span></div>
+    <div className="comic-endnote"><span>THAT&apos;S THE BRIEF.</span><b>YOUR NEXT STEP IS YOURS.</b><span>CP / STUDENT SUPPORT SYSTEM</span></div>
   </div>;
 }
