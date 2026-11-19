@@ -11,7 +11,6 @@ import {
 } from 'lucide-react';
 import {getProfile} from '@/lib/storage';
 import {LanguageSelector} from '@/components/language-selector';
-import {ThemeSelector} from '@/components/theme-selector';
 import type {StudentProfile} from '@/lib/types';
 
 const primary=[
@@ -125,7 +124,6 @@ export function AppShell({children}:{children:React.ReactNode}){
           </nav>
 
           <div className="shell-actions">
-            <ThemeSelector/>
             <LanguageSelector/>
             <Link href="/profile" className={'shell-profile '+(path==='/profile'?'active':'')} aria-label="Open profile">
               <span className="shell-avatar">{initials||<UserRound size={15}/>}</span>
@@ -151,7 +149,6 @@ export function AppShell({children}:{children:React.ReactNode}){
             {workspace.map(item=>{const Icon=item.icon;return <Link key={item.href} href={item.href} className={activePath(path,item.href)?'active':''}><Icon size={17}/><span>{item.label}</span><ArrowRight size={14}/></Link>;})}
           </div>
           <div className="mobile-navigation-tools">
-            <div><small>THEME</small><ThemeSelector/></div>
             <div><small>LANGUAGE</small><LanguageSelector/></div>
           </div>
           <Link href="/profile" className="mobile-profile-link"><UserRound size={16}/>{firstName}<ArrowRight size={14}/></Link>

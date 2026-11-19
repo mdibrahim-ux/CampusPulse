@@ -35,17 +35,19 @@
 - [ ] Test `prefers-reduced-motion`.
 - [ ] Run `npm run lint`, `npm run typecheck`, `npm run build`.
 
-## Visual system — neo-brutalist light and dark themes
 
-- [ ] First visit follows the operating-system theme when no CampusPulse preference is stored.
-- [ ] Light / Dark theme controls are visible in desktop navigation and the mobile drawer.
-- [ ] Selecting Light or Dark updates the entire shell and every active route without a reload.
-- [ ] The chosen theme survives refresh and route navigation.
-- [ ] Date, select, text, file and checkbox controls use the active theme; no default white input appears in dark mode.
+## Visual system — single light neo-brutalist theme
+
+- [ ] No Dark mode or theme selector is shown in desktop navigation or the mobile drawer.
+- [ ] The site uses the same warm neutral canvas and bold ink / forest / navy / rust palette on every active route.
+- [ ] No blurred glow, text shadow, glass blur or soft focus halo remains. Hard-edged offset shadows may be used sparingly.
+- [ ] Primary and secondary action buttons are pill shaped; icon-only actions are circular.
+- [ ] Key action icons use consistent circular containers, size and alignment.
+- [ ] Heading, body, label and control type sizes remain readable and consistent.
 - [ ] Desktop navigation remains one row at 1280px and 1440px widths with no overlap.
-- [ ] At tablet/mobile widths, primary navigation collapses to one header row and the drawer exposes all routes, theme and language controls.
-- [ ] Test home/dashboard, scholarship directory, detail, checker, review, rejection, services, tracker, planner and profile in both themes.
+- [ ] At tablet/mobile widths, navigation collapses to one header row and the drawer exposes all routes and language selection.
+- [ ] Test overview, scholarship directory, scheme detail, checker, document review, rejection, services, tracker, planner and profile.
 - [ ] No horizontal page overflow at 375px, 768px, 1024px, 1280px or 1440px.
-- [ ] Keyboard focus is visible on links, buttons, form controls, menu and theme selector.
+- [ ] Keyboard focus is visible on links, buttons, form controls and menus.
 - [ ] Reduced-motion preference disables nonessential spatial transitions.
-- [ ] Overview content is functional workspace information; no promotional mega-banner or decorative comic elements.
+- [ ] Run \`npm run lint\`, \`npm run typecheck\`, \`npm run build\`.

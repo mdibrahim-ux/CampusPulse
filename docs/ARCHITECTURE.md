@@ -4,13 +4,14 @@
 - Next.js App Router + TypeScript + React.
 - Scholarship-only routes: overview, scholarship directory and detail, eligibility checker, document review, rejection analyser, saved scholarship tracker, personal planner and student services.
 - The root route redirects to \`/dashboard\`, which is the primary student workspace. Legacy \`/opportunities\` and \`/sources\` URLs redirect to \`/scholarships\`.
-- Shared design system: simple neo-brutalism, with complete light and dark themes selected from the global shell. The theme selector persists the user's choice in browser localStorage; first visit follows the system preference.
+- Shared design system: simple neo-brutalism in one light theme. Colour theme switching is intentionally not offered.
 - One CSS source of truth in \`app/globals.css\`: root tokens, global reset, native control styling, shell, shared components and route page families. Avoid appended override blocks or route-specific duplicate resets.
 
 ## Visual system
-- Flat surfaces, strong outlines, compact consistent radii, visible geometry and restrained hard-offset shadows.
-- A strict spacing and grid system keeps the visual language orderly and content-first.
-- Light and dark modes use the same structure and accent vocabulary; contrast and focus states are tested in both.
+- Warm neutral canvas, strong near-black outlines and saturated forest / navy / rust surfaces.
+- Rounded pill actions and navigation controls; circular icon containers for key interface actions.
+- Flat surfaces with crisp borders and hard-edged offset shadows only. No glow, blur, glass effects or text shadows.
+- Expressive but readable system sans-serif typography, consistent spacing and comfortable control sizes.
 - Motion is short and functional, uses transforms/opacity where practical and respects \`prefers-reduced-motion\`.
 
 ## Domain logic
