@@ -1,3 +1,218 @@
+
+/* CampusPulse — RetroUI design tokens
+   Source: https://github.com/neobrutalism/neobrutalism (RetroUI registry.json)
+   UI styles are intentionally translated into this project's existing CSS-first components. */
+:root{
+  color-scheme:light;
+  --background:0 0% 100%;
+  --foreground:0 0% 0%;
+  --card:0 0% 100%;
+  --card-foreground:0 0% 0%;
+  --primary:50 100% 60%;
+  --primary-foreground:0 0% 0%;
+  --muted:0 0% 68%;
+  --muted-foreground:0 0% 35%;
+  --accent:50 89% 74%;
+  --accent-foreground:0 0% 0%;
+  --destructive:355 78% 56%;
+  --destructive-foreground:0 0% 100%;
+  --border:0 0% 0%;
+  --shadow-xs:1px 1px 0 hsl(var(--border));
+  --shadow-sm:2px 2px 0 hsl(var(--border));
+  --shadow:3px 3px 0 hsl(var(--border));
+  --shadow-md:4px 4px 0 hsl(var(--border));
+  --shadow-lg:6px 6px 0 hsl(var(--border));
+  --shadow-xl:10px 10px 0 1px hsl(var(--border));
+  --shadow-2xl:16px 16px 0 1px hsl(var(--border));
+
+  /* Existing CampusPulse selectors map to the RetroUI registry preset. */
+  --cp-bg:#fff;
+  --cp-surface:#fff;
+  --cp-surface-2:#FFF8D6;
+  --cp-surface-3:#FFECA3;
+  --cp-text:#000;
+  --cp-text-soft:#202020;
+  --cp-muted:#595959;
+  --cp-border:#000;
+  --cp-border-soft:#000;
+  --cp-shadow:#000;
+  --cp-accent:hsl(50 100% 60%);
+  --cp-accent-strong:hsl(50 100% 54%);
+  --cp-on-accent:#000;
+  --cp-accent-light:hsl(50 89% 74%);
+  --cp-blue:hsl(50 100% 60%);
+  --cp-blue-strong:hsl(50 100% 48%);
+  --cp-blue-light:hsl(50 89% 74%);
+  --cp-warm:hsl(50 89% 74%);
+  --cp-rust:#FF4D50;
+  --cp-rust-light:#FFF0EF;
+  --cp-danger:hsl(355 78% 46%);
+  --cp-success:#16844D;
+  --cp-warning:#9A6800;
+  --cp-control:#fff;
+  --cp-overlay:rgba(0,0,0,.62);
+  --cp-radius:5px;
+  --cp-shadow-xs:1px 1px 0 #000;
+  --cp-shadow-sm:2px 2px 0 #000;
+  --cp-shadow:3px 3px 0 #000;
+  --cp-shadow-md:4px 4px 0 #000;
+  --cp-shadow-lg:6px 6px 0 #000;
+  --cp-shadow-xl:10px 10px 0 1px #000;
+}
+html{min-height:100%;background:#fff;color-scheme:light;scroll-behavior:smooth}
+body{
+  min-height:100vh;margin:0;background:var(--cp-bg);color:#000;
+  font-family:var(--font-dm-sans),Arial,sans-serif;font-size:15px;font-weight:500;line-height:1.6;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+body,button,input,select,textarea{font-family:var(--font-dm-sans),Arial,sans-serif}
+p{color:#202020}
+h1,h2,h3,h4,h5,h6{color:#000;font-family:var(--font-dm-sans),Arial,sans-serif;font-weight:700;letter-spacing:-.035em}
+h1{font-size:clamp(36px,4.5vw,58px);line-height:1.04}
+h2{font-size:clamp(26px,3vw,38px);line-height:1.12}
+h3{font-size:21px;line-height:1.22}
+::selection{background:hsl(50 100% 60%);color:#000}
+:focus-visible{outline:2px solid #000!important;outline-offset:3px!important}
+
+/* RetroUI's 5px geometry and configurable hard-shadow scale. */
+.shell-header,.workspace-popover,.mobile-navigation,.scholar-form-card,.profile-form-card,
+.planner-create,.planner-list,.scheme-aside-card,.analysis-result-card,.aside-sticky-card,
+.overview-panel,.overview-quick-card,.overview-hero,.overview-services-strip,
+.directory-toolbar,.scheme-detail-hero,.scheme-detail-section,.checker-workspace,
+.services-hero,.service-card,.service-feature,.tracker-summary,.tracked-card,
+.office-finder,.office-directory,.profile-banner,.profile-tip,.scholar-form-card,
+.profile-form-card,.planner-create,.planner-list,.overview-panel,.scheme-card,
+.service-card,.component-demo-panel,.cp-attachment,.cp-ui-card,.cp-empty,.cp-calendar,
+.cp-calendar-popover,.cp-dropdown-content,.cp-dialog-content,.cp-drawer-content,
+.cp-popover-content,.cp-hover-card-content,.cp-command,.cp-context-content,
+.cp-menubar,.cp-navigation-menu-content,.cp-sidebar-provider,.cp-table-wrap,
+.cp-component-surface{
+  border-radius:5px;
+}
+.shell-header,.workspace-popover,.mobile-navigation,.scholar-form-card,.profile-form-card,
+.planner-create,.planner-list,.scheme-aside-card,.analysis-result-card,.aside-sticky-card,
+.overview-panel,.overview-quick-card,.overview-hero,.overview-services-strip,
+.directory-toolbar,.scheme-detail-hero,.scheme-detail-section,.checker-workspace,
+.services-hero,.service-card,.service-feature,.tracker-summary,.tracked-card,
+.office-finder,.office-directory,.profile-banner,.profile-tip,.scheme-card,
+.service-card,.component-demo-panel,.cp-ui-card,.cp-component-surface{
+  box-shadow:var(--cp-shadow);
+  border:2px solid #000;
+}
+.button,.cp-ui-button,.scheme-card-action,.service-open,.directory-filter-list button,
+.service-categories button,.language-control,.shell-profile,.mobile-menu-button,
+.workspace-menu-item,.cp-dropdown-trigger,.cp-popover-trigger,.cp-menubar-trigger,
+.cp-navigation-menu-trigger,.cp-attachment-action,.cp-dialog-close,.cp-date-trigger,
+.cp-calendar-head button,.cp-calendar-footer button,.cp-pagination-link,
+.cp-collapsible-trigger,.cp-carousel-control,.cp-sidebar-trigger,
+.cp-sidebar-menu-button,.cp-questionnaire-choice{
+  border-radius:5px;
+}
+.button,.cp-ui-button,.scheme-card-action,.service-open{
+  border:2px solid #000;background:hsl(50 100% 60%);color:#000;
+  box-shadow:4px 4px 0 #000;font-weight:700;
+  transition:transform .14s ease,box-shadow .14s ease,background .14s ease;
+}
+.button:hover,.cp-ui-button:hover,.scheme-card-action:hover,.service-open:hover{
+  transform:translate(4px,4px);box-shadow:none;
+}
+.button:active,.cp-ui-button:active,.scheme-card-action:active,.service-open:active{
+  transform:translate(4px,4px);box-shadow:none;
+}
+.button-secondary,.button-light,.cp-ui-button-secondary,.cp-ui-button-neutral,
+.cp-ui-button-outline{background:#fff;color:#000}
+.button-secondary:hover,.button-light:hover,.cp-ui-button-secondary:hover,
+.cp-ui-button-neutral:hover,.cp-ui-button-outline:hover{background:hsl(50 89% 74%);color:#000}
+.button-dark,.button-primary,.cp-ui-button-primary,.cp-ui-button-default{background:hsl(50 100% 60%);color:#000}
+.button-icon-circle{border:1.5px solid #000;border-radius:5px;background:#fff;color:#000}
+input,select,textarea{
+  border:2px solid #000;border-radius:5px;background:#fff;color:#000;
+  font-size:13px;font-weight:500;color-scheme:light;
+}
+input::placeholder,textarea::placeholder{color:#595959}
+input:focus,select:focus,textarea:focus{outline:2px solid #000;outline-offset:2px;border-color:#000;box-shadow:none}
+select option{background:#fff;color:#000}
+input[type="checkbox"]{accent-color:hsl(50 100% 60%)}
+.status-chip,.type-tag,.source-kind,.source-status{
+  border:1.5px solid #000;border-radius:4px;background:hsl(50 89% 74%);color:#000;
+}
+.overview-quick-icon,.deadline-index,.workspace-menu-icon,.shell-avatar,
+.brand-symbol,.checker-panel-number,.upload-icon,.office-finder-mark{
+  border:2px solid #000;border-radius:5px;background:hsl(50 100% 60%);color:#000;
+}
+.overview-services-strip,.profile-banner{background:hsl(50 100% 60%);color:#000}
+.overview-services-strip h2,.overview-services-strip p,.overview-services-strip .eyebrow,
+.profile-banner-copy .eyebrow,.profile-banner-copy h3,.profile-banner-copy p{color:#000}
+.directory-filter-list button.selected,.service-categories button.active,
+.scheme-category,.scheme-card-index,.scheme-hero-badge,.analysis-badge,.result-status,
+.checker-step-tab.active,.checker-aside-steps>div.active>span,
+.checker-aside-steps>div.done>span,.checker-panel-number,.upload-icon{
+  background:hsl(50 100% 60%);color:#000;border-color:#000;
+}
+.scholar-notice,.inline-rule,.aside-safety,.planner-warning,.directory-source-note,
+.services-disclaimer{background:hsl(50 89% 74%);border:2px solid #000;color:#000}
+.redaction-warning,.notice-caution{background:#FFF0B3;border:2px solid #000;color:#000}
+.redaction-warning p,.notice-caution p{color:#000}
+.cp-ui-card,.cp-dialog-content,.cp-drawer-content,.cp-popover-content,
+.cp-hover-card-content,.cp-command,.cp-context-content,.cp-menubar,
+.cp-navigation-menu-content,.cp-sidebar-provider,.cp-table-wrap,.cp-calendar,
+.cp-calendar-popover,.cp-empty,.cp-attachment,.cp-component-surface{
+  border:2px solid #000;border-radius:5px;background:#fff;color:#000;
+  box-shadow:4px 4px 0 #000;
+}
+.cp-ui-card-title,.cp-attachment-title,.cp-empty-title,.cp-dialog-title,
+.cp-field-title,.cp-field-label,.cp-questionnaire-title{color:#000;font-weight:700}
+.cp-ui-card-description,.cp-attachment-description,.cp-empty-description,
+.cp-dialog-description,.cp-field-description,.cp-form-description{color:#404040}
+.cp-checkbox{border:2px solid #000;border-radius:3px;background:#fff}
+.cp-checkbox:checked{border-color:#000;background:hsl(50 100% 60%)}
+.cp-checkbox-check,.cp-radio-mark{color:#000;background:#000}
+.cp-radio{border:2px solid #000;background:#fff}
+.cp-radio:checked{border-color:#000}
+.cp-switch span{border:2px solid #000;border-radius:5px;background:#fff}
+.cp-switch span:after{border:1px solid #000;border-radius:3px;background:#fff}
+.cp-switch input:checked+span{border-color:#000;background:hsl(50 100% 60%)}
+.cp-switch input:checked+span:after{background:#000}
+.cp-progress{height:10px;border:2px solid #000;border-radius:2px;background:#fff}
+.cp-progress-indicator{border-radius:0;background:hsl(50 100% 60%)}
+.cp-date-trigger,.cp-dropdown-trigger,.cp-popover-trigger,.cp-menubar-trigger,
+.cp-navigation-menu-trigger,.cp-sidebar-trigger,.cp-sidebar-menu-button,
+.cp-collapsible-trigger,.cp-carousel-control,.cp-pagination-link,
+.cp-attachment-action,.cp-dialog-close{
+  border:2px solid #000;border-radius:5px;background:#fff;color:#000;
+  box-shadow:2px 2px 0 #000;
+}
+.cp-date-trigger:hover,.cp-dropdown-trigger:hover,.cp-popover-trigger:hover,
+.cp-menubar-trigger:hover,.cp-navigation-menu-trigger:hover,.cp-sidebar-menu-button:hover,
+.cp-collapsible-trigger:hover,.cp-carousel-control:hover,.cp-pagination-link:hover,
+.cp-attachment-action:hover,.cp-dialog-close:hover{
+  background:hsl(50 89% 74%);color:#000;
+}
+.cp-dialog-backdrop,.cp-drawer-backdrop{background:rgba(0,0,0,.62)}
+.cp-tabs-list{border:2px solid #000;border-radius:5px;background:#FFF8D6}
+.cp-tabs-trigger{border-radius:3px;color:#000}
+.cp-tabs-trigger[aria-selected=true]{border:2px solid #000;background:hsl(50 100% 60%);color:#000}
+.cp-table-head{background:#FFF8D6;color:#000}
+.cp-table-cell{border-color:#000;color:#000}
+.cp-table-row:hover{background:#FFF8D6}
+.cp-pagination-link.is-active{border-color:#000;background:hsl(50 100% 60%);color:#000}
+.cp-skeleton{border:1px solid #000;border-radius:3px}
+.cp-context-trigger{border:2px dashed #000;border-radius:5px;color:#000}
+.cp-menubar{background:#FFF8D6}
+.cp-sidebar{border-color:#000;background:#FFF8D6}
+.cp-sidebar-inset{color:#000}
+.cp-questionnaire-item,.cp-questionnaire-choice{border:2px solid #000;border-radius:5px;background:#fff;color:#000}
+.cp-questionnaire-choice.is-selected{background:hsl(50 100% 60%);color:#000}
+.cp-form-label,.cp-form-description,.cp-form-message{color:#000}
+.component-library-notice{border:2px solid #000;border-radius:5px;background:#FFF8D6;color:#000}
+.component-demo-heading h2{font-weight:700;color:#000}
+.component-demo-panel{border:2px solid #000;border-radius:5px;background:#fff;color:#000;box-shadow:4px 4px 0 #000}
+.component-demo-panel .cp-ui-card{box-shadow:none}
+.component-demo-hint{color:#404040}
+@media(prefers-reduced-motion:reduce){
+  .button,.cp-ui-button,.scheme-card-action,.service-open{transition:none}
+}
+
 /* CampusPulse — unified neo-brutalist design system.
    One source of truth for layout, typography, controls and both themes. */
 
@@ -90,7 +305,7 @@ h3{font-size:21px;line-height:1.22}
 ::selection{background:var(--main);color:#000}
 :focus-visible{outline:2px solid var(--ring)!important;outline-offset:3px!important}
 *{box-sizing:border-box}
-html{min-height:100%;background:var(--cp-bg);color-scheme:dark;scroll-behavior:smooth}
+html{min-height:100%;background:var(--cp-bg);color-scheme:light;scroll-behavior:smooth}
 body{
   min-height:100vh;margin:0;background:var(--cp-bg);color:var(--cp-text);
   font-family:Inter,"Aptos","Segoe UI Variable","Segoe UI",system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.6;
@@ -236,7 +451,7 @@ input,select,textarea{
   width:100%;min-height:42px;padding:10px 11px;border:1.5px solid var(--cp-border);
   border-radius:7px;background:var(--cp-control);color:var(--cp-text);
   font-size:11px;font-weight:600;line-height:1.35;box-shadow:none;
-  color-scheme:dark;transition:border-color .14s ease,background .14s ease;
+  color-scheme:light;transition:border-color .14s ease,background .14s ease;
 }
 input::placeholder,textarea::placeholder{color:var(--cp-muted);opacity:1}
 input:focus,select:focus,textarea:focus{outline:2px solid var(--cp-blue-strong);outline-offset:2px;border-color:var(--cp-blue-strong);box-shadow:none}
@@ -860,7 +1075,7 @@ h1,h2,h3,h4{color:var(--cp-text)}
 ::selection{background:var(--cp-accent);color:var(--cp-on-accent)}
 *{text-shadow:none}
 :focus-visible{outline:3px solid var(--cp-blue)!important;outline-offset:3px!important}
-input,select,textarea{color-scheme:dark;background:var(--cp-control);color:var(--cp-text);border-color:var(--cp-border-soft);border-radius:12px;font-size:13px;min-height:46px}
+input,select,textarea{color-scheme:light;background:var(--cp-control);color:var(--cp-text);border-color:var(--cp-border-soft);border-radius:12px;font-size:13px;min-height:46px}
 input::placeholder,textarea::placeholder{color:var(--cp-muted)}
 input:focus,select:focus,textarea:focus{border-color:var(--cp-blue);outline:2px solid var(--cp-blue)!important;outline-offset:2px!important;box-shadow:none!important}
 select option{background:var(--cp-surface);color:var(--cp-text)}

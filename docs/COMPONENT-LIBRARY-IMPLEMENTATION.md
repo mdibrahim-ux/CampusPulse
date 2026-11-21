@@ -1,77 +1,69 @@
-# Neobrutalism.dev reference analysis and CampusPulse implementation
+# CampusPulse design system — RetroUI adaptation
 
 ## Reference inspected
 
-- Site: https://www.neobrutalism.dev/
-- Installation guide: https://www.neobrutalism.dev/docs/installation
-- Styling guide: https://www.neobrutalism.dev/docs/styling
-- Reference source: https://github.com/ekmas/neobrutalism-components
+- Repository: https://github.com/neobrutalism/neobrutalism
+- Project name in its README/package metadata: **RetroUI**
+- Documentation: https://retroui.dev/docs
+- Source license: MIT (see the upstream `LICENCE.md`)
 
-The reference is a React/Tailwind component library built around the Neobrutalism visual language. Its installation flow separates the styling token setup from individual component installation. It documents CSS-variable-based styling as the current approach; a project can install its preferred style preset, then add source components using the CLI or by copying component files. The current reference also documents its own component APIs rather than promising full compatibility with the default shadcn components.
+This reference is distinct from neobrutalism.dev and its Monochromatic Blue preset. The repository's own README identifies it as a retro-styled Tailwind CSS component library for modern apps.
 
-## Visual system identified from the reference source
+## Canonical theme tokens
 
-CampusPulse follows the reference's default **Monochromatic / Blue** preset.
+The values below are translated from the upstream `registry.json` `retroui-theme` entry:
 
-| Design token | Reference value | Applied use |
+| Token | Upstream value | CampusPulse use |
 |---|---|---|
-| Page background | `hsl(214, 95%, 93%)` | Main app canvas |
-| Card background | `oklch(100% 0 0)` | Cards, dialogs and content panels |
-| Primary | `hsl(217, 100%, 66%)` | Main buttons, active nav and key states |
-| Foreground | `oklch(0% 0 0)` | Body and heading text |
-| Border | `oklch(0% 0 0)` | Strong black component outlines |
-| Shadow | `4px 4px 0 0 var(--border)` | Hard, unblurred offset shadow |
-| Corner radius | `5px` | Common control and card radius |
-| Heading weight | `700` | Headings |
-| Body weight | `500` | Paragraphs and controls |
-| Default font | DM Sans | All application typography |
+| Background | `0 0% 100%` | White application canvas |
+| Foreground | `0 0% 0%` | Black text |
+| Card | `0 0% 100%` | White cards and overlays |
+| Primary | `50 100% 60%` | Warm yellow primary action |
+| Primary foreground | `0 0% 0%` | Black text on yellow |
+| Muted | `0 0% 68%` | Muted surfaces |
+| Muted foreground | `0 0% 35%` | Secondary text |
+| Accent | `50 89% 74%` | Pale warm yellow for hover/secondary highlight |
+| Destructive | `355 78% 56%` | Destructive states |
+| Border | `0 0% 0%` | High-contrast black outlines |
 
-The reference's default Blue chart palette is: `#5294FF`, `#FF4D50`, `#FACC00`, `#05E17A`, `#7A83FF`. CampusPulse uses these for demo chart series only; those values are not interpreted as product metrics.
+The registry defines hard shadow sizes as follows:
 
-## Component styling rules observed
+| Shadow token | Value |
+|---|---|
+| xs | `1px 1px 0 0 var(--border)` |
+| sm | `2px 2px 0 0 var(--border)` |
+| default | `3px 3px 0 0 var(--border)` |
+| md | `4px 4px 0 0 var(--border)` |
+| lg | `6px 6px 0 0 var(--border)` |
+| xl | `10px 10px 0 1px var(--border)` |
+| 2xl | `16px 16px 0 1px var(--border)` |
 
-1. Thick, high-contrast 2px black outlines define the shape.
-2. Surfaces are solid and opaque; shadows are offset hard edges, not blurred elevation.
-3. Cards and controls use compact 5px corners rather than pill or glass surfaces.
-4. The main button is a filled palette colour with black text and a black hard shadow. Its hover response translates the button into its shadow, removing the shadow to create a pressed tactile effect.
-5. Neutral buttons use white surfaces with black outlines and the same hard shadow. Reverse buttons use the opposite translation direction.
-6. Typography is direct and geometric: DM Sans, 700-weight headings, 500-weight body, clear hierarchy and compact labels.
-7. State and interaction components keep the same outline, surface and palette language; visual feedback should not require gradients or glow.
+CampusPulse uses 5px corners, black borders and zero-blur shadows. The primary button follows a tactile press interaction: it shifts 4px down/right and the hard shadow disappears. Reduced-motion preferences are respected.
 
-## CampusPulse adaptation
+## Upstream architecture and component approach
 
-This is a design-system translation, not a clone of the reference site's marketing page. CampusPulse keeps its student-support information architecture, existing content, scheme records, verified-date caveats, local reminders, profile data and document-review API. Its own labels and task flows remain in place.
+The upstream repository currently uses Next.js 16, React 19, Tailwind CSS v4, shadcn registry metadata and Base UI components, with Motion and Recharts for selected interactions/visualizations. Its `registry.json` describes a broad component set, including buttons, cards, inputs, labels, menus, popovers, progress, radio, select, slider, switch, tabs, tables, text, textarea, tooltips, and chart components.
 
-The current CampusPulse codebase is CSS-first and does not use the reference site's Tailwind/Base UI implementation throughout. The design tokens and interaction rules have therefore been translated into the existing `--cp-*` variables and native project components rather than forcing a wholesale framework or routing migration.
+CampusPulse remains on its existing Next.js/React/CSS-first implementation. We have translated the visual system into existing CampusPulse CSS tokens and UI components instead of migrating routing, replacing existing dependencies, or importing the unrelated RetroUI docs website.
 
-### Re-themed surfaces
+## CampusPulse integration
 
-- The global page background and browser theme colour use the reference light Blue preset.
-- Navigation, overview hero, quick links, scheme/service cards, forms, reminder panels and component previews now use pale-blue/white surfaces with black borders and hard shadows.
-- Existing primary actions use the reference blue; the old charcoal/coral/cobalt palette is no longer the app's global theme.
-- App typography uses Next Font's DM Sans family with the same available weight range used by the reference.
-- The existing circular avatar treatment is retained where it serves an identity purpose; the shared cards, controls, menus and action surfaces use the reference's compact geometry.
+- The global surface is white; primary actions and selected states use the registry yellow.
+- Neutral surfaces remain white with black outlines; pale yellow is used as a supporting highlight.
+- Reusable buttons, cards, inputs, selects, checkboxes, radios, switches, tabs, tables, dialogs, menus, progress indicators and component-gallery examples follow the same RetroUI visual language.
+- Hard-shadow sizes are exposed as CSS custom properties for consistent component elevation.
+- Existing navigation, scholarship catalogue, scheme detail pages, eligibility checker, document-review endpoint and privacy safeguards, reminders, and profile flows remain in place.
+- The existing component gallery remains available at `/component-library`.
 
-### Product workflows preserved
+## Source files inspected
 
-- Document review still posts to the existing analysis endpoint and keeps the existing consent, redaction, file-size and privacy messaging.
-- Planner reminders still use the existing `Reminder` type and browser-local storage functions. The date picker/calendar are visual and input upgrades, not a claim that deadline notifications or provider sync have been added.
-- Profile data remains local to the existing browser storage.
-- The component gallery still labels its charts as demonstration data, not scholarship statistics.
-
-## Component catalogue
-
-The library consolidates the supplied repeated examples into reusable implementations: attachment/upload, avatar, button/button groups, card, checkbox, radio group, switch, slider, field/form wrappers, calendar/date picker, progress, skeleton, spinner, empty state, dropdown, command, context menu, menubar, navigation menu, dialog, drawer, popover, hover card, collapsible, carousel, questionnaire, charts, tables, pagination, sidebar and image card.
-
-## Source files consulted
-
-- `public/r/styling/blue.json` — canonical default Blue preset values.
-- `src/styling/globals.css` — reference CSS variables, theme weights, radius and shadows.
-- `src/data/colors.ts` — available color presets and default mode/name.
-- `src/data/fonts.ts` and `src/lib/google-fonts.ts` — default DM Sans font and weight options.
-- `src/components/ui/button.tsx` — button variants, sizes, borders, shadows and hover motion.
-- `src/app/styling/styling.tsx` — theme customization and generated CSS installation flow.
+- `README.md` — library identity and documentation link.
+- `package.json` — source stack, scripts and dependencies.
+- `components.json` — shadcn registry setup and aliases.
+- `registry.json` — canonical RetroUI theme values and component registry.
+- `LICENCE.md` — MIT license.
+- `components/retroui/*` entries referenced by the component registry.
 
 ## Validation
 
-The branch should be checked with the repository's production build and browser testing after this commit. The component preview is available at `/component-library`; the main product landing/dashboard remains at `/dashboard`.
+The code change should be verified using `npm run build`, `npm run lint`, and browser checks at desktop and mobile widths. No claim is made that the upstream package itself has been installed wholesale; the existing CampusPulse component APIs are retained.
