@@ -6,6 +6,7 @@ import './workspace.css';
 import './scholarship-experience.css';
 import './backend.css';
 import './palette.css';
+import './palette-correction.css';
 import { AppShell } from '@/components/app-shell';
 import { LanguageProvider } from '@/components/language-provider';
 
