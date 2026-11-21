@@ -1,0 +1,8 @@
+'use client';
+import * as React from 'react';
+import { cn } from '@/lib/utils';
+type Ctx={value:string;setValue:(v:string)=>void};const TabsCtx=React.createContext<Ctx>({value:'',setValue:()=>undefined});
+export function Tabs({children,defaultValue,value,onValueChange,className,...props}:React.HTMLAttributes<HTMLDivElement>&{defaultValue?:string;value?:string;onValueChange?:(v:string)=>void}){const[local,setLocal]=React.useState(defaultValue||'');const current=value??local;const setValue=(v:string)=>{if(value===undefined)setLocal(v);onValueChange?.(v)};return <TabsCtx.Provider value={{value:current,setValue}}><div className={cn('cp-tabs',className)} {...props}>{children}</div></TabsCtx.Provider>}
+export function TabsList({children,className,...props}:React.HTMLAttributes<HTMLDivElement>){return <div role="tablist" className={cn('cp-tabs-list',className)} {...props}>{children}</div>}
+export function TabsTrigger({children,value,className,onClick,...props}:React.ButtonHTMLAttributes<HTMLButtonElement>&{value:string}){const ctx=React.useContext(TabsCtx);const active=ctx.value===value;return <button type="button" role="tab" aria-selected={active} data-state={active?'active':'inactive'} className={cn('cp-tabs-trigger',className)} onClick={e=>{ctx.setValue(value);onClick?.(e)}} {...props}>{children}</button>}
+export function TabsContent({children,value,className,...props}:React.HTMLAttributes<HTMLDivElement>&{value:string}){const ctx=React.useContext(TabsCtx);if(ctx.value!==value)return null;return <div role="tabpanel" data-state="active" className={cn('cp-tabs-content',className)} {...props}>{children}</div>}
