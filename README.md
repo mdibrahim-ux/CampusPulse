@@ -54,7 +54,7 @@ Research notes are in `docs/RESEARCH.md`. The overview's near-deadline cards are
 
 ## Local storage and privacy
 
-Profile, tracker and reminders use browser `localStorage`. The local-first build does not synchronise data across devices. Do not enter portal passwords, OTPs, Aadhaar/OTR numbers, bank account numbers or other unnecessary identity data.
+CampusPulse remains local-first until you choose to back up your data. Profile, tracker, reminders and document-checklist state stay in this browser unless you sign in at the Account page and run the explicit cloud backup. Uploaded documents and AI analysis content are not included in cloud backup. Do not enter portal passwords, OTPs, Aadhaar/OTR numbers, bank account numbers or other unnecessary identity data.
 
 ## Office and officer information
 
@@ -62,7 +62,15 @@ The office finder performs a map search using the city and department relevant t
 
 ## Backend roadmap
 
-The Supabase migration remains a foundation. Hosted authentication, cross-device persistence, admin data curation and automated live source ingestion are not represented as complete in this release.
+Backend Phase 1 adds optional Supabase email OTP sign-in and explicit browser-to-account backup for the student profile, saved scholarship tracker, reminders and document-checklist IDs. Private records are protected with per-user Row Level Security. The scholarship catalogue remains maintained in the existing curated source file. See docs/BACKEND-PHASE-1.md for setup, migration order, security boundaries and current limitations.
+
+To enable account sign-in:
+1. Create or select a Supabase project specifically for CampusPulse.
+2. Apply the migrations in supabase/migrations in order.
+3. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY to .env.local.
+4. Configure the Supabase email OTP template to include the six-digit token, then restart Next.js.
+
+The connected Supabase workspace may contain other product projects. Do not use a project belonging to another app as CampusPulse's database.
 
 ## License
 

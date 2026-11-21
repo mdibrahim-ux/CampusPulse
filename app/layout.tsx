@@ -4,6 +4,7 @@ import './globals.css';
 import './redesign.css';
 import './workspace.css';
 import './scholarship-experience.css';
+import './backend.css';
 import { AppShell } from '@/components/app-shell';
 import { LanguageProvider } from '@/components/language-provider';
 

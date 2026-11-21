@@ -10,6 +10,7 @@ import {
   BookOpenCheck,
   BriefcaseBusiness,
   CalendarClock,
+  Cloud,
   FileSearch,
   GraduationCap,
   LayoutDashboard,
@@ -50,6 +51,10 @@ const navGroups: { label: string; items: NavItem[] }[] = [
       { href: '/document-review', label: 'Document review', icon: FileSearch },
       { href: '/rejection-analyzer', label: 'Rejection help', icon: ShieldAlert },
     ],
+  },
+  {
+    label: 'YOUR ACCOUNT',
+    items: [{ href: '/account', label: 'Account & cloud backup', icon: Cloud }],
   },
 ];
 
