@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   ArrowUpRight,
   BookmarkCheck,
@@ -40,7 +40,6 @@ const navGroups: { label: string; items: NavItem[] }[] = [
       { href: '/scholarships', label: 'Scholarships', icon: GraduationCap },
       { href: '/eligibility-checker', label: 'Eligibility checker', icon: ListChecks },
       { href: '/services', label: 'Student services', icon: BriefcaseBusiness },
-      { href: '/sources', label: 'Official sources', icon: BookOpenCheck },
     ],
   },
   {
@@ -59,11 +58,11 @@ function isActivePath(pathname: string, href: string) {
 }
 
 function getPageLabel(pathname: string) {
+  if (pathname.startsWith('/scholarships/')) return 'Scheme details';
+  if (pathname === '/profile') return 'My profile';
+  if (pathname === '/get-started') return 'Eligibility checker';
   const match = navGroups.flatMap((group) => group.items).find((item) => isActivePath(pathname, item.href));
   if (match) return match.label;
-  if (pathname.startsWith('/scholarships/')) return 'Scheme details';
-  if (pathname === '/get-started') return 'Set up your profile';
-  if (pathname === '/profile') return 'My profile';
   return 'Student workspace';
 }
 
@@ -141,8 +140,8 @@ function WorkspaceNavigation({
         <div className="cp-sidebar-tip">
           <span className="cp-sidebar-tip-icon"><BookOpenCheck size={17} /></span>
           <strong>Check the source</strong>
-          <p>Confirm dates and requirements on the official scheme page before applying.</p>
-          <Link href="/sources" onClick={onNavigate}>Source directory <ArrowUpRight size={13} /></Link>
+          <p>Confirm current dates and requirements in the official scheme catalogue before applying.</p>
+          <Link href="/scholarships" onClick={onNavigate}>Browse scheme references <ArrowUpRight size={13} /></Link>
         </div>
         <Link href="/profile" onClick={onNavigate} className={'cp-sidebar-profile' + (isActivePath(pathname, '/profile') ? ' is-active' : '')}>
           <ProfileIdentity profile={profile} />
@@ -157,6 +156,8 @@ export function WorkspaceShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [profile, setProfile] = useState<StudentProfile | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const mobileTriggerRef = useRef<HTMLButtonElement>(null);
+  const mobileDrawerRef = useRef<HTMLElement>(null);
   const pageLabel = getPageLabel(pathname);
 
   useEffect(() => {
@@ -176,13 +177,32 @@ export function WorkspaceShell({ children }: { children: React.ReactNode }) {
     if (!mobileOpen) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setMobileOpen(false);
+    const focusable = mobileDrawerRef.current?.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    );
+    focusable?.[0]?.focus();
+
+    const closeOnKeyboard = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMobileOpen(false);
+        return;
+      }
+      if (event.key !== 'Tab' || !focusable?.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
-    window.addEventListener('keydown', closeOnEscape);
+    window.addEventListener('keydown', closeOnKeyboard);
     return () => {
       document.body.style.overflow = previousOverflow;
-      window.removeEventListener('keydown', closeOnEscape);
+      window.removeEventListener('keydown', closeOnKeyboard);
+      mobileTriggerRef.current?.focus();
     };
   }, [mobileOpen]);
 
@@ -197,6 +217,7 @@ export function WorkspaceShell({ children }: { children: React.ReactNode }) {
           <div className="cp-topbar-leading">
             <button
               type="button"
+              ref={mobileTriggerRef}
               className="cp-mobile-nav-trigger"
               aria-label="Open workspace navigation"
               aria-expanded={mobileOpen}
@@ -253,6 +274,7 @@ export function WorkspaceShell({ children }: { children: React.ReactNode }) {
               exit={{ opacity: 0 }}
             />
             <motion.aside
+              ref={mobileDrawerRef}
               id="cp-mobile-workspace-navigation"
               className="cp-mobile-nav-drawer"
               role="dialog"

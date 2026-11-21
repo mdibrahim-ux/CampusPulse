@@ -136,7 +136,7 @@ export default function HomePage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.48, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  <Link href="/get-started" className="nb-button nb-button-primary">
+                  <Link href="/profile" className="nb-button nb-button-primary">
                     Set up your workspace <ArrowUpRight size={17} />
                   </Link>
                   <Link href="/scholarships" className="nb-button nb-button-outline">
@@ -260,7 +260,7 @@ export default function HomePage() {
               <h2>Make room for what matters.</h2>
               <p>Bring your options, documents and follow-ups into one student-first workspace.</p>
             </div>
-            <Link href="/get-started" className="nb-button nb-button-primary">
+            <Link href="/profile" className="nb-button nb-button-primary">
               Get started <ArrowUpRight size={17} />
             </Link>
           </section>

@@ -109,7 +109,7 @@ export default function DashboardPage() {
             Check eligibility <ArrowUpRight size={16} />
           </Link>
           {!profile?.name?.trim() && (
-            <Link href="/get-started" className="cp-dash-text-link">Complete your profile <ArrowRight size={14} /></Link>
+            <Link href="/profile" className="cp-dash-text-link">Complete your profile <ArrowRight size={14} /></Link>
           )}
         </div>
       </section>

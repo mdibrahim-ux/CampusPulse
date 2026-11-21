@@ -39,7 +39,7 @@ export function SiteHeader() {
           <Link href="/dashboard" className="nb-header-workspace">
             Open workspace <ArrowUpRight size={15} />
           </Link>
-          <Link href="/get-started" className="nb-button nb-button-primary nb-header-cta">
+          <Link href="/profile" className="nb-button nb-button-primary nb-header-cta">
             Get started <ArrowUpRight size={16} />
           </Link>
           <button
@@ -66,7 +66,7 @@ export function SiteHeader() {
           <Link href="/dashboard" onClick={closeMenu}>
             Open workspace <ArrowUpRight size={15} />
           </Link>
-          <Link href="/get-started" className="nb-mobile-primary" onClick={closeMenu}>
+          <Link href="/profile" className="nb-mobile-primary" onClick={closeMenu}>
             Get started <ArrowUpRight size={15} />
           </Link>
         </nav>
