@@ -273,3 +273,17 @@ textarea:focus {
     transition-duration: .01ms !important;
   }
 }
+
+
+/* Legacy route chart and service accents: remove the last green/gold holdovers. */
+.category-fill-1 { background: var(--palette-teal); }
+.category-fill-2 { background: var(--palette-maroon); }
+.category-fill-3 { background: var(--palette-crimson); }
+.category-fill-4 { background: var(--palette-butter); }
+
+.service-feature-1,
+.service-feature-3 { background: var(--cp-blue); }
+.service-feature-2 { background: var(--cp-warm); }
+.service-feature h3,
+.service-feature p,
+.service-feature a { color: var(--cp-text); }
