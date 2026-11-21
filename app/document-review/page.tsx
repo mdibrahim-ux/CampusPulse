@@ -1,6 +1,6 @@
 'use client';
 import {useState} from 'react';
-import {AlertTriangle,ArrowRight,CheckCircle2,FileText,LockKeyhole,RotateCcw,ShieldCheck} from 'lucide-react';
+import {AlertTriangle,ArrowRight,CheckCircle2,FileText,LockKeyhole,RotateCcw} from 'lucide-react';
 import {SectionHeading} from '@/components/section-heading';
 import {Attachment,AttachmentAction,AttachmentActions,AttachmentContent,AttachmentDescription,AttachmentMedia,AttachmentTitle,AttachmentUpload} from '@/components/ui/attachment';
 import {Spinner} from '@/components/ui/spinner';
