@@ -5,6 +5,7 @@ import './redesign.css';
 import './workspace.css';
 import './scholarship-experience.css';
 import './backend.css';
+import './palette.css';
 import { AppShell } from '@/components/app-shell';
 import { LanguageProvider } from '@/components/language-provider';
 
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#f2f0e8',
+  themeColor: '#F8E0A4',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
