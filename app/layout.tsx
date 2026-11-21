@@ -1,10 +1,12 @@
 import type {Metadata,Viewport} from 'next';
-import {DM_Sans} from 'next/font/google';
+import {Bebas_Neue,DM_Mono,Outfit} from 'next/font/google';
 import './globals.css';
 import {AppShell} from '@/components/app-shell';
 import {LanguageProvider} from '@/components/language-provider';
 
-const dmSans=DM_Sans({subsets:['latin'],weight:['400','500','600','700','800','900'],display:'swap',adjustFontFallback:false,variable:'--font-dm-sans'});
+const bebasNeue=Bebas_Neue({subsets:['latin'],weight:'400',display:'swap',variable:'--font-bebas-neue'});
+const outfit=Outfit({subsets:['latin'],weight:['300','400','500','600','700','800','900'],display:'swap',variable:'--font-outfit'});
+const dmMono=DM_Mono({subsets:['latin'],weight:['300','400','500'],display:'swap',variable:'--font-dm-mono'});
 
 export const metadata:Metadata={
   title:'CampusPulse — student support, made clear',
@@ -12,11 +14,11 @@ export const metadata:Metadata={
 };
 
 export const viewport:Viewport={
-  themeColor:'#FFD633',
+  themeColor:'#F87171',
 };
 
 export default function RootLayout({children}:{children:React.ReactNode}){
-  return <html lang="en" data-theme="light" className={dmSans.variable}>
+  return <html lang="en" data-theme="light" className={`${bebasNeue.variable} ${outfit.variable} ${dmMono.variable}`}>
     <body><LanguageProvider><AppShell>{children}</AppShell></LanguageProvider></body>
   </html>;
 }
