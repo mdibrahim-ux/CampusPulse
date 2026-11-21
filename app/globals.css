@@ -1840,3 +1840,34 @@ label.field>span,label.scholar-field>span,.field>span,.scholar-field>span{color:
   .component-demo-grid.two{grid-template-columns:minmax(0,1fr)}
   .component-demo-panel{padding:13px}
 }
+
+/* Final button pass for the site's original link/button classes. */
+body{font-size:14px}
+.button{
+  min-height:40px;
+  padding:0 16px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  border:2px solid #000;
+  border-radius:5px;
+  background:var(--main);
+  color:#000;
+  font-size:14px;
+  font-weight:700;
+  line-height:1.2;
+  box-shadow:4px 4px 0 #000;
+  transition:transform .14s ease,box-shadow .14s ease,background .14s ease;
+}
+.button:hover{transform:translate(4px,4px);box-shadow:none}
+.button:active{transform:translate(4px,4px);box-shadow:none}
+.button-primary,.button-dark{border-color:#000;background:var(--main);color:#000}
+.button-primary:hover,.button-dark:hover{background:var(--main);color:#000}
+.button-secondary,.button-light{border-color:#000;background:#fff;color:#000}
+.button-secondary:hover,.button-light:hover{background:var(--background);color:#000}
+.button-icon-circle{
+  width:26px;height:26px;display:grid;place-items:center;
+  border:1.5px solid #000;border-radius:4px;background:#fff;color:#000;
+}
+.button-secondary .button-icon-circle{border-color:#000;background:var(--main);color:#000}
