@@ -1,0 +1,14 @@
+'use client';
+import * as React from 'react';
+import { AnimatePresence,motion } from 'framer-motion';
+import { X } from 'lucide-react';
+import { cn } from '@/lib/utils';
+const Ctx=React.createContext<{open:boolean;setOpen:(v:boolean)=>void}>({open:false,setOpen:()=>undefined});
+export function Drawer({children,open:controlled,onOpenChange}:{children:React.ReactNode;open?:boolean;onOpenChange?:(v:boolean)=>void}){const[local,setLocal]=React.useState(false);const open=controlled??local;const setOpen=(v:boolean)=>{if(controlled===undefined)setLocal(v);onOpenChange?.(v)};React.useEffect(()=>{if(!open)return;const esc=(e:KeyboardEvent)=>{if(e.key==='Escape')setOpen(false)};document.addEventListener('keydown',esc);return()=>document.removeEventListener('keydown',esc)},[open]);return <Ctx.Provider value={{open,setOpen}}>{children}</Ctx.Provider>}
+export function DrawerTrigger({children,className,onClick,...props}:React.ButtonHTMLAttributes<HTMLButtonElement>){const{setOpen}=React.useContext(Ctx);return <button type="button" className={className} onClick={e=>{setOpen(true);onClick?.(e)}} {...props}>{children}</button>}
+export function DrawerClose({children,className,onClick,...props}:React.ButtonHTMLAttributes<HTMLButtonElement>){const{setOpen}=React.useContext(Ctx);return <button type="button" className={className} onClick={e=>{setOpen(false);onClick?.(e)}} {...props}>{children}</button>}
+export function DrawerContent({children,className,...props}:React.HTMLAttributes<HTMLDivElement>){const{open,setOpen}=React.useContext(Ctx);return <AnimatePresence>{open&&<motion.div className="cp-drawer-backdrop" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onMouseDown={e=>{if(e.target===e.currentTarget)setOpen(false)}}><motion.div role="dialog" aria-modal="true" aria-label="Drawer" className={cn('cp-drawer-content',className)} initial={{y:'100%'}} animate={{y:0}} exit={{y:'100%'}} transition={{duration:.2,ease:[.22,1,.36,1]}} {...props}><button type="button" className="cp-dialog-close" aria-label="Close drawer" onClick={()=>setOpen(false)}><X size={16}/></button>{children}</motion.div></motion.div>}</AnimatePresence>}
+export function DrawerHeader({className,...props}:React.HTMLAttributes<HTMLDivElement>){return <div className={cn('cp-dialog-header',className)} {...props}/>}
+export function DrawerTitle({className,...props}:React.HTMLAttributes<HTMLHeadingElement>){return <h2 className={cn('cp-dialog-title',className)} {...props}/>}
+export function DrawerDescription({className,...props}:React.HTMLAttributes<HTMLParagraphElement>){return <p className={cn('cp-dialog-description',className)} {...props}/>}
+export function DrawerFooter({className,...props}:React.HTMLAttributes<HTMLDivElement>){return <div className={cn('cp-dialog-footer',className)} {...props}/>}

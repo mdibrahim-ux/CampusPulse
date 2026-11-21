@@ -1,0 +1,14 @@
+'use client';
+import * as React from 'react';
+import { AnimatePresence,motion } from 'framer-motion';
+import { X } from 'lucide-react';
+import { cn } from '@/lib/utils';
+type Ctx={open:boolean;setOpen:(v:boolean)=>void};const DialogCtx=React.createContext<Ctx>({open:false,setOpen:()=>undefined});
+export function Dialog({children,open:controlled,onOpenChange}:{children:React.ReactNode;open?:boolean;onOpenChange?:(v:boolean)=>void}){const[local,setLocal]=React.useState(false);const open=controlled??local;const setOpen=(v:boolean)=>{if(controlled===undefined)setLocal(v);onOpenChange?.(v)};React.useEffect(()=>{if(!open)return;const key=(e:KeyboardEvent)=>{if(e.key==='Escape')setOpen(false)};document.addEventListener('keydown',key);return()=>document.removeEventListener('keydown',key)},[open]);return <DialogCtx.Provider value={{open,setOpen}}>{children}</DialogCtx.Provider>}
+export function DialogTrigger({children,className,onClick,...props}:React.ButtonHTMLAttributes<HTMLButtonElement>){const{setOpen}=React.useContext(DialogCtx);return <button type="button" className={className} onClick={e=>{setOpen(true);onClick?.(e)}} {...props}>{children}</button>}
+export function DialogClose({children,className,onClick,...props}:React.ButtonHTMLAttributes<HTMLButtonElement>){const{setOpen}=React.useContext(DialogCtx);return <button type="button" className={className} onClick={e=>{setOpen(false);onClick?.(e)}} {...props}>{children}</button>}
+export function DialogContent({children,className,...props}:React.HTMLAttributes<HTMLDivElement>){const{open,setOpen}=React.useContext(DialogCtx);return <AnimatePresence>{open&&<motion.div className="cp-dialog-backdrop" role="presentation" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onMouseDown={e=>{if(e.target===e.currentTarget)setOpen(false)}}><motion.div role="dialog" aria-modal="true" className={cn('cp-dialog-content',className)} initial={{opacity:0,y:12,scale:.98}} animate={{opacity:1,y:0,scale:1}} exit={{opacity:0,y:8,scale:.98}} transition={{duration:.16}} {...props}><button type="button" aria-label="Close dialog" className="cp-dialog-close" onClick={()=>setOpen(false)}><X size={16}/></button>{children}</motion.div></motion.div>}</AnimatePresence>}
+export function DialogHeader({className,...props}:React.HTMLAttributes<HTMLDivElement>){return <div className={cn('cp-dialog-header',className)} {...props}/>}
+export function DialogTitle({className,...props}:React.HTMLAttributes<HTMLHeadingElement>){return <h2 className={cn('cp-dialog-title',className)} {...props}/>}
+export function DialogDescription({className,...props}:React.HTMLAttributes<HTMLParagraphElement>){return <p className={cn('cp-dialog-description',className)} {...props}/>}
+export function DialogFooter({className,...props}:React.HTMLAttributes<HTMLDivElement>){return <div className={cn('cp-dialog-footer',className)} {...props}/>}
