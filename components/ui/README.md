@@ -1,8 +1,10 @@
 # CampusPulse UI components
 
-Project-native React components styled for CampusPulse's dark neo-brutalist design system.
+Project-native React components styled with the **Neobrutalism.dev monochromatic Blue** design direction.
 
-The supplied snippets included repeated demonstrations of the same primitives. They have been consolidated into reusable compound components instead of copied as duplicate pages. The implementations use the repository's Next.js / React stack, Framer Motion, Lucide and Recharts. They do not require Radix UI, Base UI or the shadcn registry.
+The component APIs stay native to CampusPulse's Next.js/React project. The visual layer follows the reference's core rules: pale-blue canvas, white content surfaces, black typography and 2px outlines, 5px corners, 4px hard black shadows, DM Sans, 700-weight headings and 500-weight body copy. Primary actions use the reference blue.
+
+The supplied snippets included repeated demonstrations of the same primitives. They have been consolidated into reusable compound components instead of copied as duplicate pages. The implementations reuse React, Framer Motion, Lucide and Recharts; they do not require a full migration to the reference site's internal app.
 
 ## Component families
 
