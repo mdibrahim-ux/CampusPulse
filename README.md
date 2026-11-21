@@ -102,7 +102,7 @@ Manual refresh: GitHub → Actions → “Refresh official scholarship officer s
 
 ## Full UI/UX redesign — Editorial Neo-Brutalism
 
-The current visual system uses Midnight Ink, Electric Cobalt, Scholar Amber, Jade, Signal Coral and Cloud neutrals. Navigation, cards, forms, controls, icons, spacing and mobile breakpoints follow one shared system. The stylesheet was consolidated into one design system rather than layering additional overrides.
+The current visual system is a dark neo-brutalist workspace built from Midnight Ink, Electric Cobalt, Signal Coral, Scholar Amber and warm off-white typography. It uses a single-row capsule navigation, filled pill actions, circular icon holders, crisp hard-offset shadows and responsive layouts. No green is used as a brand or action colour.
 
 The overview now has a focused editorial hero, a short deadline strip, three student task paths, saved scholarships and a student-services panel. The scholarship directory has a searchable/filterable layout and scheme/provider imagery.
 
@@ -120,6 +120,6 @@ The official scheme source links remain the authority for current rules and appl
 
 ## Dark product redesign
 
-The current experience is a dark editorial neo-brutalist workspace with a floating translucent navigation layer. The content surfaces remain opaque for legibility. The overview contains an interactive explanation of the three actual product stages (student details, scholarship rule comparison and preparation actions), a deadline module sourced from explicit student-deadline fields, and a category chart computed from the five curated scheme records in `lib/scholarships.ts`. The category chart is not a national distribution or user-outcome metric.
+The current experience is a dark editorial neo-brutalist workspace with an opaque capsule navigation layer. The content surfaces remain opaque for legibility. The overview contains an interactive explanation of the three actual product stages (student details, scholarship rule comparison and preparation actions), a deadline module sourced from explicit student-deadline fields, and a category chart computed from the five curated scheme records in `lib/scholarships.ts`. The category chart is not a national distribution or user-outcome metric.
 
 The design research and implementation decisions are recorded in `docs/DARK-REDESIGN-PLAN.md`.
