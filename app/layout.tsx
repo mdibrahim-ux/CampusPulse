@@ -3,6 +3,7 @@ import { DM_Sans, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import './redesign.css';
 import './workspace.css';
+import './scholarship-experience.css';
 import { AppShell } from '@/components/app-shell';
 import { LanguageProvider } from '@/components/language-provider';
 
