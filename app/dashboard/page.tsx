@@ -99,9 +99,9 @@ export default function DashboardPage(){
           <span className="overview-quick-copy"><b>Find scholarships</b><small>Explore schemes, official conditions and application windows</small></span>
           <ArrowUpRight size={18}/>
         </Link>
-        <Link href="/eligibility-checker" className="overview-quick-card quick-card-blue">
-          <span className="overview-quick-icon"><ClipboardCheck size={22}/></span>
-          <span className="overview-quick-copy"><b>Check eligibility</b><small>Compare your details with published scheme criteria</small></span>
+        <Link href="/rejection-analyzer" className="overview-quick-card quick-card-blue">
+          <span className="overview-quick-icon"><ShieldCheck size={22}/></span>
+          <span className="overview-quick-copy"><b>Understand a portal remark</b><small>Make sense of defects, document requests and status messages</small></span>
           <ArrowUpRight size={18}/>
         </Link>
         <Link href="/document-review" className="overview-quick-card quick-card-neutral">
