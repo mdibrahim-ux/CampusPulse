@@ -7,7 +7,6 @@ import {
   ArrowUpRight,
   BookOpenCheck,
   CalendarDays,
-  CheckCircle2,
   ExternalLink,
   FileCheck2,
   Info,
@@ -91,7 +90,6 @@ export default async function ScholarshipDetailPage({ params }: { params: Promis
 
         <aside className="cp-scheme-detail-support">
           <span className="cp-dir-eyebrow">INDICATIVE SUPPORT</span>
-          <strong>₹</strong>
           <p>{scheme.amount}</p>
           <small>Refer to the latest scheme specification for the applicable award components.</small>
         </aside>
@@ -151,7 +149,6 @@ export default async function ScholarshipDetailPage({ params }: { params: Promis
                   <div className="cp-scheme-document" key={documentId}>
                     <span><FileCheck2 size={17} /></span>
                     <div><strong>{document.label}</strong><small>{document.detail}</small></div>
-                    <CheckCircle2 size={15} className="cp-scheme-document-check" />
                   </div>
                 );
               })}
