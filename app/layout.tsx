@@ -9,11 +9,11 @@ export const metadata:Metadata={
 };
 
 export const viewport:Viewport={
-  themeColor:'#F3F1E9',
+  themeColor:'#0B0C10',
 };
 
 export default function RootLayout({children}:{children:React.ReactNode}){
-  return <html lang="en" data-theme="light">
+  return <html lang="en" data-theme="dark">
     <body><LanguageProvider><AppShell>{children}</AppShell></LanguageProvider></body>
   </html>;
 }
