@@ -5,9 +5,9 @@ import {useEffect,useMemo,useState} from 'react';
 import {motion} from 'framer-motion';
 import {
   ArrowRight,ArrowUpRight,Bookmark,CalendarClock,CheckCircle2,
-  FileSearch,GraduationCap,ShieldCheck,ClipboardCheck,CalendarDays
+  FileSearch,GraduationCap,ShieldCheck,ClipboardCheck,CalendarDays,
+  ListChecks
 } from 'lucide-react';
-import {SectionHeading} from '@/components/section-heading';
 import {scholarshipSchemes} from '@/lib/scholarships';
 import {getReminders,getTracker} from '@/lib/storage';
 import type {Reminder,TrackerItem} from '@/lib/types';
@@ -56,29 +56,60 @@ export default function DashboardPage(){
   const nextReminders=reminders.filter(item=>!item.done).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,4);
 
   return <div className="overview-page">
-    <SectionHeading
-      eyebrow="YOUR CAMPUSPULSE / OVERVIEW"
-      title="Your student support workspace."
-      description="A clear place to find scholarships, prepare documents and keep track of what needs attention."
-      action={<Link href="/eligibility-checker" className="button button-primary">Check eligibility <ArrowRight size={16}/></Link>}
-    />
+    <section className="overview-hero" aria-labelledby="overview-title">
+      <motion.div className="overview-hero-copy" initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} transition={{duration:.36,ease:[.22,1,.36,1]}}>
+        <span className="hero-eyebrow"><i/> Student Support / Made Clear</span>
+        <h1 id="overview-title">Your next move.<br/><em>Made clearer.</em></h1>
+        <p>Find scholarships, understand eligibility and prepare your documents with one clear student-support workspace.</p>
+        <div className="overview-hero-actions">
+          <Link href="/eligibility-checker" className="button button-primary">Check eligibility <span className="button-icon-circle"><ArrowRight size={16}/></span></Link>
+          <Link href="/scholarships" className="button button-secondary">Explore scholarships <span className="button-icon-circle"><ArrowUpRight size={16}/></span></Link>
+        </div>
+        <div className="overview-hero-footnote"><span>01 DISCOVER</span><i>/</i><span>02 CHECK</span><i>/</i><span>03 PREPARE</span></div>
+      </motion.div>
 
-    <section className="overview-quick-grid" aria-label="Start a task">
-      <Link href="/scholarships" className="overview-quick-card quick-card-lime">
-        <span className="overview-quick-icon"><GraduationCap size={21}/></span>
-        <span className="overview-quick-copy"><b>Find scholarships</b><small>Browse schemes and official conditions</small></span>
-        <ArrowUpRight size={17}/>
-      </Link>
-      <Link href="/document-review" className="overview-quick-card quick-card-blue">
-        <span className="overview-quick-icon"><FileSearch size={20}/></span>
-        <span className="overview-quick-copy"><b>Review a document</b><small>Understand its purpose and visible details</small></span>
-        <ArrowUpRight size={17}/>
-      </Link>
-      <Link href="/rejection-analyzer" className="overview-quick-card quick-card-neutral">
-        <span className="overview-quick-icon"><ShieldCheck size={20}/></span>
-        <span className="overview-quick-copy"><b>Understand a portal remark</b><small>Separate a defect from a rejection</small></span>
-        <ArrowUpRight size={17}/>
-      </Link>
+      <motion.aside className="overview-hero-panel" aria-label="How CampusPulse helps" initial={{opacity:0,x:12}} animate={{opacity:1,x:0}} transition={{duration:.42,delay:.08,ease:[.22,1,.36,1]}}>
+        <div className="hero-panel-top"><span className="eyebrow">The student support route</span><span className="hero-panel-index">01 — 03</span></div>
+        <h2 className="hero-panel-title">Less confusion.<br/>More direction.</h2>
+        <div className="overview-route-list">
+          <div className="overview-route-step">
+            <span className="overview-route-icon is-coral"><GraduationCap size={20}/></span>
+            <span><b>Discover what is available</b><small>Browse scholarships and practical student services</small></span>
+          </div>
+          <div className="overview-route-step">
+            <span className="overview-route-icon is-blue"><ListChecks size={20}/></span>
+            <span><b>Check the published criteria</b><small>Compare scheme conditions with your details</small></span>
+          </div>
+          <div className="overview-route-step">
+            <span className="overview-route-icon is-amber"><FileSearch size={20}/></span>
+            <span><b>Prepare your next steps</b><small>Review documents and understand portal remarks</small></span>
+          </div>
+        </div>
+        <div className="hero-panel-note"><ShieldCheck size={15}/> Independent guide · Official sources linked</div>
+      </motion.aside>
+    </section>
+
+    <section className="overview-section">
+      <div className="overview-section-heading">
+        <div><span className="eyebrow">START WITH WHAT YOU NEED</span><h2>Make the next step yours.</h2><p>Direct routes to the most useful student-support tasks.</p></div>
+      </div>
+      <div className="overview-quick-grid" aria-label="Start a task">
+        <Link href="/scholarships" className="overview-quick-card quick-card-lime">
+          <span className="overview-quick-icon"><GraduationCap size={23}/></span>
+          <span className="overview-quick-copy"><b>Find scholarships</b><small>Explore schemes, official conditions and application windows</small></span>
+          <ArrowUpRight size={18}/>
+        </Link>
+        <Link href="/eligibility-checker" className="overview-quick-card quick-card-blue">
+          <span className="overview-quick-icon"><ClipboardCheck size={22}/></span>
+          <span className="overview-quick-copy"><b>Check eligibility</b><small>Compare your details with published scheme criteria</small></span>
+          <ArrowUpRight size={18}/>
+        </Link>
+        <Link href="/document-review" className="overview-quick-card quick-card-neutral">
+          <span className="overview-quick-icon"><FileSearch size={22}/></span>
+          <span className="overview-quick-copy"><b>Review a document</b><small>Understand its purpose and visible quality issues</small></span>
+          <ArrowUpRight size={18}/>
+        </Link>
+      </div>
     </section>
 
     <section className="overview-section">
@@ -88,7 +119,7 @@ export default function DashboardPage(){
       </div>
       <div className="overview-data-grid">
         <div className="overview-panel deadlines-panel">
-          <div className="overview-panel-head"><span><CalendarClock size={16}/> STUDENT APPLICATION DEADLINES</span><b>{closingSoon.length.toString().padStart(2,'0')} IN NEXT 30 DAYS</b></div>
+          <div className="overview-panel-head"><span><CalendarClock size={16}/> Student application deadlines</span><b>{closingSoon.length.toString().padStart(2,'0')} IN NEXT 30 DAYS</b></div>
           {closingSoon.length>0?<div className="deadline-list">{closingSoon.map((scheme,index)=><Link key={scheme.id} href={'/scholarships/'+scheme.id} className="deadline-item">
             <span className="deadline-index">{String(index+1).padStart(2,'0')}</span>
             <span className="deadline-name"><b>{scheme.shortName}</b><small>{scheme.provider}</small></span>
@@ -99,7 +130,7 @@ export default function DashboardPage(){
         </div>
 
         <div className="overview-panel reference-panel">
-          <div className="overview-panel-head"><span><ClipboardCheck size={16}/> SCHEME REFERENCE SET</span><b>LOCAL DATA</b></div>
+          <div className="overview-panel-head"><span><ClipboardCheck size={16}/> Scheme reference set</span><b>LOCAL DATA</b></div>
           <div className="reference-total"><strong>{scholarshipSchemes.length.toString().padStart(2,'0')}</strong><span>CURATED SCHEME<br/>RECORDS</span></div>
           <div className="category-chart" role="img" aria-label={'Scheme categories in the current reference set: '+categories.map(c=>c.label+' '+c.count).join(', ')}>
             {categories.map((category,index)=><div className="category-row" key={category.label}>
@@ -140,7 +171,7 @@ export default function DashboardPage(){
 
     <section className="overview-services-strip">
       <div><span className="eyebrow">BEYOND SCHOLARSHIPS</span><h2>Useful services for student life.</h2><p>Transport passes, academic records, education finance and student software offers.</p></div>
-      <Link href="/services" className="button button-secondary">Explore student services <ArrowUpRight size={15}/></Link>
+      <Link href="/services" className="button button-secondary">Explore student services <span className="button-icon-circle"><ArrowUpRight size={15}/></span></Link>
     </section>
   </div>;
 }
