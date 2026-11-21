@@ -1871,3 +1871,7 @@ body{font-size:14px}
   border:1.5px solid #000;border-radius:4px;background:#fff;color:#000;
 }
 .button-secondary .button-icon-circle{border-color:#000;background:var(--main);color:#000}
+
+
+/* Force the light scheme for native browser controls and scrollbars too. */
+html{color-scheme:light;background:var(--background);}
