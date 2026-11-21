@@ -122,4 +122,4 @@ The official scheme source links remain the authority for current rules and appl
 
 The current experience is a dark editorial neo-brutalist workspace with an opaque capsule navigation layer. The content surfaces remain opaque for legibility. The overview contains an interactive explanation of the three actual product stages (student details, scholarship rule comparison and preparation actions), a deadline module sourced from explicit student-deadline fields, and a category chart computed from the five curated scheme records in `lib/scholarships.ts`. The category chart is not a national distribution or user-outcome metric.
 
-The design research and implementation decisions are recorded in `docs/DARK-REDESIGN-PLAN.md`.
+The current design research, palette, layout choices and acceptance criteria are recorded in `docs/DARK-BRUTALIST-LANDING-PLAN.md`.
