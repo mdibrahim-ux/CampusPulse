@@ -1,0 +1,326 @@
+/* CampusPulse palette correction.
+   Teal and crimson are intentionally saturated and visible.
+   All component borders and offset shadows are pure black. */
+
+:root {
+  --palette-teal: #31AAA9;
+  --palette-butter: #F8E0A4;
+  --palette-crimson: #A82020;
+  --palette-maroon: #6C1A1A;
+  --palette-black: #000000;
+
+  --cp-bg: #F8E0A4;
+  --cp-surface: #FFF7E4;
+  --cp-surface-2: #F8E0A4;
+  --cp-surface-3: #EFD18E;
+  --cp-text: #211010;
+  --cp-text-soft: #432020;
+  --cp-muted: #6C1A1A;
+  --cp-border: #000000;
+  --cp-border-soft: #000000;
+  --cp-shadow: #000000;
+  --cp-accent: #31AAA9;
+  --cp-accent-strong: #247F7E;
+  --cp-on-accent: #101010;
+  --cp-accent-light: #D6EFEC;
+  --cp-blue: #31AAA9;
+  --cp-blue-strong: #247F7E;
+  --cp-blue-light: #D6EFEC;
+  --cp-warm: #F8E0A4;
+  --cp-rust: #A82020;
+  --cp-rust-light: #F8DEDA;
+  --cp-danger: #A82020;
+  --cp-success: #176F6D;
+  --cp-warning: #A82020;
+  --cp-control: #FFF7E4;
+  --cp-overlay: rgba(0, 0, 0, .52);
+
+  --nb-bg: #F8E0A4;
+  --nb-fg: #211010;
+  --nb-card: #FFF7E4;
+  --nb-primary: #31AAA9;
+  --nb-primary-hover: #247F7E;
+  --nb-secondary: #F8E0A4;
+  --nb-muted: #F3D58E;
+  --nb-muted-fg: #6C1A1A;
+  --nb-accent: #A82020;
+  --nb-danger: #A82020;
+  --nb-border: #000000;
+  --nb-shadow-sm: 3px 3px 0 #000000;
+  --nb-shadow: 5px 5px 0 #000000;
+  --nb-shadow-lg: 8px 8px 0 #000000;
+}
+
+/* Butter is the shared page canvas. */
+html,
+body,
+body:has(.nb-home-page),
+body:has(.cp-workspace-shell),
+body:has(.app-frame) {
+  background: #F8E0A4;
+  color: #211010;
+}
+
+/* Pure black is the only border/shadow outline used by the UI. */
+.nb-home-page *,
+.cp-workspace-shell *,
+.cp-scholarship-directory *,
+.cp-scheme-detail-page *,
+.cp-account-page *,
+.app-frame * {
+  border-color: #000000 !important;
+  --nb-border: #000000;
+  --cp-border: #000000;
+  --cp-border-soft: #000000;
+  --nb-shadow-sm: 3px 3px 0 #000000;
+  --nb-shadow: 5px 5px 0 #000000;
+  --nb-shadow-lg: 8px 8px 0 #000000;
+}
+
+:focus-visible {
+  outline: 3px solid #000000 !important;
+  outline-offset: 3px !important;
+}
+
+/* TEAL — primary actions, selected navigation, and key progress surfaces. */
+.nb-button-primary,
+.nb-mobile-nav .nb-mobile-primary,
+.cp-workspace-nav-link.is-active,
+.cp-dash-button-primary,
+.cp-dir-primary-action,
+.cp-account-primary-action,
+.button-primary,
+.button-dark,
+.primary-nav-link.active,
+.primary-nav-active,
+.directory-filter-list button.selected,
+.service-categories button.active,
+.checker-step-tab.active,
+.scheme-card-action,
+.service-open {
+  background: #31AAA9 !important;
+  color: #101010 !important;
+  border-color: #000000 !important;
+}
+
+.nb-button-primary:hover,
+.cp-dash-button-primary:hover,
+.cp-dir-primary-action:hover,
+.cp-account-primary-action:hover,
+.button-primary:hover,
+.button-dark:hover,
+.scheme-card-action:hover,
+.service-open:hover {
+  background: #247F7E !important;
+  color: #FFFFFF !important;
+}
+
+.nb-hero h1 span {
+  background: linear-gradient(transparent 59%, #31AAA9 59%);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.nb-brand-mark,
+.nb-preview-note,
+.nb-preview-stat-blue,
+.nb-preview-progress,
+.nb-progress-track i,
+.nb-feature-icon.nb-tone-blue,
+.nb-step-card:nth-child(2) .nb-step-number,
+.cp-workspace-nav-link.is-active,
+.cp-dash-stat-blue,
+.cp-dash-quick-blue,
+.cp-dir-summary-icon,
+.cp-dir-total,
+.cp-scheme-card-art,
+.cp-account-hero-mark,
+.cp-account-icon,
+.cp-account-footer-note,
+.brand-symbol,
+.overview-quick-icon,
+.deadline-index,
+.saved-symbol,
+.upload-icon,
+.scheme-hero-badge,
+.checker-panel-number,
+.services-hero-art,
+.service-feature-1,
+.service-card-top > svg,
+.profile-banner {
+  background: #31AAA9 !important;
+  color: #101010 !important;
+}
+
+.cp-dash-category-fill-1,
+.category-fill-1 { background: #31AAA9 !important; }
+.cp-dash-category-fill-2,
+.category-fill-2 { background: #A82020 !important; }
+.cp-dash-category-fill-3,
+.category-fill-4 { background: #F8E0A4 !important; }
+
+/* CRIMSON — high-visibility emphasis, warnings, and secondary highlight cards. */
+.nb-preview-stat-orange,
+.nb-feature-icon.nb-tone-orange,
+.nb-step-card:nth-child(3) .nb-step-number,
+.cp-dash-stat-orange,
+.cp-dash-quick-orange,
+.cp-dir-summary-orange,
+.cp-scheme-stat-orange,
+.cp-scheme-caveats,
+.cp-scheme-preparation-note,
+.cp-account-message.is-error,
+.service-feature-2,
+.quick-card-neutral .overview-quick-icon,
+.profile-tip,
+.notice-caution,
+.redaction-warning,
+.scheme-warning,
+.planner-warning,
+.analysis-error {
+  background: #A82020 !important;
+  color: #FFFFFF !important;
+  border-color: #000000 !important;
+}
+
+.nb-preview-stat-orange *,
+.cp-dash-stat-orange *,
+.cp-dash-quick-orange *,
+.cp-dir-summary-orange *,
+.cp-scheme-stat-orange *,
+.cp-scheme-caveats *,
+.cp-scheme-preparation-note *,
+.cp-account-message.is-error *,
+.service-feature-2 *,
+.profile-tip *,
+.notice-caution *,
+.redaction-warning *,
+.scheme-warning *,
+.planner-warning *,
+.analysis-error * {
+  color: #FFFFFF !important;
+}
+
+.nb-hero h1 span,
+.cp-dir-intro h1 span,
+.cp-account-hero h1 span,
+.cp-scheme-caveat-list svg,
+.cp-scheme-card-meta > span:first-child svg,
+.cp-account-setup-state > svg {
+  color: #A82020 !important;
+}
+
+/* MAROON is an accent ink only — never a border colour. */
+.cp-dashboard-kicker,
+.cp-dash-section-kicker,
+.cp-dir-eyebrow,
+.cp-account-eyebrow {
+  color: #6C1A1A;
+}
+
+/* BUTTER — main reading surfaces and warm cards. */
+.nb-how-section,
+.nb-preview-stat-yellow,
+.nb-step-card:nth-child(1) .nb-step-number,
+.cp-workspace-sidebar,
+.cp-mobile-nav-drawer,
+.cp-dash-stat-yellow,
+.cp-dash-quick-yellow,
+.cp-dash-reference-total,
+.cp-dir-summary,
+.cp-scheme-detail-stats,
+.cp-scheme-fact-support,
+.cp-scheme-document,
+.cp-account-privacy-panel,
+.cp-account-privacy-note,
+.service-feature-3 {
+  background: #F8E0A4 !important;
+}
+
+.nb-preview-tasks,
+.nb-feature-card,
+.nb-step-card,
+.cp-dash-panel,
+.cp-dir-filter-panel,
+.cp-scheme-card,
+.cp-account-panel,
+.scheme-card,
+.overview-panel,
+.directory-toolbar,
+.service-card,
+.scholar-form-card,
+.profile-form-card,
+.planner-create,
+.planner-list,
+.tracked-card {
+  background: #FFF7E4;
+}
+
+/* Deep maroon provides a small number of dark brand panels, not outlines. */
+.nb-final-cta,
+.cp-dash-services,
+.overview-services-strip {
+  background: #6C1A1A !important;
+  color: #FFFFFF !important;
+}
+.nb-final-cta *,
+.cp-dash-services *,
+.overview-services-strip * {
+  color: #FFFFFF !important;
+}
+
+/* Legacy service surfaces follow the same four roles. */
+.service-feature-1 { background: #31AAA9 !important; color: #101010 !important; }
+.service-feature-2 { background: #A82020 !important; color: #FFFFFF !important; }
+.service-feature-3 { background: #F8E0A4 !important; color: #211010 !important; }
+.service-feature-1 *,
+.service-feature-3 * { color: #211010 !important; }
+.service-feature-2 * { color: #FFFFFF !important; }
+
+.cp-account-message.is-success,
+.cp-account-footer-note {
+  border-color: #000000 !important;
+  background: #D6EFEC !important;
+  color: #163B38 !important;
+}
+.cp-account-message.is-error {
+  border-color: #000000 !important;
+  background: #A82020 !important;
+  color: #FFFFFF !important;
+}
+
+/* Primary controls are consistently pill-shaped with hard black outlines. */
+.nb-button,
+.cp-dash-button,
+.cp-dir-primary-action,
+.cp-scheme-detail-actions > a,
+.cp-scheme-source-button,
+.cp-scheme-check-button,
+.cp-scheme-related-grid a,
+.cp-scheme-next-panel > a,
+.cp-scheme-save,
+.cp-account-primary-action,
+.cp-account-secondary-action,
+.button,
+.text-button,
+.scheme-card-action,
+.service-open {
+  border-radius: 999px;
+  border: 2px solid #000000 !important;
+  box-shadow: 3px 3px 0 #000000;
+}
+
+/* Keep focus and motion accessible. */
+@media (prefers-reduced-motion: reduce) {
+  .nb-home-page *,
+  .cp-workspace-shell *,
+  .cp-scholarship-directory *,
+  .cp-scheme-detail-page *,
+  .cp-account-page *,
+  .app-frame * {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
