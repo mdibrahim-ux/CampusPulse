@@ -99,13 +99,13 @@ export function AppShell({children}:{children:React.ReactNode}){
               const active=activePath(path,item.href);
               return <Link key={item.href} href={item.href} className={'primary-nav-link '+(active?'active':'')} aria-current={active?'page':undefined}>
                 {active&&<motion.span layoutId="nav-active" className="primary-nav-active" transition={{type:'spring',stiffness:520,damping:42}}/>}
-                <Icon size={15}/><span>{item.label}</span>
+                <span className="primary-nav-icon"><Icon size={15}/></span><span>{item.label}</span>
               </Link>;
             })}
             <div className="workspace-menu-wrap">
               <button type="button" className={'primary-nav-link workspace-trigger '+((workspaceOpen||activeWorkspace)?'active':'')} onClick={()=>setWorkspaceOpen(value=>!value)} aria-expanded={workspaceOpen} aria-haspopup="menu">
                 {(workspaceOpen||activeWorkspace)&&<motion.span layoutId="nav-active" className="primary-nav-active" transition={{type:'spring',stiffness:520,damping:42}}/>}
-                <LayoutGrid size={15}/><span>Workspace</span><ChevronDown size={13} className={workspaceOpen?'chevron-open':''}/>
+                <span className="primary-nav-icon"><LayoutGrid size={15}/></span><span>Workspace</span><ChevronDown size={13} className={workspaceOpen?'chevron-open':''}/>
               </button>
               <AnimatePresence>
                 {workspaceOpen&&<motion.div className="workspace-popover" role="menu" initial={{opacity:0,y:5}} animate={{opacity:1,y:0}} exit={{opacity:0,y:3}} transition={{duration:.15,ease:[.22,1,.36,1]}}>
@@ -142,11 +142,11 @@ export function AppShell({children}:{children:React.ReactNode}){
           <div className="mobile-navigation-top"><span>EXPLORE CAMPUSPULSE</span><b>{pageLabel}</b></div>
           <div className="mobile-navigation-section">
             <small>EXPLORE</small>
-            {primary.map(item=>{const Icon=item.icon;return <Link key={item.href} href={item.href} className={activePath(path,item.href)?'active':''}><Icon size={17}/><span>{item.label}</span><ArrowRight size={14}/></Link>;})}
+            {primary.map(item=>{const Icon=item.icon;return <Link key={item.href} href={item.href} className={activePath(path,item.href)?'active':''}><span className="mobile-nav-icon"><Icon size={17}/></span><span>{item.label}</span><ArrowRight size={14}/></Link>;})}
           </div>
           <div className="mobile-navigation-section">
             <small>MY WORKSPACE</small>
-            {workspace.map(item=>{const Icon=item.icon;return <Link key={item.href} href={item.href} className={activePath(path,item.href)?'active':''}><Icon size={17}/><span>{item.label}</span><ArrowRight size={14}/></Link>;})}
+            {workspace.map(item=>{const Icon=item.icon;return <Link key={item.href} href={item.href} className={activePath(path,item.href)?'active':''}><span className="mobile-nav-icon"><Icon size={17}/></span><span>{item.label}</span><ArrowRight size={14}/></Link>;})}
           </div>
           <div className="mobile-navigation-tools">
             <div><small>LANGUAGE</small><LanguageSelector/></div>
