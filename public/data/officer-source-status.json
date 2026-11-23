@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-11-22T11:46:40.710Z",
+  "checkedAt": "2026-11-23T13:26:50.348Z",
   "academicYear": "2026-27",
   "method": "Daily public-page metadata check; no officer names, emails or phone numbers are extracted.",
   "sources": [
@@ -8,31 +8,31 @@
       "label": "NSP officer directory",
       "url": "https://scholarships.gov.in/Officers",
       "purpose": "Official scheme-wise nodal officer and grievance officer entry point.",
-      "checkedAt": "2026-11-22T11:46:40.710Z",
-      "httpStatus": 200,
-      "reachable": true,
-      "publishedUpdate": "November 2026",
+      "checkedAt": "2026-11-23T13:26:50.348Z",
+      "httpStatus": null,
+      "reachable": false,
+      "publishedUpdate": null,
       "queryRequiresOfficialInteraction": false,
-      "note": "Only public page availability and its published update marker are checked. Officer names and contact details are not scraped."
+      "note": "fetch failed"
     },
     {
       "id": "public",
       "label": "NSP public services",
       "url": "https://scholarships.gov.in/Public",
       "purpose": "Official entry point for scheme-wise officers, district-wise officers and grievance services.",
-      "checkedAt": "2026-11-22T11:46:40.758Z",
-      "httpStatus": 200,
-      "reachable": true,
-      "publishedUpdate": "November 2026",
+      "checkedAt": "2026-11-23T13:26:50.395Z",
+      "httpStatus": null,
+      "reachable": false,
+      "publishedUpdate": null,
       "queryRequiresOfficialInteraction": false,
-      "note": "Only public page availability and its published update marker are checked. Officer names and contact details are not scraped."
+      "note": "The operation was aborted due to timeout"
     },
     {
       "id": "scheme-wise",
       "label": "Scheme-wise officer search",
       "url": "https://scholarships.gov.in/nodelOfficerDetails",
       "purpose": "Live scheme-wise search form. The official portal controls the filters and any CAPTCHA.",
-      "checkedAt": "2026-11-22T11:46:40.760Z",
+      "checkedAt": "2026-11-23T13:26:50.397Z",
       "httpStatus": 200,
       "reachable": true,
       "publishedUpdate": "November 2026",
@@ -44,12 +44,12 @@
       "label": "District-wise officer search",
       "url": "https://scholarships.gov.in/districtNodelOfficerDetails",
       "purpose": "Live district-wise search form. The official portal controls the filters and any CAPTCHA.",
-      "checkedAt": "2026-11-22T11:46:40.761Z",
-      "httpStatus": 200,
-      "reachable": true,
-      "publishedUpdate": "November 2026",
+      "checkedAt": "2026-11-23T13:26:50.398Z",
+      "httpStatus": null,
+      "reachable": false,
+      "publishedUpdate": null,
       "queryRequiresOfficialInteraction": true,
-      "note": "Only public page availability and its published update marker are checked. Officer names and contact details are not scraped."
+      "note": "The operation was aborted due to timeout"
     }
   ]
 }
