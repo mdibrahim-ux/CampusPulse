@@ -1,0 +1,5 @@
+'use client';
+import * as React from 'react';
+import { cn } from '@/lib/utils';
+type Props=Omit<React.InputHTMLAttributes<HTMLInputElement>,'type'|'value'|'defaultValue'|'onChange'>&{value?:number[];defaultValue?:number[];onValueChange?:(value:number[])=>void;onChange?:React.ChangeEventHandler<HTMLInputElement>;max?:number;min?:number;step?:number};
+export function Slider({value,defaultValue=[0],onValueChange,onChange,max=100,min=0,step=1,name,disabled,required,className,...props}:Props){const[local,setLocal]=React.useState(defaultValue);const current=value??local;const selected=current[0]??min;const change=(next:number)=>{if(value===undefined)setLocal([next]);onValueChange?.([next])};return <div className={cn('cp-slider-wrap',className)}><input type="range" min={min} max={max} step={step} value={selected} disabled={disabled} required={required} name={name} onChange={e=>{change(Number(e.target.value));onChange?.(e)}} className="cp-slider" {...props}/><span className="cp-slider-value">{selected}</span></div>}

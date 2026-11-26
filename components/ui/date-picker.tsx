@@ -1,0 +1,17 @@
+'use client';
+import * as React from 'react';
+import { CalendarDays, ChevronLeft, ChevronRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
+type Props={value?:string;defaultValue?:string;onChange?:(value:string)=>void;min?:string;max?:string;disabled?:boolean;required?:boolean;placeholder?:string;className?:string;id?:string;name?:string};
+const toISO=(d:Date)=>[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');
+export function DatePicker({value,defaultValue,onChange,min,max,disabled,required,placeholder='Select a date',className,id,name}:Props){
+ const[open,setOpen]=React.useState(false);const[internal,setInternal]=React.useState(defaultValue||'');const selected=value??internal;const[view,setView]=React.useState(()=>selected?new Date(selected+'T00:00:00'):new Date());const root=React.useRef<HTMLDivElement>(null);
+ React.useEffect(()=>{const outside=(e:PointerEvent)=>{if(!root.current?.contains(e.target as Node))setOpen(false)};document.addEventListener('pointerdown',outside);return()=>document.removeEventListener('pointerdown',outside)},[]);
+ React.useEffect(()=>{if(selected){const d=new Date(selected+'T00:00:00');if(!Number.isNaN(d.getTime()))setView(d)}},[selected]);
+ const first=new Date(view.getFullYear(),view.getMonth(),1);const offset=(first.getDay()+6)%7;const days=new Date(view.getFullYear(),view.getMonth()+1,0).getDate();const cells=Array.from({length:Math.ceil((offset+days)/7)*7},(_,i)=>i-offset+1);const iso=(d:number)=>toISO(new Date(view.getFullYear(),view.getMonth(),d));
+ const choose=(d:number)=>{const next=iso(d);if((min&&next<min)||(max&&next>max))return;if(value===undefined)setInternal(next);onChange?.(next);setOpen(false)};
+ return <div ref={root} className={cn('cp-date-picker',className)}><button id={id} type="button" disabled={disabled} aria-haspopup="dialog" aria-expanded={open} className="cp-date-trigger" onClick={()=>setOpen(v=>!v)}><CalendarDays size={16}/><span>{selected?new Date(selected+'T00:00:00').toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}):placeholder}</span><ChevronRight size={14}/></button>
+ {open&&<div className="cp-calendar-popover" role="dialog" aria-label="Choose date"><div className="cp-calendar-head"><button type="button" aria-label="Previous month" onClick={()=>setView(new Date(view.getFullYear(),view.getMonth()-1,1))}><ChevronLeft size={16}/></button><b>{view.toLocaleDateString('en-IN',{month:'long',year:'numeric'})}</b><button type="button" aria-label="Next month" onClick={()=>setView(new Date(view.getFullYear(),view.getMonth()+1,1))}><ChevronRight size={16}/></button></div>
+ <div className="cp-calendar-grid">{['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(x=><span className="cp-calendar-weekday" key={x}>{x}</span>)}{cells.map((d,i)=>d<1||d>days?<span key={i}/>:<button type="button" key={i} className={cn('cp-calendar-day',selected===iso(d)&&'is-selected')} disabled={!!((min&&iso(d)<min)||(max&&iso(d)>max))} onClick={()=>choose(d)}>{d}</button>)}</div>
+ <div className="cp-calendar-footer"><button type="button" onClick={()=>{const d=new Date();setView(d);choose(d.getDate())}}>Today</button><button type="button" onClick={()=>setOpen(false)}>Close</button></div>{required&&<input required tabIndex={-1} aria-hidden="true" className="cp-sr-only" value={selected} readOnly/>}{name&&<input type="hidden" name={name} value={selected}/>}</div>}</div>
+}
